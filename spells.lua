@@ -1,3 +1,33 @@
+-- A helper function creates a table that the system will understand
+-- as a spell. The variadic arguments are the alternates to use if not
+-- available, for example, a talent. They should be given in pairs wit
+-- hthe type and name.
+function icub3d_Spell(typ, name, target, ...)
+   arg = {...}
+   local alternates = {}
+   for x = 1, select("#",...)-1, 2 do
+	  alternates[math.floor((x+1)/2)] = {typ = arg[x], name = arg[x+1], target = target}
+   end
+   spell = {
+	  typ = typ,
+	  name = name,
+	  alternates = alternates,
+   }
+   return spell
+end
+
+function icub3d_PvPTalent(num, target)
+   return {typ = "pvp", num = num, target = target}
+end
+
+function icub3d_Skip()
+   return {typ = "skip"}
+end
+
+function icub3d_Macro(name)
+   return {typ = "macro", name = name}
+end
+
 -- icub3d_spells contains the spells that each character uses.
 --
 -- The action bars aren't in a normal order.
@@ -12,219 +42,90 @@
 -- These are stored by class by the standardized string name. See:
 -- https://wow.gamepedia.com/ClassId
 icub3d_Spells = {
-   ["PALADIN"] = {
-	  specs = {
-		 {
-			tags = {"h", "holy"},
-			actionbar = {
-			   {{typ = "harm", name = "Holy Shock", target=1}},
-			   {{typ = "harm", name = "Holy Shock", target=2}},
-			   {{typ = "help", name = "Holy Shock", target=1}},
-			   {{typ = "help", name = "Holy Shock", target=2}},
-			   {{typ = "help", name = "Holy Light", target=1}},
-			   {{typ = "help", name = "Holy Light", target=2}},
-			   {{typ = "help", name = "Flash of Light", target=1}},
-			   {{typ = "help", name = "Flash of Light", target=2}},
-			   {{typ = "harm", name = "Crusader Strike", target=1}},
-			   {{typ = "harm", name = "Crusader Strike", target=2}},
-			   {{typ = "help", name = "Beacon of Virtue", target=1},{typ = "harm", name = "Crusader Strike", target=1}},
-			   {{typ = "help", name = "Beacon of Virtue", target=2},{typ = "harm", name = "Crusader Strike", target=2}},
-
-			   {{typ = "help", name = "Cleanse", target=1}},
-			   {{typ = "help", name = "Cleanse", target=2}},
-			   {{typ = "help", name = "Light of the Martyr", target=1}},
-			   {{typ = "help", name = "Light of the Martyr", target=2}},
-			   {{typ = "help", name = "Bestow Faith", target=1},{typ = "mouse", name = "Light's Hammer", target=1},{typ = "harm", name = "Judgment", target=1}},
-			   {{typ = "help", name = "Bestow Faith", target=2},{typ = "mouse", name = "Light's Hammer", target=2},{typ = "harm", name = "Judgment", target=1}},
-			   {{typ = "harm", name = "Judgment", target=1}},
-			   {{typ = "harm", name = "Judgment", target=2}},
-			   {{typ = "harm", name = "Hand of Reckoning", target=1}},
-			   {{typ = "harm", name = "Hand of Reckoning", target=2}},
-			   {{typ = "harm", name = "Hammer of Justice", target=1}},
-			   {{typ = "harm", name = "Hammer of Justice", target=2}},
-			   
-			   {{typ = "harm", name = "Repentance", target=1},{typ = "harm", name = "Blinding Light", target=1},{typ = "harm", name = "Hammer of Justice", target=1}},
-			   {{typ = "harm", name = "Repentance", target=2},{typ = "harm", name = "Blinding Light", target=1},{typ = "harm", name = "Hammer of Justice", target=1}},
-			   {{typ = "help", name = "Blessing of Freedom", target=1}},
-			   {{typ = "help", name = "Blessing of Freedom", target=2}},
-			   {{typ = "help", name = "Blessing of Sacrifice", target=1}},
-			   {{typ = "help", name = "Blessing of Sacrifice", target=2}},
-			   {{typ = "help", name = "Blessing of Protection", target=1}},
-			   {{typ = "help", name = "Blessing of Protection", target=2}},
-			   {{typ = "help", name = "Lay on Hands", target=1}},
-			   {{typ = "help", name = "Lay on Hands", target=2}},
-			   {{typ = "help", name = "Divine Favor", target=1}},
-			   {{typ = "help", name = "Divine Favor", target=2}},
-
-			   {skip = true},
-			   {skip = true},
-			   {skip = true},
-			   {skip = true},
-			   {{typ = "help", name = "Beacon of Light", target=1},{typ = "help", name = "Bestow Faith", target=1},{typ = "mouse", name = "Light's Hammer"},{typ = "harm", name = "Judgment", target=1}},
-			   {{typ = "help", name = "Beacon of Light", target=1},{typ = "help", name = "Bestow Faith", target=2},{typ = "mouse", name = "Light's Hammer"},{typ = "harm", name = "Judgment", target=2}},
-			   {{typ = "macro", name = "im_racial"}},
-			   {{typ = "help", name = "Gladiator's Medallion"}},
-			   {{typ = "help", name = "Light of Dawn", target=1}},
-			   {{typ = "help", name = "Light of Dawn", target=2}},
-			   {{typ = "help", name = "Consecration", target=1}},
-			   {{typ = "help", name = "Divine Protection", target=1}},
-			   {{typ = "help", name = "Divine Shield", target=1}},
-			   {{typ = "help", name = "Divine Steed", target=1}},
-			   {{typ = "help", name = "Rule of Law", target=1},{typ = "help", name = "Divine Steed", target=1}},
-			   {{typ = "help", name = "Aura Mastery", target=1}},
-			   {{typ = "help", name = "Avenging Crusader", target=1},{typ = "help", name = "Aura Mastery", target=1}},
-			   {{typ = "help", name = "Holy Avenger", target=1},{typ = "mouse", name = "Holy Prism", target=1},{typ = "help", name = "Blessing of Sacrifice", target = 2}},
-			   {{typ = "help", name = "Holy Avenger", target=1},{typ = "mouse", name = "Holy Prism", target=2},{typ = "help", name = "Blessing of Protection", target = 1}},
-			   {{typ = "help", name = "Beacon of Faith", target=1},{typ = "mouse", name = "Holy Prism", target=2},{typ = "help", name = "Blessing of Protection", target = 2}},
-			   {skip = true},
-			   {skip = true},
-			   {skip = true},
-			   {skip = true},
-			   
-			},
-		 },
-	  },
-   },
    ["PRIEST"] = {
 	  specs = { -- The tags are useful for switching but these should be in in-game order.
 		 {
 			tags = {"d", "disc", "discipline"},
-			actionbar = { -- These should be in the order you want them on the action bar. Each one takes up two spots.
-			   {{typ = "help", name = "Penance", target=1}},
-			   {{typ = "help", name = "Penance", target=2}},
-			   {{typ = "harm", name = "Penance", target=1}},
-			   {{typ = "harm", name = "Penance", target=2}},
-			   {{typ = "help", name = "Power Word: Shield", target=1}},
-			   {{typ = "help", name = "Power Word: Shield", target=2}},
-			   {{typ = "help", name = "Shadow Mend", target=1}},
-			   {{typ = "help", name = "Shadow Mend", target=2}},
-			   {{typ = "harm", name = "Shadow Word: Pain", target=1}},
-			   {{typ = "harm", name = "Shadow Word: Pain", target=2}},
-			   {{typ = "harm", name = "Smite", target=1}},
-			   {{typ = "harm", name = "Smite", target=2}},
-
-			   {{typ = "harm", name = "Dispel Magic", traget=1}},
-			   {{typ = "harm", name = "Dispel Magic", traget=2}},
-			   {{typ = "help", name = "Purify", target=1}},
-			   {{typ = "help", name = "Purify", target=2}},
-			   {{typ = "help", name = "Power Word: Radiance", target=1}},
-			   {{typ = "help", name = "Power Word: Radiance", target=2}},
-			   {{typ = "help", name = "Pain Suppression", target=1}},
-			   {{typ = "help", name = "Pain Suppression", target=2}},
-			   {{typ = "harm", name = "Schism", target=1}, {typ = "harm", name = "Shadow Word: Pain", target=1}},
-			   {{typ = "harm", name = "Schism", target=2}, {typ = "harm", name = "Shadow Word: Pain", target=2}},
-			   {{typ = "harm", name = "Power Word: Solace", target=1}, {typ = "harm", name = "Smite", target=1}},
-			   {{typ = "harm", name = "Power Word: Solace", target=2}, {typ = "harm", name = "Smite", target=2}},
-
-			   {{typ = "help", name = "Leap of Faith", target=1}},
-			   {{typ = "help", name = "Leap of Faith", target=2}},
-			   {{typ = "harm", name = "Psychic Scream", target=1}},
-			   {{typ = "help", name = "Desperate Prayer", target=1}},
-			   {{typ = "mouse", name = "Power Word: Barrier", target=1}},
-			   {{typ = "mouse", name = "Rapture", target=1}},
-			   {{typ = "help", name = "Shining Force", target=1},{typ = "help", name = "Leap of Faith", target=1}},
-			   {{typ = "help", name = "Shining Force", target=2},{typ = "help", name = "Leap of Faith", target=2}},
-			   {{typ = "help", name = "Levitate", target=1}},
-			   {{typ = "mouse", name = "Angelic Feather", target=1}},
-			   {{typ = "help", name = "Holy Nova", target=1}},
-			   {{typ = "help", name = "Halo", target=1},{typ = "help", name = "Divine Star", target=1},{typ = "help", name = "Rapture", target=1}},			   
-
-			   {{typ = "help", name = "Archangel", target=1},{typ = "help", name = "Power Word: Shield", target=1}},
-			   {{typ = "help", name = "Dark Archangel", target=1},{typ = "help", name = "Power Word: Shield", target=1}},
-			   {{typ = "help", name = "Premonition", target=1},{typ = "help", name = "Power Word: Shield", target=1}},
-			   {{typ = "mouse", name = "Mind Vision"}},
-			   {{typ = "harm", name = "Mind Control", target=1}},
-			   {{typ = "harm", name = "Mind Control", target=2}},
-			   {{typ = "harm", name = "Shackle Undead", target=1}},
-			   {{typ = "harm", name = "Shackle Undead", target=2}},
-			   {{typ = "help", name = "Evangelism", target=1}, {typ="mouse", name = "Mass Dispel"}},
-			   {{typ = "macro", name = "im_mench"}},
-			   {{typ = "macro", name = "im_focus"}},
-			   {{typ = "help", name = "Power Word: Fortitude", target=1}},
-			   
-			   {{typ = "macro", name = "im_racial"}},
-			   {{typ = "help", name = "Gladiator's Medallion", target=1}},
-			   {{typ = "help", name = "Fade", target=1}},
-			   {{typ = "harm", name = "Shadowfiend", target=1}},
-			   {{typ = "mouse", name = "Mass Dispel"}},
-			   {{typ = "macro", name = "im_trinket"}},
-			   {{typ = "help", name = "Shadow Covenant", target=1},{typ = "help", name = "Power Word: Shield", target=1}},
-			   {{typ = "help", name = "Shadow Covenant", target=2},{typ = "help", name = "Power Word: Shield", target=2}},
-			   {{typ = "macro", name = "im_belt"}},
-			   {{typ = "macro", name = "im_cloak"}},
-			   {{typ = "help", name = "Resurrection", target=1}},
-			   {{typ = "help", name = "Mass Resurrection", target=1}},
-			}
-		 },
-		 {
-			tags = {"h", "holy"},
 			pvp = {
+			   alternate = icub3d_Spell("help", "Penance"),
 			   spells = {
-				  {typ = "help", name = "Holy Ward"},
-				  {typ = "help", name = "Holy Word: Concentration"},
-				  {typ = "help", name = "Greater Heal"},
-				  {typ = "help", name = "Spirit of the Redeemer"},
-				  {typ = "help", name = "Ray of Hope"},
+				  icub3d_Spell("help", "Archangel"),
+				  icub3d_Spell("help", "Dark Archangel"),
+				  icub3d_Spell("help", "Premonition"),
 			   },
-			   alt = {typ = "harm", name = "Heal"},
 			},
-			spells = {
-			   {{typ = "harm", name = "Dispel Magic"}},
-			   {{typ = "help", name = "Flash Heal"}},
-			   {{typ = "help", name = "Guardian Spirit"}},
-			   {{typ = "help", name = "Heal"}},
-			   {{typ = "harm", name = "Holy Fire"}},
-			   {{typ = "harm", name = "Holy Word: Chastise"}},
-			   {{typ = "help", name = "Holy Word: Serenity"}},
-			   {{typ = "help", name = "Leap of Faith"}},
-			   {{typ = "help", name = "Levitate"}},
-			   {{typ = "help", name = "Prayer of Healing"}},
-			   {{typ = "help", name = "Prayer of Mending"}},
-			   {{typ = "help", name = "Purify"}},
-			   {{typ = "help", name = "Renew"}},
-			   {{typ = "help", name = "Resurrection"}},
-			   {{typ = "harm", name = "Shackle Undead"}},
-			   {{typ = "harm", name = "Smite"}},
-			   {{typ = "help", name = "Shinig Force"}, {typ = "help", name = "Leap of Faith"}},
-			   {{typ = "help", name = "Binding Heal"}, {typ = "help", name = "Circle of Healing"},    {typ = "help", name = "Prayer of healing"}},
-			   {{typ = "help", name = "Halo"},         {typ = "help", name = "Divine Star"},	      {typ = "help", name = "Prayer of Healing"}},
-			   {{typ = "help", name = "Apotheosis"},   {typ = "help", name = "Holy Word: Salvation"}, {typ = "help", name = "Prayer of Healing"}},
-			}
-		 },
-		 {
-			tags = {"s", "shad", "shadow"},
-			pvp = {
-			   spells = {
-				  {typ = "help", name = "Void Shift"},
-				  {typ = "help", name = "Psyfiend"},
-			   },
-			   alt = {typ = "harm", name = "Mind Blast"},
+			actionbar = { -- These should be in the order you want them on the action bar.
+			   -- Top Row
+			   icub3d_Spell("help", "Penance", 1),
+			   icub3d_Spell("help", "Penance", 2),
+			   icub3d_Spell("harm", "Penance", 1),
+			   icub3d_Spell("harm", "Penance", 2),
+			   icub3d_Spell("help", "Power Word: Shield", 1),
+			   icub3d_Spell("help", "Power Word: Shield", 2),
+			   icub3d_Spell("help", "Shadow Mend", 1),
+			   icub3d_Spell("help", "Shadow Mend", 2),
+			   icub3d_Spell("harm", "Shadow Word: Pain", 1),
+			   icub3d_Spell("harm", "Shadow Word: Pain", 2),
+			   icub3d_Spell("harm", "Smite", 1),
+			   icub3d_Spell("harm", "Smite", 2),
+
+			   -- Middle Row (left)
+			   icub3d_Spell("harm", "Dispel Magic", 1),
+			   icub3d_Spell("harm", "Dispel Magic", 2),
+			   icub3d_Spell("help", "Purify", 1),
+			   icub3d_Spell("help", "Purify", 2),
+			   icub3d_Spell("help", "Power Word: Radiance", 1),
+			   icub3d_Spell("help", "Power Word: Radiance", 2),
+			   icub3d_Spell("help", "Pain Suppression", 1),
+			   icub3d_Spell("help", "Pain Suppression", 2),
+			   icub3d_Spell("harm", "Schism", 1, "harm", "Shadow Word: Pain"),
+			   icub3d_Spell("harm", "Schism", 2, "harm", "Shadow Word: Pain"),
+			   icub3d_Spell("harm", "Power Word: Solace", 1, "harm", "Shadow Word: Pain"),
+			   icub3d_Spell("harm", "Power Word: Solace", 2, "harm", "Shadow Word: Pain"),
+
+			   -- Middle Row (right)
+			   icub3d_Spell("help", "Leap of Faith", 1),
+			   icub3d_Spell("help", "Leap of Faith", 2),
+			   icub3d_Spell("help", "Shadow Covenant", 1, "help","Power Word: Shield"),
+			   icub3d_Spell("help", "Shadow Covenant", 2, "help","Power Word: Shield"),
+			   icub3d_Spell("harm", "Shadowfiend", 1),
+			   icub3d_Spell("harm", "Shadowfiend", 2),
+			   icub3d_Spell("help", "Shining Force", 1, "help", "Leap of Faith"),
+			   icub3d_Spell("help", "Shining Force", 2, "help", "Leap of Faith"),
+			   icub3d_Spell("help", "Levitate", 1),
+			   icub3d_Spell("mouse", "Angelic Feather", 1),
+			   icub3d_Spell("help", "Holy Nova", 1),
+			   icub3d_Spell("help", "Halo Force", 1, "help", "Divine Star", "help", "Rapture"),
+
+			   -- Bottom Row (left)
+			   icub3d_Skip(),
+			   icub3d_Skip(),
+			   icub3d_Skip(),
+			   icub3d_PvPTalent(1, 1),
+			   icub3d_PvPTalent(2, 1),
+			   icub3d_PvPTalent(3, 1),
+			   icub3d_Spell("harm", "Mind Control", 1),
+			   icub3d_Spell("harm", "Mind Control", 2),
+			   icub3d_Spell("harm", "Shackle Undead", 1),
+			   icub3d_Spell("harm", "Shackle Undead", 2),
+			   icub3d_Spell("help", "Evangelism", nil, "mouse", "Mass Dispel"),
+			   icub3d_Spell("help", "Power Word: Fortitude"),
+
+			   -- Bottom Row (right)
+			   icub3d_Macro("im_racial"),
+			   icub3d_Spell("help", "Gladiator's Medallion"),
+			   icub3d_Spell("help", "Fade"),
+			   icub3d_Spell("mouse", "Power Word: Barrier"),
+			   icub3d_Spell("mouse", "Rapture"),
+			   icub3d_Spell("mouse", "Mass Dispel"),
+			   icub3d_Spell("harm", "Psychic Scream"),
+			   icub3d_Spell("help", "Desperate Prayer"),
+			   icub3d_Macro("im_trinket"),
+			   icub3d_Macro("im_belt"),
+			   icub3d_Macro("im_cloak"),
+			   icub3d_Skip(),
+			   icub3d_Skip(),
 			},
-			spells = {
-			   {{typ = "harm", name = "Dispel Magic"}},
-			   {{typ = "help", name = "Leap of Faith"}},
-			   {{typ = "help", name = "Levitate"}},
-			   {{typ = "harm", name = "Mind Blast"}},
-			   {{typ = "harm", name = "Mind Control"}},
-			   {{typ = "harm", name = "Mind Flay"}},
-			   {{typ = "harm", name = "Mind Sear"}},
-			   {{typ = "help", name = "Power Word: Shield"}},
-			   {{typ = "help", name = "Purify Disease"}},
-			   {{typ = "help", name = "Resurrection"}},
-			   {{typ = "harm", name = "Shackle Undead"}},
-			   {{typ = "help", name = "Shadow Mend"}},
-			   {{typ = "harm", name = "Shadow Word: Pain"}},
-			   {{typ = "harm", name = "Shadowfiend"}},
-			   {{typ = "harm", name = "Shadowform"}},
-			   {{typ = "harm", name = "Silence"}},
-			   {{typ = "harm", name = "Vampiric Touch"}},
-			   {{typ = "harm", name = "Void Eruption"}},
-			   {{typ = "harm", name = "Dark Void"},          {typ = "harm", name = "Mind Sear"}},
-			   {{typ = "harm", name = "Mind Bomb"},          {typ = "harm", name = "Psychic Horror"},       {typ = "harm", name = "Psychic Scream"}},
-			   {{typ = "harm", name = "Shadow Word: Death"}, {typ = "harm", name = "Shadow Crash"},         {typ = "harm", name = "Mind Blast"}},
-			   {{typ = "harm", name = "Void Torrent"},       {typ = "harm", name = "Mind Blast"}},
-			   {{typ = "help", name = "Dark Ascension"},     {typ = "help", name = "Surrender to Madness"}, {typ = "help", name = "Void Eruption"}}
-			}
 		 },
 	  },
    },

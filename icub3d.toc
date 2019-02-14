@@ -5,6 +5,7 @@
 ## Version: 1.0
 ## SavedVariablesPerCharacter: icub3d_MacroType icub3d_PvP1 icub3d_PvP2
 icub3d.lua
+dumper.lua
 macros.lua
 spells.lua
 ui.lua
