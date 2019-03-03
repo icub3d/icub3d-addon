@@ -6,8 +6,6 @@ function SlashCmdList.ICUB3DMACROS(msg, editBox)
 	  icub3d_CreateMacros()
    elseif msg == "delete" then
 	  icub3d_DeleteMacros()
-   elseif msg == "place" then
-	  icub3d_PlaceMacros()
    else
 	  print("unknown icub3d-macro command: " .. msg);
    end
@@ -21,6 +19,7 @@ icub3d_PermanentMacros = {
    ["im_turnin"] = { icon = "achievement_quests_completed_08", body = "/script SelectGossipAvailableQuest(1)\n/script CompleteQuest()\n/script GetQuestReward()"},
    ["im_mench"] = { icon = "INV_Misc_QuestionMark", body = "#showtooltip Enchanting\n/run C_TradeSkillUI.CraftRecipe(TradeSkillFrame.RecipeList:GetSelectedRecipeID())\n/use Enchanting Vellum\n/click StaticPopup1Button1"},
    ["im_focus"] = { icon = "ability_cheapshot", body = "/clearfocus [target=focus,exists]\n/focus [target=focus,noexists]"},
+   ["im_scrap"] = { icon = "inv_misc_wartornscrap_plate", body = "/click EasyScrap_ScrapKeybindFrame" },
 }
 
 -- When we change the macros for an action bar button, it's possible
@@ -30,6 +29,7 @@ icub3d_SpecialMacros = {
    ["im_cloak"] = { icon = "INV_Misc_QuestionMark", body = "#showtooltip\n/use 15"},
    ["im_trinket"] = { icon = "INV_Misc_QuestionMark", body = "#showtooltip\n/use [mod:alt] 14; 13"},
    ["im_racial"] = { icon = "INV_Misc_QuestionMark", body = "/run print('hello')"},
+   ["im_medallion"] = { icon = "INV_Misc_QuestionMark", body = "#showtooltip\n/use Honorable Medallion"},
 }
 
 -- These are the different macro formats that can be used.
@@ -47,6 +47,10 @@ icub3d_MacroFormats = {
 		 "#showtooltip %1$s \n/cast [mod,@player] [] %1$s",
 		 "#showtooltip %1$s \n/cast [mod,@player] [] %1$s",
 	  },
+	  ["use"] = {
+		 "#showtooltip %1$s \n/use %1$s",
+		 "#showtooltip %1$s \n/use %1$s",
+	  },
    },
    ["pvp"] = {
 	  ["harm"] = {
@@ -61,6 +65,10 @@ icub3d_MacroFormats = {
 		 "#showtooltip %1$s \n/cast [mod,@player] [] %1$s",
 		 "#showtooltip %1$s \n/cast [mod,@player] [] %1$s",
 	  },
+	  ["use"] = {
+		 "#showtooltip %1$s \n/cast %1$s",
+		 "#showtooltip %1$s \n/cast %1$s",
+	  },
    }
 }
 
@@ -69,50 +77,44 @@ function icub3d_UpdateMacro(name, where, typ, spell, target, who)
    EditMacro(name, nil, nil, macro)
 end
 
-function icub3d_PlaceMacros()
-   for i = 1, 72 do
-	  -- We want to skip the second action bar.
-	  p = i
-	  if p > 12 then
-		 p = p + 12
-	  end
+function icub3d_MacrosInit()
+   -- Update our racial macro.
+   icub3d_RacialMacro()
+end
 
-	  -- Always remove it, if there is one.
-	  PickupAction(p)
-	  ClearCursor()
+function icub3d_RacialMacro()
+   _, race, _ = UnitRace("player")
+   local body = "#showtooltip\n/cast [nomod] Will of the Forsaken; Cannibalize"
 
-	  -- create the name for the macro we'll want to place.
-	  local name = string.format("is-%02d", i)
+   if race == "BloodElf" then
+	  body = "#showtooltip\n/cast Arcane Torrent"
+   elseif race == "HighmountainTauren" then
+	  body = "#showtooltip\n/cast Bull Rush"
+   end
 
-	  -- only place it if we have a macro for it.
-	  local _, _, body, _ = GetMacroInfo(name)
-	  if body ~= "" then
-		 PickupMacro(name)
-		 PlaceAction(p)
-	  end
+   icub3d_SpecialMacros["im_racial"] = {icon = "INV_Misc_QuestionMark", body = body}
+
+   if GetMacroInfo("im_racial") == nil then
+	  CreateMacro("im_racial", "INV_Misc_QuestionMark", body)
+   else
+	  EditMacro("im_racial", "im_racial", "INV_Misc_QuestionMark", body, 1)
    end
 end
 
-function icub3d_MacrosInit()
-   -- Update our racial macro.
-   _, race, _ = UnitRace("player")
-   local body = "#showtooltip\n/cast [nomod] Will of the Forsaken; Cannibalize"
-   if race == "BloodElf" then
-	  body = "#showtooltip\n/cast Arcane Torrent"
+function icub3d_CreateMacro(x)
+   local p = nil
+   if x < 19 then
+	  p = true
    end
-   icub3d_SpecialMacros["im_racial"] = {icon = "INV_Misc_QuestionMark", body = body}
-
-   -- Create any macro's we don't have.
-   icub3d_CreateMacros()
+   local name = string.format("is-%03d", x)
+   if GetMacroInfo(name) == nil then
+	  CreateMacro(name, "INV_Misc_QuestionMark", "", p)
+   end
 end
 
 function icub3d_CreateMacros()
-   -- The class icon wil be the default.
-   for x = 1,72 do
-	  local name = string.format("is-%02d", x)
-	  if GetMacroInfo(name) == nil then
-		 CreateMacro(name, "INV_Misc_QuestionMark", "")
-	  end
+   for x = 1, 120 do
+	  icub3d_CreateMacro(x)
    end
 
    for name, macro in pairs(icub3d_PermanentMacros) do
@@ -123,9 +125,11 @@ function icub3d_CreateMacros()
 end
 
 function icub3d_DeleteMacros()
-   for x = 1,72 do
-	  local name = string.format("is-%02d", x)
+   for i = 1,138 do
+	  local name = string.format("is-%03d", i)
+	  local oldName = string.format("is-%02d", i)
 	  DeleteMacro(name)
+	  DeleteMacro(oldName)
    end
    for name, macro in pairs(icub3d_PermanentMacros) do
 	  DeleteMacro(name)
@@ -140,16 +144,18 @@ function icub3d_UpdateMacros(spec, where, targets)
 	  if p > 12 then
 		 p = p + 12
 	  end
+	  -- print(p .. " -> " .. DataDumper(s))
 
-	  -- Determine the macro name the spell will be placed in.
-	  local name = string.format("is-%02d", i)
+	  -- Determine the macro name the spell will be placed in and set
+	  -- a default target.
+	  local name = string.format("is-%03d", i)
 	  if s.target == nil then
 		 s.target = 1
 	  end
 	  
 	  -- We may need to add the macro back to the actionbar if a
 	  -- previous spec removed/skipped it.
-	  if s.typ ~= "skip" and GetActionInfo(p) == nil then
+	  if s.typ ~= "skip" and GetActionText(p) == nil then
 		 PickupMacro(name)
 		 PlaceAction(p)
 	  end
@@ -195,6 +201,10 @@ function icub3d_UpdateMacros(spec, where, targets)
 		 -- Update the macro with the chosen spell or alternate.
 		 icub3d_UpdateMacro(name, where, selected.typ, selected.name,
 							s.target, targets[s.target])
+	  elseif s.typ == "use" then
+		 -- This is just a normal spell, item, etc.
+		 icub3d_UpdateMacro(name, where, s.typ, s.name, s.target,
+							targets[s.target])
 	  elseif GetSpellInfo(s.name) ~= nil then
 		 -- This is just a normal spell, item, etc.
 		 icub3d_UpdateMacro(name, where, s.typ, s.name, s.target,

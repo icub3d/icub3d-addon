@@ -38,6 +38,10 @@ function icub3d_UI()
    icub3d_MoveActionBar("MultiBarBottomRightButton", "CENTER", UIParent, -480, -504)
    icub3d_MoveActionBar("MultiBarBottomLeftButton", "CENTER", UIParent, 23, -504)
 
+   -- Extra Action Button
+   ExtraActionButton1:ClearAllPoints()
+   ExtraActionButton1:SetPoint("CENTER", UIParent, 0, -125)
+   
    -- Remove the macro name from the buttons
    local bars = {
 	  "ActionButton",
