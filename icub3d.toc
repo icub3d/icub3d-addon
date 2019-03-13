@@ -4,8 +4,11 @@
 ## Author: Joshua Marsh
 ## Version: 1.0
 ## SavedVariablesPerCharacter: icub3d_MacroType icub3d_PvP1 icub3d_PvP2
+## SavedVariables: icub3d_Search
 icub3d.lua
+log.lua
 dumper.lua
 macros.lua
 spells.lua
 ui.lua
+search.lua

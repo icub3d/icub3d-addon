@@ -1,15 +1,6 @@
--- Slash command for managing macros. This is mostly for debug/fix as
--- it should all happen automagically.
-SLASH_ICUB3DMACROS1 = "/im"
-function SlashCmdList.ICUB3DMACROS(msg, editBox)
-   if msg == "create" then
-	  icub3d_CreateMacros()
-   elseif msg == "delete" then
-	  icub3d_DeleteMacros()
-   else
-	  print("unknown icub3d-macro command: " .. msg);
-   end
-end
+-- This prevents icons from being animated onto the main action bar
+IconIntroTracker.RegisterEvent = function() end
+IconIntroTracker:UnregisterEvent('SPELL_PUSHED_TO_ACTIONBAR')
 
 -- When we create macros, we'll create these as well. They aren't
 -- normally used in action bars but I do occasionally use them in
@@ -74,6 +65,11 @@ icub3d_MacroFormats = {
 
 function icub3d_UpdateMacro(name, where, typ, spell, target, who)
    macro = string.format(icub3d_MacroFormats[where][typ][target], spell, who)
+   if spell == "Prowl" then
+	  macro = "#showtooltip Prowl\n/cancelform [nostance:2]\n/cast Prowl"
+   elseif spell == "Dash" then
+	  macro = "#showtooltip Dash\n/cancelform [nostance:2]\n/cast Dash"
+   end
    EditMacro(name, nil, nil, macro)
 end
 
@@ -173,7 +169,7 @@ function icub3d_UpdateMacros(spec, where, targets)
 		 if macro ~= nil then
 			EditMacro(name, nil, macro.icon, macro.body)
 		 else
-			print("icub3dSpecialMacros[" .. s.name .. "] not found")
+			icub3d_Error("icub3dSpecialMacros[%s] not found", {s.name})
 		 end
 	  elseif s.typ == "pvp" then
 		 -- This is a pvp talent slot.
@@ -219,7 +215,7 @@ function icub3d_UpdateMacros(spec, where, targets)
 			end
 		 end
 	  else
-		 print("unable to place spell(" .. s.name .. ")")
+		 icub3d_Error("unable to place spell(%s)", {s.name})
 	  end
    end
 end
