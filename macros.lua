@@ -21,6 +21,7 @@ icub3d_SpecialMacros = {
    ["im_trinket"] = { icon = "INV_Misc_QuestionMark", body = "#showtooltip\n/use [mod:alt] 14; 13"},
    ["im_racial"] = { icon = "INV_Misc_QuestionMark", body = "/run print('hello')"},
    ["im_medallion"] = { icon = "INV_Misc_QuestionMark", body = "#showtooltip\n/use Honorable Medallion"},
+   ["im_glide"] = { icon = "INV_Misc_QuestionMark", body = "#showtooltip Glide\n/dismount\n/cast Glide"},
 }
 
 -- These are the different macro formats that can be used.
