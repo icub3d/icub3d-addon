@@ -1,1270 +1,147 @@
+--------------------------------------------------------------------
+-- GLOBAL VARIABLES
+--------------------------------------------------------------------
+-- icub3d_spells contains the spells that each character uses.
+--
+-- These are stored by class by the standardized string name. See:
+-- https://wow.gamepedia.com/ClassId
+--
+-- Each class has it's own file that updates this global variable.
+icub3d_Spells = {}
+
+--------------------------------------------------------------------
+-- SLASH COMMANDS
+--------------------------------------------------------------------
+-- Change specs
+SLASH_CHANGESPEC1 = "/cs"
+function SlashCmdList.CHANGESPEC(msg, editBox)
+   icub3d_ChangeSpec(msg)
+end
+
+-- Change talents
+SLASH_CHANGETALENTS1 = "/ct"
+function SlashCmdList.CHANGETALENTS(msg, editBox)
+   icub3d_ChangeTalents(msg)
+end
+
+--------------------------------------------------------------------
+-- EVENT REGISTRATION
+--------------------------------------------------------------------
+icub3d_RegisterEvent("ADDON_READY", function(arg1)
+	icub3d_TalentChanges()
+	icub3d_RegisterEvent("PLAYER_TALENT_UPDATE", function(arg1)
+		icub3d_Debug("talents changed")
+		icub3d_TalentChanges()
+	end)
+end)
+
+--------------------------------------------------------------------
+-- SPELLS CODE
+--------------------------------------------------------------------
+function icub3d_TalentChanges()
+	-- Make sure we have the right macros
+	local spec = GetSpecialization()
+	local _, class, _ = UnitClass("player")
+	if icub3d_Spells[class] ~= nil then
+	   if icub3d_Spells[class].specs[spec] ~= nil then
+		  icub3d_UpdateMacros(icub3d_Spells[class].specs[spec], icub3d_MACROTYPE,
+							  {icub3d_PVP1, icub3d_PVP2})
+	   end
+	end
+ end
+
+function icub3d_ChangeTalents(name)
+	local _, class, _ = UnitClass("player")
+	local character = icub3d_Spells[class]
+	if character == nil then
+	   icub3d_Error("class not found: %s", {class})
+	   return
+	 end
+ 
+	 spec = character.specs[GetSpecialization()]
+	if spec == nil then
+		 icub3d_Error("spec not found: %s", {class})
+		 return
+	 end	
+	 local talents = spec.talents[name]
+	 if talents == nil then
+		 icub3d_Error("talent '%s' not found for spec", {name})
+		 return
+	 end
+ 
+	 for k, tal in pairs(talents) do
+		 LearnTalent(GetTalentInfo(k, tal, 1))
+	 end
+ end
+ 
+ function icub3d_ChangeSpec(spec)
+	local _, class, _ = UnitClass("player")
+	local character = icub3d_Spells[class]
+	if character == nil then
+	   icub3d_Error("class not found: %s", {class})
+	   return
+	end
+ 
+	 local words = {}
+	 for word in spec:gmatch("%w+") do table.insert(words, word) end
+	 local len = table.getn(words)
+	 local talents = ""
+	 if len > 1 then
+		 spec = words[1]
+		 talents = words[2]
+	 end	
+	 
+	-- Find the spec that matches the given spec tag.
+	for i, v in ipairs(character.specs) do
+	   for j, tag in ipairs(v.tags) do
+		  if tag == spec then
+			 SetSpecialization(i)
+			 -- The event handler will see this and change our macros
+			 -- and spells.
+ 
+			 if talent ~= "" then
+				 icub3d_ChangeTalents(talents)
+			 end
+ 
+			 return
+		  end
+	   end
+	end
+	
+	icub3d_Error("spec '%s' not found for '%s'", {spec, class})
+ end
+ 
 -- A helper function creates a table that the system will understand
 -- as a spell. The variadic arguments are the alternates to use if not
 -- available, for example, a talent. They should be given in pairs wit
 -- hthe type and name.
 function icub3d_Spell(typ, name, target, ...)
-   if target == nil then
-	  target = 1
-   end
-   arg = {...}
-   local alternates = {}
-   for x = 1, select("#",...)-1, 2 do
-	  alternates[math.floor((x+1)/2)] = {typ = arg[x], name = arg[x+1], target = target}
-   end
-   spell = {
-	  typ = typ,
-	  name = name,
-	  target = target,
-	  alternates = alternates,
-   }
-   return spell
+    if target == nil then
+        target = 1
+    end
+    local arg = {...}
+    local alternates = {}
+    for x = 1, select('#', ...) - 1, 2 do
+        alternates[math.floor((x + 1) / 2)] = {typ = arg[x], name = arg[x + 1], target = target}
+    end
+    return {
+        typ = typ,
+        name = name,
+        target = target,
+        alternates = alternates
+    }
 end
 
 function icub3d_PvPTalent(num, target)
-   return {typ = "pvp", num = num, target = target}
+    return {typ = 'pvp', num = num, target = target}
 end
 
 function icub3d_Skip()
-   return {typ = "skip"}
+    return {typ = 'skip'}
 end
 
 function icub3d_Macro(name)
-   return {typ = "macro", name = name}
+    return {typ = 'macro', name = name}
 end
 
--- icub3d_spells contains the spells that each character uses.
---
---
--- These are stored by class by the standardized string name. See:
--- https://wow.gamepedia.com/ClassId
-icub3d_Spells = {}
 
-icub3d_Spells["DRUID"] = {
-	  specs = {
-		 {
-			tags = {"b", "bal", "balance"},
-			pvp = {
-			   alternate = icub3d_Spell("harm", "Moonfire"),
-			   spells = {
-				  icub3d_Spell("harm", "Faerie Swarm"),
-				  icub3d_Spell("harm", "Cyclone"),
-				  icub3d_Spell("help", "Thorns"),
-			   }
-			},
-			actionbar = {
-			   -- Top Row
-			   icub3d_Spell("harm", "Lunar Strike", 1),
-			   icub3d_Spell("harm", "Lunar Strike", 2),
-			   icub3d_Spell("harm", "Solar Wrath", 1),
-			   icub3d_Spell("harm", "Solar Wrath", 2),
-			   icub3d_Spell("harm", "Sunfire", 1),
-			   icub3d_Spell("harm", "Sunfire", 2),
-			   icub3d_Spell("harm", "Starfall", 1),
-			   icub3d_Spell("harm", "Starfall", 2),
-			   icub3d_Spell("harm", "Starsurge", 1),
-			   icub3d_Spell("harm", "Starsurge", 2),
-			   icub3d_Spell("harm", "New Moon", 1, "harm", "Fury of Elune"),
-			   icub3d_Spell("harm", "New Moon", 2, "harm", "Fury of Elune"),
-
-			   -- Middle Left
-			   icub3d_Spell("help", "Remove Corruption", 1),
-			   icub3d_Spell("help", "Remove Corruption", 2),
-			   icub3d_Spell("harm", "Typhoon", 1, "harm", "Mass Entanglement", "harm", "Mighty Bash"),
-			   icub3d_Spell("harm", "Typhoon", 2, "harm", "Mass Entanglement", "harm", "Mighty Bash"),
-			   icub3d_Spell("harm", "Entangling Roots", 1),
-			   icub3d_Spell("harm", "Entangling Roots", 2),
-			   icub3d_Spell("mouse", "Wild Charge", 1, "help", "Renewal", "help", "Tiger Dash"),
-			   icub3d_Spell("mouse", "Wild Charge", 2, "help", "Renewal", "help", "Tiger Dash"),
-			   icub3d_Spell("help", "Innervate", 1),
-			   icub3d_Spell("help", "Innervate", 2),
-			   icub3d_Spell("harm", "Hibernate", 1),
- 			   icub3d_Spell("harm", "Soothe", 1),
-			   
-			   -- Middle Right
-			   icub3d_Spell("harm", "Stellar Flare", 1, "harm", "Moonfire"),
-			   icub3d_Spell("harm", "Stellar Flare", 2, "harm", "Moonfire"),
-			   icub3d_Spell("harm", "Moonfire", 1),
-			   icub3d_Spell("harm", "Moonfire", 2),
-			   icub3d_Spell("help", "Wild Growth", 1, "help", "Regrowth"),
-			   icub3d_Spell("help", "Wild Growth", 2, "help", "Regrowth"),
-			   icub3d_Spell("help", "Swiftmend", 1, "help", "Regrowth"),
-			   icub3d_Spell("help", "Swiftmend", 2, "help", "Regrowth"),
-			   icub3d_Spell("help", "Rejuvenation", 1, "help", "Regrowth"),
-			   icub3d_Spell("help", "Rejuvenation", 2, "help", "Regrowth"),
-			   icub3d_Spell("help", "Regrowth", 1),
-			   icub3d_Spell("help", "Regrowth", 2),
-
-			   -- Bottom Left
-			   icub3d_PvPTalent(1, 1),
-			   icub3d_PvPTalent(1, 2),
-			   icub3d_PvPTalent(2, 1),
-			   icub3d_PvPTalent(2, 2),
-			   icub3d_PvPTalent(3, 1),
-			   icub3d_PvPTalent(3, 2),
-			   icub3d_Macro("im_racial"),
-			   icub3d_Macro("im_medallion"),
-			   icub3d_Spell("help", "Force of Nature", 2),
-			   icub3d_Spell("help", "Dash", 1),
-			   icub3d_Spell("help", "Prowl", 1),
-			   icub3d_Macro("im_cloak"),
-
-			   -- Bottom Right
-			   icub3d_Macro("im_belt"),
-			   icub3d_Macro("im_trinket"),
-			   icub3d_Spell("help", "Rebirth", 2),
-			   icub3d_Spell("help", "Solar Beam", 2),
-			   icub3d_Spell("help", "Celestial Alignment", 2),
-			   icub3d_Spell("help", "Barkskin", 1),
-			   icub3d_Spell("help", "Flap", 2),
-			   icub3d_Spell("mouse", "Bear Form", 2),
-			   icub3d_Spell("mouse", "Cat Form", 2),
-			   icub3d_Spell("mouse", "Travel Form", 2),
-			   icub3d_Spell("mouse", "Stag Form", 2),
-			   icub3d_Spell("mouse", "Moonkin Form", 2),
-
-			   -- Cat Form
-			   icub3d_Spell("harm", "Shred", 1),
-			   icub3d_Spell("harm", "Shred", 2),
-			   icub3d_Spell("harm", "Rake", 1, "harm", "Shred"),
-			   icub3d_Spell("harm", "Rake", 2, "harm", "Shred"),
-			   icub3d_Spell("harm", "Ferocious Bite", 1, "harm", "Shred"),
-			   icub3d_Spell("harm", "Ferocious Bite", 2, "harm", "Shred"),
-			   icub3d_Skip(),
-			   icub3d_Skip(),
-			   icub3d_Spell("mouse", "Thrash", 1, "mouse", "Swipe", "mouse", "harm", "Shred"),
-			   icub3d_Spell("mouse", "Thrash", 2, "mouse", "Swipe", "mouse", "harm", "Shred"),
-			   icub3d_Spell("harm", "Rip", 1, "harm", "Shred"),
-			   icub3d_Spell("harm", "Rip", 2, "harm", "Shred"),
-
-			   -- Prowl Form
-			   icub3d_Spell("harm", "Lunar Strike", 1),
-			   icub3d_Spell("harm", "Lunar Strike", 2),
-			   icub3d_Spell("harm", "Solar Wrath", 1),
-			   icub3d_Spell("harm", "Solar Wrath", 2),
-			   icub3d_Spell("harm", "Sunfire", 1),
-			   icub3d_Spell("harm", "Sunfire", 2),
-			   icub3d_Spell("harm", "Starfall", 1),
-			   icub3d_Spell("harm", "Starfall", 2),
-			   icub3d_Spell("harm", "Starsurge", 1),
-			   icub3d_Spell("harm", "Starsurge", 2),
-			   icub3d_Spell("harm", "New Moon", 1),
-			   icub3d_Spell("harm", "New Moon", 2),
-
-			   -- Bear Form
-			   icub3d_Spell("harm", "Mangle", 1),
-			   icub3d_Spell("harm", "Mangle", 2),
-			   icub3d_Skip(),
-			   icub3d_Skip(),
-			   icub3d_Spell("help", "Frenzied Regeneration", 1, "harm", "Mangle"),
-			   icub3d_Spell("help", "Ironfur", 2, "harm", "Mangle"),
-			   icub3d_Skip(),
-			   icub3d_Skip(),
-			   icub3d_Spell("mouse", "Thrash", 1, "mouse", "Swipe", "mouse", "harm", "Growl"),
-			   icub3d_Spell("mouse", "Thrash", 2, "mouse", "Swipe", "mouse", "harm", "Growl"),
-			   icub3d_Spell("harm", "Growl", 1),
-			   icub3d_Spell("harm", "Growl", 2),
-
-			   -- Moonkin Form
-			   icub3d_Spell("harm", "Lunar Strike", 1),
-			   icub3d_Spell("harm", "Lunar Strike", 2),
-			   icub3d_Spell("harm", "Solar Wrath", 1),
-			   icub3d_Spell("harm", "Solar Wrath", 2),
-			   icub3d_Spell("harm", "Sunfire", 1),
-			   icub3d_Spell("harm", "Sunfire", 2),
-			   icub3d_Spell("harm", "Starfall", 1),
-			   icub3d_Spell("harm", "Starfall", 2),
-			   icub3d_Spell("harm", "Starsurge", 1),
-			   icub3d_Spell("harm", "Starsurge", 2),
-			   icub3d_Spell("harm", "New Moon", 1),
-			   icub3d_Spell("harm", "New Moon", 2),
-			},
-		 },
-		 {
-			tags = {"f", "feral"},
-			pvp = {
-			   alternate = icub3d_Spell("harm", "Moonfire"),
-			   spells = {
-				  icub3d_Spell("harm", "Rip and Tear"),
-				  icub3d_Spell("harm", "Cyclone"),
-				  icub3d_Spell("help", "Thorns"),
-			   }
-			},
-			actionbar = {
-			   -- Top Row
-			   icub3d_Spell("harm", "Lunar Strike", 1, "harm", "Moonfire"),
-			   icub3d_Spell("harm", "Lunar Strike", 2, "harm", "Moonfire"),
-			   icub3d_Spell("harm", "Solar Wrath", 1, "harm", "Moonfire"),
-			   icub3d_Spell("harm", "Solar Wrath", 2, "harm", "Moonfire"),
-			   icub3d_Spell("harm", "Sunfire", 1, "harm", "Moonfire"),
-			   icub3d_Spell("harm", "Sunfire", 2, "harm", "Moonfire"),
-			   icub3d_Spell("harm", "Moonfire", 1),
-			   icub3d_Spell("harm", "Moonfire", 2),
-			   icub3d_Spell("harm", "Starsurge", 1, "harm", "Moonfire"),
-			   icub3d_Spell("harm", "Starsurge", 2, "harm", "Moonfire"),
-			   icub3d_Skip(),
-			   icub3d_Skip(),
-
-			   -- Middle Left
-			   icub3d_Spell("help", "Remove Corruption", 1),
-			   icub3d_Spell("help", "Remove Corruption", 2),
-			   icub3d_Spell("harm", "Typhoon", 1, "harm", "Mass Entanglement", "harm", "Mighty Bash"),
-			   icub3d_Spell("harm", "Typhoon", 2, "harm", "Mass Entanglement", "harm", "Mighty Bash"),
-			   icub3d_Spell("harm", "Entangling Roots", 1),
-			   icub3d_Spell("harm", "Entangling Roots", 2),
-			   icub3d_Spell("mouse", "Wild Charge", 1, "help", "Renewal", "help", "Tiger Dash"),
-			   icub3d_Spell("mouse", "Wild Charge", 2, "help", "Renewal", "help", "Tiger Dash"),
-			   icub3d_Spell("harm", "Feral Frenzy", 1, "harm", "Rake"),
-			   icub3d_Spell("harm", "Feral Frenzy", 2, "harm", "Rake"),
-			   icub3d_Spell("harm", "Hibernate", 1),
- 			   icub3d_Spell("harm", "Soothe", 1),
-			   
-			   -- Middle Right
-			   icub3d_Spell("harm", "Skull Bash", 1),
-			   icub3d_Spell("harm", "Skull Bash", 2),
-			   icub3d_Spell("harm", "Primal Wrath", 1, "harm", "Thrash"),
-			   icub3d_Spell("harm", "Primal Wrath", 2, "harm", "Swipe"),
-			   icub3d_Spell("help", "Wild Growth", 1, "help", "Regrowth"),
-			   icub3d_Spell("help", "Wild Growth", 2, "help", "Regrowth"),
-			   icub3d_Spell("help", "Swiftmend", 1, "help", "Regrowth"),
-			   icub3d_Spell("help", "Swiftmend", 2, "help", "Regrowth"),
-			   icub3d_Spell("help", "Rejuvenation", 1, "help", "Regrowth"),
-			   icub3d_Spell("help", "Rejuvenation", 2, "help", "Regrowth"),
-			   icub3d_Spell("help", "Regrowth", 1),
-			   icub3d_Spell("help", "Regrowth", 2),
-
-			   -- Bottom Left
-			   icub3d_PvPTalent(1, 1),
-			   icub3d_PvPTalent(1, 2),
-			   icub3d_PvPTalent(2, 1),
-			   icub3d_PvPTalent(2, 2),
-			   icub3d_PvPTalent(3, 1),
-			   icub3d_PvPTalent(3, 2),
-			   icub3d_Macro("im_racial"),
-			   icub3d_Macro("im_medallion"),
-			   icub3d_Spell("help", "Survival Instincts", 1),
-			   icub3d_Spell("help", "Dash", 1),
-			   icub3d_Spell("help", "Prowl", 1),
-			   icub3d_Macro("im_cloak"),
-
-			   -- Bottom Right
-			   icub3d_Macro("im_belt"),
-			   icub3d_Macro("im_trinket"),
-			   icub3d_Spell("help", "Rebirth", 2),
-			   icub3d_Spell("help", "Tiger's Fury", 2),
-			   icub3d_Spell("help", "Stampeding Roar", 2),
-			   icub3d_Spell("help", "Berserk", 2),
-			   icub3d_Spell("help", "Savage Roar", 2, "help", "Berserk"),
-			   icub3d_Spell("mouse", "Bear Form", 2),
-			   icub3d_Spell("mouse", "Cat Form", 2),
-			   icub3d_Spell("mouse", "Travel Form", 2),
-			   icub3d_Spell("mouse", "Stag Form", 2),
-			   icub3d_Spell("mouse", "Moonkin Form", 2, "help", "Stag Form"),
-
-			   -- Cat Form
-			   icub3d_Spell("harm", "Shred", 1),
-			   icub3d_Spell("harm", "Shred", 2),
-			   icub3d_Spell("harm", "Rake", 1),
-			   icub3d_Spell("harm", "Rake", 2),
-			   icub3d_Spell("harm", "Ferocious Bite", 1),
-			   icub3d_Spell("harm", "Ferocious Bite", 2),
-			   icub3d_Spell("harm", "Maim", 1, "harm", "Shred"),
-			   icub3d_Spell("harm", "Maim", 2, "harm", "Shred"),
-			   icub3d_Spell("mouse", "Thrash", 1, "mouse", "Swipe", "mouse", "harm", "Shred"),
-			   icub3d_Spell("mouse", "Swipe", 2, "mouse", "Thrash", "mouse", "harm", "Shred"),
-			   icub3d_Spell("harm", "Rip", 1, "harm", "Shred"),
-			   icub3d_Spell("harm", "Rip", 2, "harm", "Shred"),
-
-			   -- Prowl Form
-			   icub3d_Spell("harm", "Shred", 1),
-			   icub3d_Spell("harm", "Shred", 2),
-			   icub3d_Spell("harm", "Rake", 1),
-			   icub3d_Spell("harm", "Rake", 2),
-			   icub3d_Spell("harm", "Ferocious Bite", 1),
-			   icub3d_Spell("harm", "Ferocious Bite", 2),
-			   icub3d_Spell("harm", "Maim", 1),
-			   icub3d_Spell("harm", "Maim", 2),
-			   icub3d_Spell("mouse", "Thrash", 1, "mouse", "Swipe", "mouse", "harm", "Shred"),
-			   icub3d_Spell("mouse", "Swipe", 2, "mouse", "Thrash", "mouse", "harm", "Shred"),
-			   icub3d_Spell("harm", "Rip", 1),
-			   icub3d_Spell("harm", "Rip", 2),
-
-			   -- Bear Form
-			   icub3d_Spell("harm", "Mangle", 1),
-			   icub3d_Spell("harm", "Mangle", 2),
-			   icub3d_Skip(),
-			   icub3d_Skip(),
-			   icub3d_Spell("help", "Frenzied Regeneration", 1, "harm", "Mangle"),
-			   icub3d_Spell("help", "Ironfur", 2, "harm", "Mangle"),
-			   icub3d_Spell("harm", "Moonfire", 1),
-			   icub3d_Spell("harm", "Moonfire", 2),
-			   icub3d_Spell("mouse", "Thrash", 1, "mouse", "Swipe", "mouse", "harm", "Growl"),
-			   icub3d_Spell("mouse", "Thrash", 2, "mouse", "Swipe", "mouse", "harm", "Growl"),
-			   icub3d_Spell("harm", "Growl", 1),
-			   icub3d_Spell("harm", "Growl", 2),
-
-			   -- Moonkin Form
-			   icub3d_Spell("harm", "Lunar Strike", 1, "harm", "Moonfire"),
-			   icub3d_Spell("harm", "Lunar Strike", 2, "harm", "Moonfire"),
-			   icub3d_Spell("harm", "Solar Wrath", 1, "harm", "Moonfire"),
-			   icub3d_Spell("harm", "Solar Wrath", 2, "harm", "Moonfire"),
-			   icub3d_Spell("harm", "Sunfire", 1, "harm", "Moonfire"),
-			   icub3d_Spell("harm", "Sunfire", 2, "harm", "Moonfire"),
-			   icub3d_Spell("harm", "Moonfire", 1),
-			   icub3d_Spell("harm", "Moonfire", 2),
-			   icub3d_Spell("harm", "Starsurge", 1, "harm", "Moonfire"),
-			   icub3d_Spell("harm", "Starsurge", 2, "harm", "Moonfire"),
-			   icub3d_Skip(),
-			   icub3d_Skip(),
-			},
-		 },
-		 {
-			tags = {"g", "guard", "guardian"},
-			pvp = {
-			   alternate = icub3d_Spell("harm", "Moonfire"),
-			   spells = {
-				  icub3d_Spell("harm", "Demoralizing Roar"),
-				  icub3d_Spell("harm", "Overrun"),
-			   }
-			},
-			actionbar = {
-			   -- Top Row
-			   icub3d_Spell("harm", "Lunar Strike", 1, "harm", "Moonfire"),
-			   icub3d_Spell("harm", "Lunar Strike", 2, "harm", "Moonfire"),
-			   icub3d_Spell("harm", "Solar Wrath", 1, "harm", "Moonfire"),
-			   icub3d_Spell("harm", "Solar Wrath", 2, "harm", "Moonfire"),
-			   icub3d_Spell("harm", "Sunfire", 1, "harm", "Moonfire"),
-			   icub3d_Spell("harm", "Sunfire", 2, "harm", "Moonfire"),
-			   icub3d_Spell("harm", "Moonfire", 1),
-			   icub3d_Spell("harm", "Moonfire", 2),
-			   icub3d_Spell("harm", "Starsurge", 1, "harm", "Moonfire"),
-			   icub3d_Spell("harm", "Starsurge", 2, "harm", "Moonfire"),
-			   icub3d_Skip(),
-			   icub3d_Skip(),
-
-			   -- Middle Left
-			   icub3d_Spell("help", "Remove Corruption", 1),
-			   icub3d_Spell("help", "Remove Corruption", 2),
-			   icub3d_Spell("harm", "Typhoon", 1, "harm", "Mass Entanglement", "harm", "Mighty Bash"),
-			   icub3d_Spell("harm", "Typhoon", 2, "harm", "Mass Entanglement", "harm", "Mighty Bash"),
-			   icub3d_Spell("harm", "Entangling Roots", 1),
-			   icub3d_Spell("harm", "Entangling Roots", 2),
-			   icub3d_Spell("mouse", "Wild Charge", 1, "mouse", "Ursol's Vortex", "help", "Tiger Dash"),
-			   icub3d_Spell("mouse", "Wild Charge", 2, "mouse", "Ursol's Vortex", "help", "Tiger Dash"),
-			   icub3d_Spell("harm", "Pulverize", 1, "harm", "Lunar Beam", "harm", "Maul"),
-			   icub3d_Spell("help", "Incarnation: Guardian of Ursoc", 2, "harm", "Pulverize", "harm", "Lunar Beam", "harm", "Maul"),
-			   icub3d_Spell("harm", "Hibernate", 1),
- 			   icub3d_Spell("harm", "Soothe", 1),
-			   
-			   -- Middle Right
-			   icub3d_Spell("harm", "Skull Bash", 1),
-			   icub3d_Spell("harm", "Skull Bash", 2),
-			   icub3d_Spell("harm", "Primal Wrath", 1, "harm", "Thrash"),
-			   icub3d_Spell("harm", "Primal Wrath", 2, "harm", "Swipe"),
-			   icub3d_Spell("help", "Wild Growth", 1, "help", "Regrowth"),
-			   icub3d_Spell("help", "Wild Growth", 2, "help", "Regrowth"),
-			   icub3d_Spell("help", "Swiftmend", 1, "help", "Regrowth"),
-			   icub3d_Spell("help", "Swiftmend", 2, "help", "Regrowth"),
-			   icub3d_Spell("help", "Rejuvenation", 1, "help", "Regrowth"),
-			   icub3d_Spell("help", "Rejuvenation", 2, "help", "Regrowth"),
-			   icub3d_Spell("help", "Regrowth", 1),
-			   icub3d_Spell("help", "Regrowth", 2),
-
-			   -- Bottom Left
-			   icub3d_PvPTalent(1, 1),
-			   icub3d_PvPTalent(1, 2),
-			   icub3d_PvPTalent(2, 1),
-			   icub3d_PvPTalent(2, 2),
-			   icub3d_PvPTalent(3, 1),
-			   icub3d_PvPTalent(3, 2),
-			   icub3d_Macro("im_racial"),
-			   icub3d_Macro("im_medallion"),
-			   icub3d_Spell("help", "Survival Instincts", 1),
-			   icub3d_Spell("help", "Dash", 1),
-			   icub3d_Spell("help", "Prowl", 1),
-			   icub3d_Macro("im_cloak"),
-
-			   -- Bottom Right
-			   icub3d_Macro("im_belt"),
-			   icub3d_Macro("im_trinket"),
-			   icub3d_Spell("help", "Rebirth", 2),
-			   icub3d_Spell("help", "Bristling Fur", 2, "harm", "Stampeding Roar"),
-			   icub3d_Spell("help", "Stampeding Roar", 2),
-			   icub3d_Spell("help", "Barkskin", 2),
-			   icub3d_Spell("help", "Incapacitating Roar", 2),
-			   icub3d_Spell("mouse", "Bear Form", 2),
-			   icub3d_Spell("mouse", "Cat Form", 2),
-			   icub3d_Spell("mouse", "Travel Form", 2),
-			   icub3d_Spell("mouse", "Stag Form", 2),
-			   icub3d_Spell("mouse", "Moonkin Form", 2, "help", "Stag Form"),
-
-			   -- Cat Form
-			   icub3d_Spell("harm", "Shred", 1),
-			   icub3d_Spell("harm", "Shred", 2),
-			   icub3d_Spell("harm", "Rake", 1),
-			   icub3d_Spell("harm", "Rake", 2),
-			   icub3d_Spell("harm", "Ferocious Bite", 1),
-			   icub3d_Spell("harm", "Ferocious Bite", 2),
-			   icub3d_Skip(),
-			   icub3d_Skip(),
-			   icub3d_Spell("mouse", "Thrash", 1, "mouse", "Swipe", "mouse", "harm", "Shred"),
-			   icub3d_Spell("mouse", "Swipe", 2, "mouse", "Thrash", "mouse", "harm", "Shred"),
-			   icub3d_Spell("harm", "Rip", 1),
-			   icub3d_Spell("harm", "Rip", 2),
-
-			   -- Prowl Form
-			   icub3d_Spell("harm", "Shred", 1),
-			   icub3d_Spell("harm", "Shred", 2),
-			   icub3d_Spell("harm", "Rake", 1),
-			   icub3d_Spell("harm", "Rake", 2),
-			   icub3d_Spell("harm", "Ferocious Bite", 1),
-			   icub3d_Spell("harm", "Ferocious Bite", 2),
-			   icub3d_Skip(),
-			   icub3d_Skip(),
-			   icub3d_Spell("mouse", "Thrash", 1, "mouse", "Swipe", "mouse", "harm", "Shred"),
-			   icub3d_Spell("mouse", "Swipe", 2, "mouse", "Thrash", "mouse", "harm", "Shred"),
-			   icub3d_Spell("harm", "Rip", 1),
-			   icub3d_Spell("harm", "Rip", 2),
-
-			   -- Bear Form
-			   icub3d_Spell("harm", "Mangle", 1),
-			   icub3d_Spell("harm", "Mangle", 2),
-			   icub3d_Spell("harm", "Maul", 1),
-			   icub3d_Spell("harm", "Maul", 2),
-			   icub3d_Spell("help", "Frenzied Regeneration", 1, "harm", "Mangle"),
-			   icub3d_Spell("help", "Ironfur", 2, "harm", "Mangle"),
-			   icub3d_Spell("harm", "Moonfire", 1),
-			   icub3d_Spell("harm", "Moonfire", 2),
-			   icub3d_Spell("mouse", "Thrash", 1, "mouse", "Swipe", "mouse", "harm", "Growl"),
-			   icub3d_Spell("mouse", "Swipe", 2, "mouse", "Thrash", "mouse", "harm", "Growl"),
-			   icub3d_Spell("harm", "Growl", 1),
-			   icub3d_Spell("harm", "Growl", 2),
-
-			   -- Moonkin Form
-			   icub3d_Spell("harm", "Lunar Strike", 1, "harm", "Moonfire"),
-			   icub3d_Spell("harm", "Lunar Strike", 2, "harm", "Moonfire"),
-			   icub3d_Spell("harm", "Solar Wrath", 1, "harm", "Moonfire"),
-			   icub3d_Spell("harm", "Solar Wrath", 2, "harm", "Moonfire"),
-			   icub3d_Spell("harm", "Sunfire", 1, "harm", "Moonfire"),
-			   icub3d_Spell("harm", "Sunfire", 2, "harm", "Moonfire"),
-			   icub3d_Spell("harm", "Moonfire", 1),
-			   icub3d_Spell("harm", "Moonfire", 2),
-			   icub3d_Spell("harm", "Starsurge", 1, "harm", "Moonfire"),
-			   icub3d_Spell("harm", "Starsurge", 2, "harm", "Moonfire"),
-			   icub3d_Skip(),
-			   icub3d_Skip(),
-			},
-		 },
-		 		 {
-			tags = {"r", "resto", "restoration"},
-			pvp = {
-			   alternate = icub3d_Spell("harm", "Moonfire"),
-			   spells = {
-				  icub3d_Spell("harm", "Nourish"),
-				  icub3d_Spell("harm", "Cyclone"),
-				  icub3d_Spell("help", "Thorns"),
-				  icub3d_Spell("help", "Mark of the Wild"),
-				  icub3d_Spell("help", "Overgrowth"),
-			   }
-			},
-			actionbar = {
-			   -- Top Row
-			   icub3d_Spell("help", "Wild Growth", 1, "help", "Regrowth"),
-			   icub3d_Spell("help", "Wild Growth", 2, "help", "Regrowth"),
-			   icub3d_Spell("help", "Swiftmend", 1, "help", "Regrowth"),
-			   icub3d_Spell("help", "Swiftmend", 2, "help", "Regrowth"),
-			   icub3d_Spell("help", "Rejuvenation", 1, "help", "Regrowth"),
-			   icub3d_Spell("help", "Rejuvenation", 2, "help", "Regrowth"),
-			   icub3d_Spell("help", "Regrowth", 1),
-			   icub3d_Spell("help", "Regrowth", 2),
-			   icub3d_Spell("help", "Lifebloom", 1),
-			   icub3d_Spell("help", "Lifebloom", 2),
-			   icub3d_Spell("help", "Cenarion Ward", 1, "help", "Lifebloom"),
-			   icub3d_Spell("help", "Cenarion Ward", 2, "help", "Lifebloom"),
-
-
-			   -- Middle Left
-			   icub3d_Spell("help", "Nature's Cure", 1),
-			   icub3d_Spell("help", "Nature's Cure", 2),
-			   icub3d_Spell("harm", "Typhoon", 1, "harm", "Mass Entanglement", "harm", "Mighty Bash"),
-			   icub3d_Spell("harm", "Typhoon", 2, "harm", "Mass Entanglement", "harm", "Mighty Bash"),
-			   icub3d_Spell("harm", "Entangling Roots", 1),
-			   icub3d_Spell("harm", "Entangling Roots", 2),
-			   icub3d_Spell("mouse", "Wild Charge", 1, "help", "Renewal", "help", "Tiger Dash"),
-			   icub3d_Spell("mouse", "Wild Charge", 2, "help", "Renewal", "help", "Tiger Dash"),
-			   icub3d_Spell("help", "Innervate", 1),
-			   icub3d_Spell("help", "Innervate", 2),
-			   icub3d_Spell("harm", "Hibernate", 1),
- 			   icub3d_Spell("harm", "Soothe", 1),
-			   
-			   -- Middle Right
-			   icub3d_Spell("mouse", "Efflorescence", 1),
-			   icub3d_Spell("mouse", "Efflorescence", 2),
-			   icub3d_Spell("mouse", "Ursol's Vortex", 1),
-			   icub3d_Spell("mouse", "Ursol's Vortex", 2),
-			   icub3d_Spell("harm", "Lunar Strike", 1),
-			   icub3d_Spell("harm", "Lunar Strike", 2),
-			   icub3d_Spell("harm", "Solar Wrath", 1),
-			   icub3d_Spell("harm", "Solar Wrath", 2),
-			   icub3d_Spell("harm", "Sunfire", 1),
-			   icub3d_Spell("harm", "Sunfire", 2),
-			   icub3d_Spell("harm", "Starsurge", 1),
-			   icub3d_Spell("harm", "Starsurge", 2),
-
-			   -- Bottom Left
-			   icub3d_PvPTalent(1, 1),
-			   icub3d_PvPTalent(1, 2),
-			   icub3d_PvPTalent(2, 1),
-			   icub3d_PvPTalent(2, 2),
-			   icub3d_PvPTalent(3, 1),
-			   icub3d_PvPTalent(3, 2),
-			   icub3d_Macro("im_racial"),
-			   icub3d_Macro("im_medallion"),
-			   icub3d_Spell("help", "Tranquility", 2),
-			   icub3d_Spell("help", "Dash", 1),
-			   icub3d_Spell("help", "Prowl", 1),
-			   icub3d_Macro("im_cloak"),
-
-			   -- Bottom Right
-			   icub3d_Macro("im_belt"),
-			   icub3d_Macro("im_trinket"),
-			   icub3d_Spell("help", "Rebirth", 2),
-			   icub3d_Spell("help", "Flourish", 2, "help", "Barkskin"),
-			   icub3d_Spell("help", "Incarnation: Tree of Life", 2, "help", "Flourish", "help", "Barkskin"),
-			   icub3d_Spell("help", "Barkskin", 1),
-			   icub3d_Spell("help", "Ironbark", 2),
-			   icub3d_Spell("mouse", "Bear Form", 2),
-			   icub3d_Spell("mouse", "Cat Form", 2),
-			   icub3d_Spell("mouse", "Travel Form", 2),
-			   icub3d_Spell("mouse", "Stag Form", 2),
-			   icub3d_Spell("mouse", "Moonkin Form", 2),
-
-			   -- Cat Form
-			   icub3d_Spell("harm", "Shred", 1),
-			   icub3d_Spell("harm", "Shred", 2),
-			   icub3d_Spell("harm", "Rake", 1, "harm", "Shred"),
-			   icub3d_Spell("harm", "Rake", 2, "harm", "Shred"),
-			   icub3d_Spell("harm", "Ferocious Bite", 1, "harm", "Shred"),
-			   icub3d_Spell("harm", "Ferocious Bite", 2, "harm", "Shred"),
-			   icub3d_Skip(),
-			   icub3d_Skip(),
-			   icub3d_Spell("mouse", "Thrash", 1, "mouse", "Swipe", "mouse", "harm", "Shred"),
-			   icub3d_Spell("mouse", "Thrash", 2, "mouse", "Swipe", "mouse", "harm", "Shred"),
-			   icub3d_Spell("harm", "Rip", 1, "harm", "Shred"),
-			   icub3d_Spell("harm", "Rip", 2, "harm", "Shred"),
-
-			   -- Prowl Form
-			   icub3d_Spell("harm", "Shred", 1),
-			   icub3d_Spell("harm", "Shred", 2),
-			   icub3d_Spell("harm", "Rake", 1, "harm", "Shred"),
-			   icub3d_Spell("harm", "Rake", 2, "harm", "Shred"),
-			   icub3d_Spell("harm", "Ferocious Bite", 1, "harm", "Shred"),
-			   icub3d_Spell("harm", "Ferocious Bite", 2, "harm", "Shred"),
-			   icub3d_Skip(),
-			   icub3d_Skip(),
-			   icub3d_Spell("mouse", "Thrash", 1, "mouse", "Swipe", "mouse", "harm", "Shred"),
-			   icub3d_Spell("mouse", "Thrash", 2, "mouse", "Swipe", "mouse", "harm", "Shred"),
-			   icub3d_Spell("harm", "Rip", 1, "harm", "Shred"),
-			   icub3d_Spell("harm", "Rip", 2, "harm", "Shred"),
-
-			   -- Bear Form
-			   icub3d_Spell("harm", "Mangle", 1),
-			   icub3d_Spell("harm", "Mangle", 2),
-			   icub3d_Skip(),
-			   icub3d_Skip(),
-			   icub3d_Spell("help", "Frenzied Regeneration", 1, "harm", "Mangle"),
-			   icub3d_Spell("help", "Ironfur", 2, "harm", "Mangle"),
-			   icub3d_Skip(),
-			   icub3d_Skip(),
-			   icub3d_Spell("mouse", "Thrash", 1, "mouse", "Swipe", "mouse", "harm", "Growl"),
-			   icub3d_Spell("mouse", "Thrash", 2, "mouse", "Swipe", "mouse", "harm", "Growl"),
-			   icub3d_Spell("harm", "Growl", 1),
-			   icub3d_Spell("harm", "Growl", 2),
-
-			   -- Moonkin Form
-			   icub3d_Spell("harm", "Lunar Strike", 1),
-			   icub3d_Spell("harm", "Lunar Strike", 2),
-			   icub3d_Spell("harm", "Solar Wrath", 1),
-			   icub3d_Spell("harm", "Solar Wrath", 2),
-			   icub3d_Spell("harm", "Sunfire", 1),
-			   icub3d_Spell("harm", "Sunfire", 2),
-			   icub3d_Skip(),
-			   icub3d_Skip(),
-			   icub3d_Spell("harm", "Starsurge", 1),
-			   icub3d_Spell("harm", "Starsurge", 2),
-			   icub3d_Skip(),
-			   icub3d_Skip(),
-			},
-		 },
-	  },
-}
-
-icub3d_Spells["DEMONHUNTER"] = {
-	  specs = { -- The tags are useful for switching but these should be in in-game order.
-		 {
-			tags = {"h", "havoc"},
-			pvp = {
-			   alternate = icub3d_Spell("help", "Arcane Torrent"),
-			   spells = {
-				  icub3d_Spell("harm", "Mana Break"),
-				  icub3d_Spell("harm", "Mana Rift"),
-				  icub3d_Spell("harm", "Eye of Leotheras"),
-				  icub3d_Spell("harm", "Reverse Magic"),
-				  icub3d_Spell("harm", "Rain from Above"),
-			   },
-			},
-			actionbar = { -- These should be in the order you want them on the action bar.
-			   -- Top Row
-			   icub3d_Spell("harm", "Demon's Bite", 1),
-			   icub3d_Spell("harm", "Demon's Bite", 2),
-			   icub3d_Spell("harm", "Chaos Strike", 1),
-			   icub3d_Spell("harm", "Chaos Strike", 2),
-			   icub3d_Spell("harm", "Immolation Aura", 1, "harm", "Chaos Strike"),
-			   icub3d_Spell("harm", "Immolation Aura", 1, "harm", "Chaos Strike"),
-			   icub3d_Spell("harm", "Chaos Nova", 1),
-			   icub3d_Spell("harm", "Chaos Nova", 1),
-			   icub3d_Spell("harm", "Throw Glaive", 1),
-			   icub3d_Spell("harm", "Throw Glaive", 2),
-			   icub3d_Spell("harm", "Blade Dance", 1),
-			   icub3d_Spell("harm", "Blade Dance", 1),
-
-			   -- Middle Left
-			   icub3d_Spell("harm", "Dark Slash", 1, "harm", "Chaos Strike"),
-			   icub3d_Spell("harm", "Dark Slash", 2, "harm", "Chaos Strike"),
-			   icub3d_Spell("harm", "Imprison", 1),
-			   icub3d_Spell("harm", "Imprison", 2),
-			   icub3d_Spell("harm", "Fel Rush", 1),
-			   icub3d_Spell("harm", "Fel Rush", 2),
-			   icub3d_Spell("harm", "Torment", 1),
-			   icub3d_Spell("harm", "Torment", 2),
-			   icub3d_Spell("harm", "Fel Barrage", 1, "harm", "Torment"),
-			   icub3d_Spell("harm", "Fel Barrage", 1, "harm", "Torment"),
-
-			   -- Middle Right
-			   icub3d_Spell("harm", "Eye Beam", 1),
-			   icub3d_Spell("harm", "Eye Beam", 1),
-			   icub3d_Spell("mouse", "Metamorphosis", 1),
-			   icub3d_Spell("mouse", "Metamorphosis", 1),
-			   icub3d_Spell("harm", "Felblade", 1, "mouse", "Metamorphosis"),
-			   icub3d_Spell("harm", "Felblade", 2, "mouse", "Metamorphosis"),
-			   icub3d_Skip(),
-			   icub3d_Skip(),
-			   icub3d_Spell("harm", "Disrupt", 1),
-			   icub3d_Spell("harm", "Disrupt", 2),
-			   icub3d_Spell("harm", "Fel Eruption", 1, "harm", "Consume Magic"),
-			   icub3d_Spell("harm", "Fel Eruption", 2, "harm", "Consume Magic"),
-			   icub3d_Spell("harm", "Consume Magic", 1),
-			   icub3d_Spell("harm", "Consume Magic", 2),
-
-			   -- Bottom Left
-			   icub3d_PvPTalent(1, 1),
-			   icub3d_PvPTalent(1, 2),
-			   icub3d_PvPTalent(2, 1),
-			   icub3d_PvPTalent(2, 2),
-			   icub3d_PvPTalent(3, 1),
-			   icub3d_PvPTalent(3, 2),
-			   icub3d_Macro("im_racial"),
-			   icub3d_Macro("im_medallion"),
-			   icub3d_Spell("help", "Blur"),
-			   icub3d_Spell("help", "Darkness"),
-			   icub3d_Spell("help", "Netherwalk", nil, "help", "Darkness"),
-			   icub3d_Spell("help", "Vengeful Retreat"),
-			   
-			   -- Bottom Row (right)
-			   icub3d_Spell("use", "Drums of Fury"),
-			   icub3d_Spell("use", "F.R.I.E.D.", 1),
-			   icub3d_Skip(),
-			   icub3d_Skip(),
-			   icub3d_Skip(),
-			   icub3d_Skip(),
-			   icub3d_Macro("im_glide"),
-			   icub3d_Spell("use", "Soft Foam Sword"),
-			   icub3d_Macro("im_trinket"),
-			   icub3d_Macro("im_belt"),
-			   icub3d_Macro("im_cloak"),
-			   icub3d_Spell("help", "Spectral Sight"),
-			},
-		 },
-		 
-		 {
-			tags = {"v", "veng", "vengeance"},
-			pvp = {
-			   alternate = icub3d_Spell("harm", "Gladiator's Medallion"),
-			   spells = {
-				  icub3d_Spell("harm", "Reverse Magic"),
-				  icub3d_Spell("harm", "Illidan's Grasp"),
-				  icub3d_Spell("harm", "Demonic Trample"),
-			   },
-			},
-			actionbar = { -- These should be in the order you want them on the action bar.
-			   -- Top Row
-			   icub3d_Spell("harm", "Shear", 1),
-			   icub3d_Spell("harm", "Shear", 2),
-			   icub3d_Spell("harm", "Soul Cleave", 1),
-			   icub3d_Spell("harm", "Soul Cleave", 2),
-			   icub3d_Spell("help", "Spirit Bomb", 1, "harm", "Fel Devastation", "mouse", "Infernal Strike"),
-			   icub3d_Spell("help", "Spirit Bomb", 2, "harm", "Fel Devastation", "mouse", "Infernal Strike"),
-			   icub3d_Spell("harm", "Immolation Aura", 1),
-			   icub3d_Spell("harm", "Immolation Aura", 2),
-			   icub3d_Spell("harm", "Throw Glaive", 1),
-			   icub3d_Spell("harm", "Throw Glaive", 2),
-			   icub3d_Spell("mouse", "Sigil of Flame", 1),
-			   icub3d_Spell("mouse", "Sigil of Flame", 1),
-
-			   -- Middle Left
-			   icub3d_Spell("mouse", "Sigil of Chains", 1, "harm", "Immolation Aura"),
-			   icub3d_Spell("mouse", "Sigil of Chains", 1, "harm", "Immolation Aura"),
-			   icub3d_Spell("harm", "Imprison", 1),
-			   icub3d_Spell("harm", "Imprison", 2),
-			   icub3d_Spell("mouse", "Infernal Strike", 1),
-			   icub3d_Spell("mouse", "Infernal Strike", 2),
-			   icub3d_Spell("mouse", "Sigil of Misery", 1),
-			   icub3d_Spell("mouse", "Sigil of Misery", 2),
-			   icub3d_Spell("harm", "Torment", 1),
-			   icub3d_Spell("harm", "Torment", 2),
-			   icub3d_Skip(),
-			   icub3d_Skip(),
-
-			   -- Middle Right
-			   icub3d_Spell("mouse", "Sigil of Silence", 1),
-			   icub3d_Spell("mouse", "Sigil of Silence", 2),
-			   icub3d_Spell("mouse", "Metamorphosis", 1),
-			   icub3d_Spell("mouse", "Metamorphosis", 1),
-			   icub3d_Spell("harm", "Felblade", 1, "mouse", "Metamorphosis"),
-			   icub3d_Spell("harm", "Felblade", 2, "mouse", "Metamorphosis"),
-			   icub3d_Spell("harm", "Disrupt", 1),
-			   icub3d_Spell("harm", "Disrupt", 2),
-			   icub3d_Spell("harm", "Fiery Brand", 1),
-			   icub3d_Spell("harm", "Fiery Brand", 2),
-			   icub3d_Spell("harm", "Consume Magic", 1),
-			   icub3d_Spell("harm", "Consume Magic", 2),
-
-			   -- Bottom Left
-			   icub3d_PvPTalent(1, 1),
-			   icub3d_PvPTalent(1, 2),
-			   icub3d_PvPTalent(2, 1),
-			   icub3d_PvPTalent(2, 2),
-			   icub3d_PvPTalent(3, 1),
-			   icub3d_PvPTalent(3, 2),
-			   icub3d_Macro("im_racial"),
-			   icub3d_Macro("im_medallion"),
-			   icub3d_Spell("help", "Soul Barrier", nil, "help", "Demon Spikes"),
-			   icub3d_Spell("help", "Demon Spikes"),
-			   icub3d_Skip(),
-			   icub3d_Skip(),
-
-			   -- Bottom Row (right)
-			   icub3d_Spell("use", "Drums of Fury"),
-			   icub3d_Spell("use", "F.R.I.E.D.", 1),
-			   icub3d_Skip(),
-			   icub3d_Skip(),
-			   icub3d_Skip(),
-			   icub3d_Skip(),
-			   icub3d_Macro("im_glide"),
-			   icub3d_Spell("use", "Soft Foam Sword"),
-			   icub3d_Macro("im_trinket"),
-			   icub3d_Macro("im_belt"),
-			   icub3d_Macro("im_cloak"),
-			   icub3d_Spell("help", "Spectral Sight"),
-			},
-		 },
-	  },
-   }
-   
-icub3d_Spells["PALADIN"] = {
-	  specs = { -- The tags are useful for switching but these should be in in-game order.
-		 {
-			tags = {"h", "holy"},
-			pvp = {
-			   alternate = icub3d_Spell("help", "Gladiator's Medallion", 1, "help", "Adaptation", "help", "Relentless"),
-			   spells = {
-				  icub3d_Spell("help", "Divine Favor"),
-			   },
-			},
-			actionbar = { -- These should be in the order you want them on the action bar.
-			   -- Top Row
-			   icub3d_Spell("harm", "Holy Shock", 1),
-			   icub3d_Spell("harm", "Holy Shock", 2),
-			   icub3d_Spell("help", "Holy Shock", 1),
-			   icub3d_Spell("help", "Holy Shock", 2),
-			   icub3d_Spell("help", "Flash of Light", 1),
-			   icub3d_Spell("help", "Flash of Light", 2),
-			   icub3d_Spell("help", "Holy Light", 1),
-			   icub3d_Spell("help", "Holy Light", 2),
-			   icub3d_Spell("help", "Beacon of Light", 1),
-			   icub3d_Spell("help", "Beacon of Light", 2),
-			   icub3d_Spell("harm", "Judgment", 2),
-			   icub3d_Spell("harm", "Judgment", 2),
-
-			   -- Middle Left
-			   icub3d_Spell("help", "Cleanse", 1),
-			   icub3d_Spell("help", "Cleanse", 2),
-			   icub3d_Spell("harm", "Repentance", 1, "help", "Blinding Light", "harm", "Hammer of Justice"),
-			   icub3d_Spell("harm", "Repentance", 2, "help", "Blinding Light", "harm", "Hammer of Justice"),
-			   icub3d_Spell("help", "Light of the Martyr", 1),
-			   icub3d_Spell("help", "Light of the Martyr", 2),
-			   icub3d_Skip(),
-			   icub3d_Skip(),
-			   icub3d_Spell("harm", "Hand of Reckoning", 1),
-			   icub3d_Spell("harm", "Hand of Reckoning", 2),
-			   icub3d_Spell("help", "Lay on Hands", 1),
-			   icub3d_Spell("help", "Lay on Hands", 2),
-
-			   -- Middle Right
-			   icub3d_Spell("help", "Blessing of Freedom", 1),
-			   icub3d_Spell("help", "Blessing of Freedom", 2),
-			   icub3d_Spell("help", "Blessing of Protection", 1),
-			   icub3d_Spell("help", "Blessing of Protection", 2),
-			   icub3d_Spell("help", "Blessing of Sacrifice", 1),
-			   icub3d_Spell("help", "Blessing of Sacrifice", 2),
-			   icub3d_Spell("harm", "Crusader Strike", 1),
-			   icub3d_Spell("harm", "Crusader Strike", 2),
-			   icub3d_Spell("help", "Bestow Faith", 1, "mouse", "Light's Hammer", "help", "Holy Light"),
-			   icub3d_Spell("help", "Bestow Faith", 2, "mouse", "Light's Hammer", "help", "Holy Light"),
-			   icub3d_Spell("harm", "Hammer of Justice", 1),
-			   icub3d_Spell("harm", "Hammer of Justice", 2),
-			   
-			   -- Bottom Row (left)
-			   icub3d_Spell("use", "F.R.I.E.D."),
-			   icub3d_Skip(),
-			   icub3d_Spell("use", "Potion of Prolonged Power"),
-			   icub3d_Spell("use", "Drums of Fury"),
-			   icub3d_Skip(),
-			   icub3d_Skip(),
-			   icub3d_Macro("im_racial"),
-			   icub3d_Macro("im_medallion"),
-			   icub3d_PvPTalent(1, 1),
-			   icub3d_Spell("help", "Avenging Wrath", 1),
-			   icub3d_Spell("help", "Divine Shield", 2),
-			   icub3d_Spell("help", "Divine Protection", 1),
-			   
-			   -- Bottom Row (right)
-			   icub3d_Spell("help", "Avenging Crusader", 1, "help", "Divine Shield"),
-			   icub3d_Spell("help", "Aura Mastery"),
-			   icub3d_Spell("mouse", "Consecration"),
-			   icub3d_Spell("mouse", "Light of Dawn"),
-			   icub3d_Spell("mouse", "Divine Steed"),
-			   icub3d_Spell("help", "Rule of Law", 1, "help", "Light of Dawn"),
-			   icub3d_Spell("help", "Holy Avenger", 1, "mouse", "Holy Prism", "help", "Light of Dawn"),
-			   icub3d_Macro("im_trinket"),
-			   icub3d_Macro("im_belt"),
-			   icub3d_Macro("im_cloak"),
-			   icub3d_Skip(),
-			   icub3d_Skip(),
-			},
-		 },
-		 {
-			tags = {"p", "prot", "protection"},
-			pvp = {
-			   alternate = icub3d_Spell("help", "Divine Shield"),
-			   spells = {
-				  icub3d_Spell("help", "Shield of Virtue"),
-			   },
-			},
-			actionbar = { -- These should be in the order you want them on the action bar.
-			   -- Top Row
-			   icub3d_Spell("harm", "Hammer of the Righteous", 1),
-			   icub3d_Spell("harm", "Hammer of the Righteous", 2),
-			   icub3d_Skip(),
-			   icub3d_Skip(),
-			   icub3d_Spell("help", "Light of the Protector", 1),
-			   icub3d_Spell("help", "Light of the Protector", 2),
-			   icub3d_Spell("harm", "Shield of the Righteous", 1),
-			   icub3d_Spell("harm", "Shield of the Righteous", 2),
-			   icub3d_Spell("harm", "Avenger's Shield", 1),
-			   icub3d_Spell("harm", "Avenger's Shield", 2),
-			   icub3d_Spell("harm", "Judgment", 1),
-			   icub3d_Spell("harm", "Judgment", 2),
-
-			   -- Middle Left
-			   icub3d_Spell("help", "Cleanse Toxins", 1),
-			   icub3d_Spell("help", "Cleanse Toxins", 2),
-			   icub3d_Spell("harm", "Repentance", 1, "help", "Blinding Light", "harm", "Hammer of Justice"),
-			   icub3d_Spell("harm", "Repentance", 2, "help", "Blinding Light", "harm", "Hammer of Justice"),
-			   icub3d_Skip(),
-			   icub3d_Skip(),
-			   icub3d_Skip(),
-			   icub3d_Skip(),
-			   icub3d_Spell("harm", "Hand of Reckoning", 1),
-			   icub3d_Spell("harm", "Hand of Reckoning", 2),
-			   icub3d_Spell("help", "Lay on Hands", 1),
-			   icub3d_Spell("help", "Lay on Hands", 2),
-
-			   -- Middle Right
-			   icub3d_Spell("help", "Blessing of Freedom", 1),
-			   icub3d_Spell("help", "Blessing of Freedom", 2),
-			   icub3d_Spell("help", "Blessing of Protection", 1),
-			   icub3d_Spell("help", "Blessing of Protection", 2),
-			   icub3d_Spell("help", "Blessing of Sacrifice", 1),
-			   icub3d_Spell("help", "Blessing of Sacrifice", 2),
-			   icub3d_Spell("harm", "Rebuke", 1),
-			   icub3d_Spell("harm", "Rebuke", 2),
-			   icub3d_Spell("help", "Flash of Light", 1),
-			   icub3d_Spell("help", "Flash of Light", 2),
-			   icub3d_Spell("harm", "Hammer of Justice", 1),
-			   icub3d_Spell("harm", "Hammer of Justice", 2),
-			   
-			   -- Bottom Row (left)
-			   icub3d_Spell("use", "F.R.I.E.D."),
-			   icub3d_Skip(),
-			   icub3d_Spell("use", "Potion of Prolonged Power"),
-			   icub3d_Spell("use", "Drums of Fury"),
-			   icub3d_Skip(),
-			   icub3d_Skip(),
-			   icub3d_Macro("im_racial"),
-			   icub3d_Macro("im_medallion"),
-			   icub3d_PvPTalent(1, 1),
-			   icub3d_Spell("help", "Avenging Wrath", 1),
-			   icub3d_Spell("help", "Divine Shield", 2),
-			   icub3d_Spell("help", "Bastion of Light", 1, "help", "Divine Shield"),
-			   
-			   -- Bottom Row (right)
-			   icub3d_Spell("help", "Aegis of Light", 1, "help", "Divine Shield"),
-			   icub3d_Spell("help", "Ardent Defender", 1),
-			   icub3d_Spell("mouse", "Consecration"),
-			   icub3d_Skip(),
-			   icub3d_Spell("mouse", "Divine Steed"),
-			   icub3d_Spell("mouse", "Guardian of Ancient Kings", 1, "mouse", "Guardian of the Forgotten Queen"),
-			   icub3d_Spell("mouse", "Seraphim", 1, "mouse", "Guardian of Ancient Kings"),
-			   icub3d_Macro("im_trinket"),
-			   icub3d_Macro("im_belt"),
-			   icub3d_Macro("im_cloak"),
-			   icub3d_Skip(),
-			   icub3d_Skip(),
-			},
-		 },
-		 {
-			tags = {"r", "ret", "retribution"},
-			pvp = {
-			   alternate = icub3d_Spell("help", "Blessing of Protection"),
-			   spells = {
-				  icub3d_Spell("help", "Blessing of Sanctuary"),
-				  icub3d_Spell("help", "Hammer of Reckoning"),
-			   },
-			},
-			actionbar = { -- These should be in the order you want them on the action bar.
-			   -- Top Row
-			   icub3d_Spell("harm", "Crusader Strike", 1),
-			   icub3d_Spell("harm", "Crusader Strike", 2),
-			   icub3d_Spell("harm", "Blade of Justice", 1),
-			   icub3d_Spell("harm", "Blade of Justice", 2),
-			   icub3d_Spell("harm", "Templar's Verdict", 1),
-			   icub3d_Spell("harm", "Templar's Verdict", 2),
-			   icub3d_Spell("harm", "Hand of Hindrance", 1),
-			   icub3d_Spell("harm", "Hand of Hindrance", 2),
-			   icub3d_Spell("harm", "Divine Storm", 1),
-			   icub3d_Spell("harm", "Divine Storm", 2),
-			   icub3d_Spell("harm", "Judgment", 1),
-			   icub3d_Spell("harm", "Judgment", 2),
-
-			   -- Middle Left
-			   icub3d_Spell("help", "Cleanse Toxins", 1),
-			   icub3d_Spell("help", "Cleanse Toxins", 2),
-			   icub3d_Spell("harm", "Repentance", 1, "help", "Blinding Light", "harm", "Hammer of Justice"),
-			   icub3d_Spell("harm", "Repentance", 2, "help", "Blinding Light", "harm", "Hammer of Justice"),
-			   icub3d_Spell("harm", "Execution Sentence", 1, "harm", "Hammer of Justice"),
-			   icub3d_Spell("harm", "Execution Sentence", 2, "harm", "Hammer of Justice"),
-			   icub3d_Spell("help", "Word of Glory", 1, "harm", "Justicar's Vengeance", "help", "Flash of Light"),
-			   icub3d_Spell("help", "Word of Glory", 2, "harm", "Justicar's Vengeance", "help", "Flash of Light"),
-			   icub3d_Spell("harm", "Hand of Reckoning", 1),
-			   icub3d_Spell("harm", "Hand of Reckoning", 2),
-			   icub3d_Spell("help", "Lay on Hands", 1),
-			   icub3d_Spell("help", "Lay on Hands", 2),
-
-			   -- Middle Right
-			   icub3d_Spell("help", "Blessing of Freedom", 1),
-			   icub3d_Spell("help", "Blessing of Freedom", 2),
-			   icub3d_Spell("help", "Blessing of Protection", 1),
-			   icub3d_Spell("help", "Blessing of Protection", 2),
-			   icub3d_PvPTalent(1, 1),
-			   icub3d_PvPTalent(1, 2),
-			   icub3d_Spell("harm", "Rebuke", 1),
-			   icub3d_Spell("harm", "Rebuke", 2),
-			   icub3d_Spell("help", "Flash of Light", 1),
-			   icub3d_Spell("help", "Flash of Light", 2),
-			   icub3d_Spell("harm", "Hammer of Justice", 1),
-			   icub3d_Spell("harm", "Hammer of Justice", 2),
-			   
-			   -- Bottom Row (left)
-			   icub3d_Spell("use", "F.R.I.E.D."),
-			   icub3d_Skip(),
-			   icub3d_Spell("use", "Potion of Prolonged Power"),
-			   icub3d_Spell("use", "Drums of Fury"),
-			   icub3d_Spell("harm", "Hammer of Wrath", 1, "harm", "Templar's Verdict"),
-			   icub3d_Spell("harm", "Hammer of Wrath", 2, "harm", "Templar's Verdict"),
-			   icub3d_Macro("im_racial"),
-			   icub3d_Macro("im_medallion"),
-			   icub3d_PvPTalent(2, 1),
-			   icub3d_Spell("help", "Avenging Wrath", 1),
-			   icub3d_Spell("help", "Divine Shield", 2),
-			   icub3d_Spell("help", "Eye for an Eye", 1, "help", "Divine Shield"),
-			   
-			   -- Bottom Row (right)
-			   icub3d_Spell("help", "Inquisition", 1, "help", "Crusade", "help", "Divine Shield"),
-			   icub3d_Spell("help", "Shield of Vengeance"),
-			   icub3d_Spell("mouse", "Wake of Ashes", 1, "mouse", "Consecration"),
-			   icub3d_Skip(),
-			   icub3d_Spell("mouse", "Divine Steed"),
-			   icub3d_Skip(),
-			   icub3d_Skip(),
-			   icub3d_Macro("im_trinket"),
-			   icub3d_Macro("im_belt"),
-			   icub3d_Macro("im_cloak"),
-			   icub3d_Spell("help", "Greater Blessing of Kings", 1),
-			   icub3d_Spell("help", "Greater Blessing of Wisdom", 1),
-			},
-		 },
-	  },
-   }
-
-icub3d_Spells["PRIEST"] = {
-	  specs = { -- The tags are useful for switching but these should be in in-game order.
-		 {
-			tags = {"d", "disc", "discipline"},
-			pvp = {
-			   alternate = icub3d_Spell("help", "Penance"),
-			   spells = {
-				  icub3d_Spell("help", "Archangel"),
-				  icub3d_Spell("help", "Dark Archangel"),
-				  icub3d_Spell("help", "Premonition"),
-			   },
-			},
-			actionbar = { -- These should be in the order you want them on the action bar.
-			   -- Top Row
-			   icub3d_Spell("harm", "Penance", 1),
-			   icub3d_Spell("harm", "Penance", 2),
-			   icub3d_Spell("help", "Penance", 1),
-			   icub3d_Spell("help", "Penance", 2),
-			   icub3d_Spell("help", "Power Word: Shield", 1),
-			   icub3d_Spell("help", "Power Word: Shield", 2),
-			   icub3d_Spell("help", "Shadow Mend", 1),
-			   icub3d_Spell("help", "Shadow Mend", 2),
-			   icub3d_Spell("harm", "Shadow Word: Pain", 1),
-			   icub3d_Spell("harm", "Shadow Word: Pain", 2),
-			   icub3d_Spell("harm", "Smite", 1),
-			   icub3d_Spell("harm", "Smite", 2),
-
-			   -- Middle Row (left)
-			   icub3d_Spell("harm", "Dispel Magic", 1),
-			   icub3d_Spell("harm", "Dispel Magic", 2),
-			   icub3d_Spell("help", "Purify", 1),
-			   icub3d_Spell("help", "Purify", 2),
-			   icub3d_Spell("help", "Power Word: Radiance", 1),
-			   icub3d_Spell("help", "Power Word: Radiance", 2),
-			   icub3d_Spell("help", "Pain Suppression", 1),
-			   icub3d_Spell("help", "Pain Suppression", 2),
-			   icub3d_Spell("harm", "Schism", 1, "harm", "Shadow Word: Pain"),
-			   icub3d_Spell("harm", "Schism", 2, "harm", "Shadow Word: Pain"),
-			   icub3d_Spell("harm", "Power Word: Solace", 1, "harm", "Shadow Word: Pain"),
-			   icub3d_Spell("harm", "Power Word: Solace", 2, "harm", "Shadow Word: Pain"),
-
-			   -- Middle Row (right)
-			   icub3d_Spell("help", "Leap of Faith", 1),
-			   icub3d_Spell("help", "Leap of Faith", 2),
-			   icub3d_Spell("help", "Shadow Covenant", 1, "help","Power Word: Shield"),
-			   icub3d_Spell("help", "Shadow Covenant", 2, "help","Power Word: Shield"),
-			   icub3d_Spell("harm", "Shadowfiend", 1),
-			   icub3d_Spell("harm", "Shadowfiend", 2),
-			   icub3d_Spell("help", "Shining Force", 1, "help", "Leap of Faith"),
-			   icub3d_Spell("help", "Shining Force", 2, "help", "Leap of Faith"),
-			   icub3d_Spell("help", "Levitate", 1),
-			   icub3d_Spell("mouse", "Angelic Feather", 1, "help", "Levitate"),
-			   icub3d_Spell("help", "Holy Nova", 1),
-			   icub3d_Spell("help", "Halo", 1, "help", "Divine Star", "help", "Rapture"),
-
-			   -- Bottom Row (left)
-			   icub3d_Skip(),
-			   icub3d_Skip(),
-			   icub3d_Skip(),
-			   icub3d_PvPTalent(1, 1),
-			   icub3d_PvPTalent(2, 1),
-			   icub3d_PvPTalent(3, 1),
-			   icub3d_Spell("harm", "Mind Control", 1),
-			   icub3d_Spell("harm", "Mind Control", 2),
-			   icub3d_Spell("harm", "Shackle Undead", 1),
-			   icub3d_Spell("harm", "Shackle Undead", 2),
-			   icub3d_Spell("help", "Evangelism", nil, "mouse", "Mass Dispel"),
-			   icub3d_Skip(),
-
-			   -- Bottom Row (right)
-			   icub3d_Macro("im_racial"),
-			   icub3d_Spell("help", "Gladiator's Medallion"),
-			   icub3d_Spell("help", "Fade"),
-			   icub3d_Spell("mouse", "Power Word: Barrier"),
-			   icub3d_Spell("mouse", "Rapture"),
-			   icub3d_Spell("mouse", "Mass Dispel"),
-			   icub3d_Spell("harm", "Psychic Scream"),
-			   icub3d_Spell("help", "Desperate Prayer"),
-			   icub3d_Macro("im_trinket"),
-			   icub3d_Macro("im_belt"),
-			   icub3d_Macro("im_cloak"),
-			   icub3d_Skip(),
-			},
-		 },
-		 {
-			tags = {"h", "holy"},
-			pvp = {
-			   alternate = icub3d_Spell("help", "Penance"),
-			   spells = {
-				  icub3d_Spell("help", "Holy Ward"),
-				  icub3d_Spell("mouse", "Holy Word: Concentration"),
-				  icub3d_Spell("help", "Greater Heal"),
-				  icub3d_Spell("help", "Ray of Hope"),
-				  icub3d_Spell("help", "Spirit of Redemption"),
-			   },
-			},
-			actionbar = { -- These should be in the order you want them on the action bar.
-			   -- Top Row
-			   icub3d_Spell("help", "Heal", 1),
-			   icub3d_Spell("help", "Heal", 2),
-			   icub3d_Spell("help", "Prayer of Mending", 1),
-			   icub3d_Spell("help", "Prayer of Mending", 2),
-			   icub3d_Spell("help", "Holy Word: Serenity", 1),
-			   icub3d_Spell("help", "Holy Word: Serentiy", 2),
-			   icub3d_Spell("help", "Flash Heal", 1),
-			   icub3d_Spell("help", "Flash Heal", 2),
-			   icub3d_Spell("harm", "Holy Fire", 1),
-			   icub3d_Spell("harm", "Holy Fire", 2),
-			   icub3d_Spell("harm", "Smite", 1),
-			   icub3d_Spell("harm", "Smite", 2),
-
-			   -- Middle Row (left)
-			   icub3d_Spell("harm", "Dispel Magic", 1),
-			   icub3d_Spell("harm", "Dispel Magic", 2),
-			   icub3d_Spell("help", "Purify", 1),
-			   icub3d_Spell("help", "Purify", 2),
-			   icub3d_Spell("help", "Prayer of Healing", 1),
-			   icub3d_Spell("help", "Prayer of Healing", 2),
-			   icub3d_Spell("help", "Renew", 1),
-			   icub3d_Spell("help", "Renew", 2),
-			   icub3d_Spell("help", "Binding Heal", 1, "help", "Circle of Healing", "help", "Prayer of Mending"),
-			   icub3d_Spell("help", "Binding Heal", 2, "help", "Circle of Healing", "help", "Prayer of Mending"),
-			   icub3d_Spell("help", "Guardian Spirit", 1),
-			   icub3d_Spell("help", "Guardian Spirit", 2),
-
-			   -- Middle Row (right)
-			   icub3d_Spell("help", "Leap of Faith", 1),
-			   icub3d_Spell("help", "Leap of Faith", 2),
-			   icub3d_PvPTalent(1, 1),
-			   icub3d_PvPTalent(1, 2),
-			   icub3d_Spell("harm", "Holy Word: Chastise", 1),
-			   icub3d_Spell("harm", "Holy Word: Chastise", 2),
-			   icub3d_Spell("help", "Shining Force", 1, "help", "Leap of Faith"),
-			   icub3d_Spell("help", "Shining Force", 2, "help", "Leap of Faith"),
-			   icub3d_Spell("help", "Levitate", 1),
-			   icub3d_Spell("mouse", "Angelic Feather", 1, "help", "Levitate"),
-			   icub3d_Spell("help", "Holy Nova", 1),
-			   icub3d_Skip(),
-
-			   -- Bottom Row (left)
-			   icub3d_Skip(),
-			   icub3d_Skip(),
-			   icub3d_PvPTalent(2, 1),
-			   icub3d_PvPTalent(2, 1),
-			   icub3d_PvPTalent(3, 1),
-			   icub3d_PvPTalent(3, 1),
-			   icub3d_Spell("harm", "Mind Control", 1),
-			   icub3d_Spell("harm", "Mind Control", 2),
-			   icub3d_Spell("harm", "Shackle Undead", 1),
-			   icub3d_Spell("harm", "Shackle Undead", 2),
-			   icub3d_Spell("help", "Symbol of Hope", 1),
-			   icub3d_Spell("help", "Apotheosis"),
-
-			   -- Bottom Row (right)
-			   icub3d_Macro("im_racial"),
-			   icub3d_Spell("help", "Gladiator's Medallion"),
-			   icub3d_Spell("help", "Fade"),
-			   icub3d_Spell("mouse", "Holy Word: Sanctify"),
-			   icub3d_Spell("help", "Divine Hymn"),
-			   icub3d_Spell("mouse", "Mass Dispel"),
-			   icub3d_Spell("harm", "Psychic Scream"),
-			   icub3d_Spell("help", "Desperate Prayer"),
-			   icub3d_Macro("im_trinket"),
-			   icub3d_Macro("im_belt"),
-			   icub3d_Macro("im_cloak"),
-			   icub3d_Skip(),
-			},
-		 },
-		 {
-			tags = {"s", "shadow", "shadow"},
-			pvp = {
-			   alternate = icub3d_Spell("harm", "Mind Blast"),
-			   spells = {
-				  icub3d_Spell("help", "Void Shift"),
-				  icub3d_Spell("help", "Psyfiend"),
-				  icub3d_Spell("help", "Premonition"),
-			   },
-			},
-			actionbar = { -- These should be in the order you want them on the action bar.
-			   -- Top Row
-			   icub3d_Spell("harm", "Mind Blast", 1),
-			   icub3d_Spell("harm", "Mind Blast", 2),
-			   icub3d_Spell("harm", "Mind Flay", 1),
-			   icub3d_Spell("harm", "Mind flay", 2),
-			   icub3d_Spell("help", "Power Word: Shield", 1),
-			   icub3d_Spell("help", "Power Word: Shield", 2),
-			   icub3d_Spell("help", "Shadow Mend", 1),
-			   icub3d_Spell("help", "Shadow Mend", 2),
-			   icub3d_Spell("harm", "Shadow Word: Pain", 1),
-			   icub3d_Spell("harm", "Shadow Word: Pain", 2),
-			   icub3d_Spell("harm", "Mind Sear", 1),
-			   icub3d_Spell("harm", "Mind Sear", 2),
-
-			   -- Middle Row (left)
-			   icub3d_Spell("harm", "Dispel Magic", 1),
-			   icub3d_Spell("harm", "Dispel Magic", 2),
-			   icub3d_Spell("help", "Purify Disease", 1),
-			   icub3d_Spell("help", "Purify Disease", 2),
-			   icub3d_Spell("harm", "Mind Bomb", 1),
-			   icub3d_Spell("harm", "Mind Bomb", 2),
-			   icub3d_Spell("harm", "Vampiric Touch", 1),
-			   icub3d_Spell("harm", "Vampiric Touch", 2),
-			   icub3d_Spell("harm", "Void Eruption", 1),
-			   icub3d_Spell("harm", "Void Eruption", 2),
-			   icub3d_Spell("harm", "Shadow Word: Death", 1, "harm", "Shadow Crush", "harm", "Mind Flay"),
-			   icub3d_Spell("harm", "Shadow Word: Death", 2, "harm", "Shadow Crush", "harm", "Mind Flay"),
-
-			   -- Middle Row (right)
-			   icub3d_Spell("help", "Leap of Faith", 1),
-			   icub3d_Spell("help", "Leap of Faith", 2),
-			   icub3d_Spell("harm", "Void Torrent", 1, "harm", "Mind Flay"),
-			   icub3d_Spell("harm", "Void Torrent", 2, "harm", "Mind Flay"),
-			   icub3d_Spell("harm", "Shadowfiend", 1),
-			   icub3d_Spell("harm", "Shadowfiend", 2),
-			   icub3d_Spell("harm", "Silence", 1),
-			   icub3d_Spell("harm", "Silence", 2),
-			   icub3d_Spell("help", "Levitate", 1),
-			   icub3d_Skip(),
-			   icub3d_Skip(),
-			   icub3d_Skip(),
-
-			   -- Bottom Row (left)
-			   icub3d_PvPTalent(1, 1),
-			   icub3d_PvPTalent(1, 2),
-			   icub3d_PvPTalent(2, 1),
-			   icub3d_PvPTalent(2, 2),
-			   icub3d_PvPTalent(3, 1),
-			   icub3d_PvPTalent(3, 2),
-			   icub3d_Spell("harm", "Mind Control", 1),
-			   icub3d_Spell("harm", "Mind Control", 2),
-			   icub3d_Spell("harm", "Shackle Undead", 1),
-			   icub3d_Spell("harm", "Shackle Undead", 2),
-			   icub3d_Spell("help", "Dispersion", nil),
-			   icub3d_Skip(),
-
-			   -- Bottom Row (right)
-			   icub3d_Macro("im_racial"),
-			   icub3d_Spell("help", "Gladiator's Medallion"),
-			   icub3d_Spell("help", "Fade"),
-			   icub3d_Spell("help", "Surrender to Madness", 1, "harm", "Dark Ascension"),
-			   icub3d_Spell("help", "Surrender to Madness", 2, "harm", "Dark Ascension"),
-			   icub3d_Spell("mouse", "Mass Dispel"),
-			   icub3d_Skip(),
-			   icub3d_Spell("help", "Vampiric Embrace"),
-			   icub3d_Macro("im_trinket"),
-			   icub3d_Macro("im_belt"),
-			   icub3d_Macro("im_cloak"),
-			   icub3d_Skip(),
-			},
-		 },
-	  },
-   }

@@ -1,4 +1,20 @@
+# icub3d
+
+This addon provides various utilities (especially from the command line).
+
+# Search
+
+# Macros
+
+# Spells
+
 # Developing
+
+## Printing Icons
+
+```
+|TInterface\\Icons\\INV_Misc_Coin_01:16|t
+```
 
 ## Script Errors
 

@@ -3,12 +3,16 @@
 ## Notes: My personal addon
 ## Author: Joshua Marsh
 ## Version: 1.0
-## SavedVariablesPerCharacter: icub3d_MacroType icub3d_PvP1 icub3d_PvP2
-## SavedVariables: icub3d_Search
+## SavedVariablesPerCharacter: icub3d_MACROTYPE icub3d_PVP1 icub3d_PVP2
+## SavedVariables: icub3d_SEARCHDATA
 icub3d.lua
-log.lua
 dumper.lua
+log.lua
 macros.lua
-spells.lua
-ui.lua
 search.lua
+spells.lua
+spells-demonhunter.lua
+spells-druid.lua
+spells-paladin.lua
+spells-priest.lua
+ui.lua
