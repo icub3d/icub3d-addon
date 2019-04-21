@@ -89,7 +89,7 @@ function icub3d_ChangeTalents(name)
 	 if len > 1 then
 		 spec = words[1]
 		 talents = words[2]
-	 end	
+	 end
 	 
 	-- Find the spec that matches the given spec tag.
 	for i, v in ipairs(character.specs) do
@@ -99,7 +99,7 @@ function icub3d_ChangeTalents(name)
 			 -- The event handler will see this and change our macros
 			 -- and spells.
  
-			 if talent ~= "" then
+			 if talents ~= "" then
 				 icub3d_ChangeTalents(talents)
 			 end
  

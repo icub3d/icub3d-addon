@@ -1,4 +1,20 @@
 --------------------------------------------------------------------
+-- SLASH COMMANDS
+--------------------------------------------------------------------
+-- Change specs
+SLASH_CHANGERAIDPROFILE1 = "/cr"
+function SlashCmdList.CHANGERAIDPROFILE(msg, editBox)
+    if msg == "" then
+        msg = "Primary"
+    end
+    if GetActiveRaidProfile() ~= msg and RaidProfileExists(msg) then
+        CompactUnitFrameProfiles_ActivateRaidProfile(msg)
+    elseif not RaidProfileExists(msg) then
+        icub3d_Error("raid profile '%s' does not exist", {msg})
+    end
+end
+
+--------------------------------------------------------------------
 -- EVENT REGISTRATION
 --------------------------------------------------------------------
 icub3d_RegisterEvent(
@@ -25,13 +41,13 @@ icub3d_RegisterEvent(
 
         -- Unit frames
         PlayerFrame:ClearAllPoints()
-        PlayerFrame:SetPoint('CENTER', UIParent, -200, -75)
+        PlayerFrame:SetPoint('CENTER', UIParent, -250, -75)
         PlayerFrame:SetUserPlaced(true)
         TargetFrame:ClearAllPoints()
-        TargetFrame:SetPoint('CENTER', UIParent, 200, -75)
+        TargetFrame:SetPoint('CENTER', UIParent, 250, -75)
         TargetFrame:SetUserPlaced(true)
         FocusFrame:ClearAllPoints()
-        FocusFrame:SetPoint('CENTER', UIParent, 300, 50)
+        FocusFrame:SetPoint('CENTER', UIParent, 350, 50)
         FocusFrame:SetUserPlaced(true)
 
         -- Action bars

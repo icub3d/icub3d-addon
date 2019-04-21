@@ -1,4 +1,4 @@
-local DEBUG = true
+local DEBUG = false
 
 local class = select(2, UnitClass("player"))
 local rgb = select(4, GetClassColor(class))
