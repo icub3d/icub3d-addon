@@ -9,7 +9,6 @@ icub3d.lua
 dumper.lua
 log.lua
 macros.lua
-search.lua
 spells.lua
 spells-demonhunter.lua
 spells-druid.lua

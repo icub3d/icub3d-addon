@@ -3,6 +3,12 @@ icub3d_Spells['PRIEST'] = {
         -- The tags are useful for switching but these should be in in-game order.
         {
             tags = {'d', 'disc', 'discipline'},
+            talents = {
+                ['raid'] = {3, 3, 3 , 3, 3, 3, 3},
+                ['dungeon'] = {3, 3, 3, 1, 1, 1, 1},
+                ['dungeon-safe'] = {2, 3, 2, 1, 3, 1, 1},
+                ['pvp'] = {2, 3, 3, 1, 1, 1, 1}
+            },
             pvp = {
                 alternate = icub3d_Spell('help', 'Penance'),
                 spells = {
@@ -58,8 +64,8 @@ icub3d_Spells['PRIEST'] = {
                 icub3d_Spell('help', 'Shining Force', 1, 'help', 'Leap of Faith'),
                 icub3d_Spell('help', 'Shining Force', 2, 'help', 'Leap of Faith'),
                 icub3d_Skip(),
-                icub3d_Skip(),
-                icub3d_Skip(),
+                icub3d_Spell("use", "Healthstone"),
+                icub3d_Spell("use", "Battle Potion of Intellect"),
                 icub3d_Spell("use", "Goblin Glider Kit"),
                 icub3d_Macro('im_racial'),
                 icub3d_Spell('help', "Gladiator's Medallion"),
@@ -85,6 +91,11 @@ icub3d_Spells['PRIEST'] = {
         },
         {
             tags = {'h', 'holy'},
+            talents = {
+                ['raid'] = {1, 3, 1, 3, 3, 3, 3},
+                ['dungeon'] = {2, 3, 2, 3, 1, 2, 2},
+                ['pvp'] = {3, 3, 2, 2, 1, 2, 2}
+            },
             pvp = {
                 alternate = icub3d_Spell('help', 'Penance'),
                 spells = {
@@ -142,8 +153,8 @@ icub3d_Spells['PRIEST'] = {
                 icub3d_Spell('help', 'Shining Force', 1, 'help', 'Leap of Faith'),
                 icub3d_Spell('help', 'Shining Force', 2, 'help', 'Leap of Faith'),
                 icub3d_Skip(),
-                icub3d_Skip(),
-                icub3d_Skip(),
+                icub3d_Spell("use", "Healthstone"),
+                icub3d_Spell("use", "Battle Potion of Intellect"),
                 icub3d_Spell("use", "Goblin Glider Kit"),
                 icub3d_Macro('im_racial'),
                 icub3d_Spell('help', "Gladiator's Medallion"),
@@ -169,6 +180,12 @@ icub3d_Spells['PRIEST'] = {
         },
         {
             tags = {'s', 'shadow', 'shadow'},
+            talents = {
+                ['quest'] = {3, 3, 2, 1, 3, 2 ,2},
+                ['raid'] = {3, 1, 1, 1, 1, 1, 1,},
+                ['dungeon'] = {3, 1, 3, 2, 3, 1, 2},
+                ['pvp'] = {2, 3, 2, 3, 1, 1, 1}
+            },
             pvp = {
                 alternate = icub3d_Spell('harm', 'Mind Blast'),
                 spells = {
@@ -202,16 +219,16 @@ icub3d_Spells['PRIEST'] = {
                 icub3d_Spell('harm', "Dark Void", 2, 'harm', 'Mind Sear'),
                 icub3d_Spell('harm', 'Mind Sear', 1),
                 icub3d_Spell('harm', 'Mind Sear', 2),
-                icub3d_Spell('harm', 'Psychic Horror', 1,'harm', 'Mind Bomb'),
-                icub3d_Spell('harm', 'Psychic Horror', 2,'harm', 'Mind Bomb'),
+                icub3d_Spell('harm', 'Psychic Horror', 1,'harm', 'Mind Bomb', "harm", "Psychic Scream"),
+                icub3d_Spell('harm', 'Psychic Horror', 2,'harm', 'Mind Bomb', "harm", "Psychic Scream"),
 
                 -- Middle Row (right)
                 icub3d_Spell('help', 'Leap of Faith', 1),
                 icub3d_Spell('help', 'Leap of Faith', 2),
                 icub3d_Spell('harm', 'Void Torrent', 1, 'harm', 'Mind Flay'),
                 icub3d_Spell('harm', 'Void Torrent', 2, 'harm', 'Mind Flay'),
-                icub3d_Spell('harm', 'Void Eruption', 1),
-                icub3d_Spell('harm', 'Void Eruption', 2),
+                icub3d_Spell('harm', 'Shadowfiend', 1),
+                icub3d_Spell('harm', 'Shadowfiend', 2),
                 icub3d_Spell('harm', 'Silence', 1),
                 icub3d_Spell('harm', 'Silence', 2),
                 icub3d_Spell('harm', 'Shadow Word: Death', 1, 'harm', 'Shadow Crush', 'harm', 'Mind Flay'),
@@ -220,12 +237,11 @@ icub3d_Spells['PRIEST'] = {
                 icub3d_Spell('harm', 'Dispel Magic', 2),
 
                 -- Bottom Row (left)
-                
-                icub3d_Spell('harm', 'Shadowfiend', 1),
-                icub3d_Spell('harm', 'Shadowfiend', 2),
+                icub3d_Spell('harm', 'Void Eruption', 1),
+                icub3d_Spell('harm', 'Void Eruption', 2),
                 icub3d_Skip(),
-                icub3d_Skip(),
-                icub3d_Skip(),
+                icub3d_Spell("use", "Healthstone"),
+                icub3d_Spell("use", "Battle Potion of Intellect"),
                 icub3d_Spell("use", "Goblin Glider Kit"),
                 icub3d_Macro('im_racial'),
                 icub3d_Spell('help', "Gladiator's Medallion"),
@@ -233,8 +249,8 @@ icub3d_Spells['PRIEST'] = {
                 icub3d_Spell('harm', 'Mind Control', 2),
                 icub3d_Spell('harm', 'Shackle Undead', 1),
                 icub3d_Spell('harm', 'Shackle Undead', 2),
-                -- Bottom Row (right)
 
+                -- Bottom Row (right)
                 icub3d_Skip(),
                 icub3d_Spell('mouse', 'Mass Dispel'),
                 icub3d_Skip(),

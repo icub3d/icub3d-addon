@@ -124,6 +124,10 @@ function icub3d_UpdateMacro(name, where, typ, spell, target, who)
         macro = '#showtooltip Prowl\n/cancelform [nostance:2]\n/cast Prowl'
     elseif spell == 'Dash' then
         macro = '#showtooltip Dash\n/cancelform [nostance:2]\n/cast Dash'
+    elseif spell == "Angelic Feather" then
+        macro = '#showtooltip Angelic Feather \n/cast [nomod,@player] [] Angelic Feather'
+    elseif spell == "Divine Shield" and GetSpecialization() == 2 then -- only do this for prot.
+        macro = "#showtooltip Divine Shield\n/cancelaura Divine Shield\n/cast Divine Shield"
     end
     EditMacro(name, nil, nil, macro)
 end
@@ -141,6 +145,8 @@ function icub3d_RacialMacro()
         body = '#showtooltip\n/cast Arcane Torrent'
     elseif race == 'HighmountainTauren' then
         body = '#showtooltip\n/cast Bull Rush'
+    elseif race == "Human" then
+        body = "#showtooltip\n/cast Every Man for Himself"
     end
 
     icub3d_SpecialMacros['im_racial'] = {icon = 'INV_Misc_QuestionMark', body = body}
@@ -188,12 +194,20 @@ function icub3d_DeleteMacros()
 end
 
 function icub3d_UpdateMacros(spec, where, targets)
+    local plus = true
+    local funky = 1
     for i, s in ipairs(spec.actionbar) do
         -- Track the slot we'd place it in. We want to skip the second
         -- action bar.
-        p = i
+        local p = i
         if p > 12 then
             p = p + 12
+        elseif p > 1 and p <= 12 then
+            -- This is to deal with the strange vehicle setup. We interleave
+            -- here.
+            local map = {1, 7, 2, 8, 3, 9, 4, 10, 5, 11, 6, 12}
+            p = map[p]
+            i = p
         end
         -- print(p .. " -> " .. DataDumper(s))
 
