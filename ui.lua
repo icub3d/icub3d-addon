@@ -35,35 +35,43 @@ icub3d_RegisterEvent(
         RegisterStateDriver(MicroButtonAndBagsBar, 'visibility', 'hide')
         RegisterStateDriver(PetActionBarFrame, 'visibility', 'hide')
 
+		-- Hide XP, etc.
+		StatusTrackingBarManager:Hide()
+		
         -- Micro buttons
-        CharacterMicroButton:ClearAllPoints()
-        CharacterMicroButton:SetPoint('BOTTOMLEFT', -560, -25)
+        --CharacterMicroButton:ClearAllPoints()
+        --CharacterMicroButton:SetPoint('BOTTOMLEFT', -560, -25)
 
         -- TalkingHeadFrame
-        -- hooksecurefunc("TalkingHeadFrame_PlayCurrent", function()
-        --     TalkingHeadFrame:ClearAllPoints()
-        --     TalkingHeadFrame:SetPoint("CENTER", UIParent, 0, 500)
-        --     TalkingHeadFrame:ClearAllPoints()
-        -- end)
+        TalkingHead_LoadUI()
+        hooksecurefunc("TalkingHeadFrame_PlayCurrent", function()
+            TalkingHeadFrame:ClearAllPoints()
+            TalkingHeadFrame:SetPoint("CENTER", UIParent, 0, 450)
+        end)
 
         -- Unit frames
         PlayerFrame:ClearAllPoints()
-        PlayerFrame:SetPoint('CENTER', UIParent, -250, -75)
+        PlayerFrame:SetPoint('CENTER', UIParent, -300, -50)
         PlayerFrame:SetUserPlaced(true)
         TargetFrame:ClearAllPoints()
-        TargetFrame:SetPoint('CENTER', UIParent, 250, -75)
+        TargetFrame:SetPoint('CENTER', UIParent, 300, -50)
         TargetFrame:SetUserPlaced(true)
         FocusFrame:ClearAllPoints()
-        FocusFrame:SetPoint('CENTER', UIParent, 350, 50)
+        FocusFrame:SetPoint('CENTER', UIParent, 400, 75)
         FocusFrame:SetUserPlaced(true)
 
+		CastingBarFrame:HookScript("OnShow", function(self)
+									  self:ClearAllPoints()
+									  self:SetPoint("CENTER", UIParent, "CENTER", 0, -400)
+		end)
+		
         -- Action bars
-        icub3d_MoveMainActionBar('CENTER', UIParent, -229, -420)
+        icub3d_MoveMainActionBar('CENTER', UIParent, -229, -430)
         --icub3d_MoveActionBar('ActionButton', 'CENTER', UIParent, -229, -420)
-        icub3d_MoveActionBar('MultiBarRightButton', 'CENTER', UIParent, -480, -462)
-        icub3d_MoveActionBar('MultiBarLeftButton', 'CENTER', UIParent, 23, -462)
-        icub3d_MoveActionBar('MultiBarBottomRightButton', 'CENTER', UIParent, -480, -504)
-        icub3d_MoveActionBar('MultiBarBottomLeftButton', 'CENTER', UIParent, 23, -504)
+        icub3d_MoveActionBar('MultiBarRightButton', 'CENTER', UIParent, -480, -472)
+        icub3d_MoveActionBar('MultiBarLeftButton', 'CENTER', UIParent, 23, -472)
+        icub3d_MoveActionBar('MultiBarBottomRightButton', 'CENTER', UIParent, -480, -514)
+        icub3d_MoveActionBar('MultiBarBottomLeftButton', 'CENTER', UIParent, 23, -514)
 
         -- Extra Action Button
         ExtraActionButton1:ClearAllPoints()

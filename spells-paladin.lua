@@ -18,17 +18,18 @@ icub3d_Spells['PALADIN'] = {
                 -- These should be in the order you want them on the action bar.
                 -- Top Row
                 icub3d_Spell('harm', 'Holy Shock', 1),
-                icub3d_Spell('harm', 'Holy Shock', 2),
                 icub3d_Spell('help', 'Holy Shock', 1),
-                icub3d_Spell('help', 'Holy Shock', 2),
                 icub3d_Spell('help', 'Flash of Light', 1),
-                icub3d_Spell('help', 'Flash of Light', 2),
                 icub3d_Spell('help', 'Holy Light', 1),
-                icub3d_Spell('help', 'Holy Light', 2),
                 icub3d_Spell('help', 'Beacon of Virtue', 1, 'help', 'Beacon of Light'),
+                icub3d_Spell('harm', 'Judgment', 2),
+                icub3d_Spell('harm', 'Holy Shock', 2),
+                icub3d_Spell('help', 'Holy Shock', 2),
+                icub3d_Spell('help', 'Flash of Light', 2),
+                icub3d_Spell('help', 'Holy Light', 2),
                 icub3d_Spell('help', 'Beacon of Virtue', 2, 'help', 'Beacon of Faith', 'help', 'Beacon of Light'),
                 icub3d_Spell('harm', 'Judgment', 2),
-                icub3d_Spell('harm', 'Judgment', 2),
+                
                 -- Middle Left
                 icub3d_Spell('help', 'Cleanse', 1),
                 icub3d_Spell('help', 'Cleanse', 2),
@@ -42,6 +43,7 @@ icub3d_Spells['PALADIN'] = {
                 icub3d_Spell('harm', 'Hand of Reckoning', 2),
                 icub3d_Spell('help', 'Lay on Hands', 1),
                 icub3d_Spell('help', 'Lay on Hands', 2),
+
                 -- Middle Right
                 icub3d_Spell('help', 'Blessing of Freedom', 1),
                 icub3d_Spell('help', 'Blessing of Freedom', 2),
@@ -55,9 +57,10 @@ icub3d_Spells['PALADIN'] = {
                 icub3d_Spell('help', 'Bestow Faith', 2, 'mouse', "Light's Hammer", 'help', 'Holy Light'),
                 icub3d_Spell('harm', 'Hammer of Justice', 1),
                 icub3d_Spell('harm', 'Hammer of Justice', 2),
+
                 -- Bottom Row (left)
                 icub3d_Spell('use', 'F.R.I.E.D.'),
-                icub3d_Skip(),
+                icub3d_Spell('use', 'Battle Potion of Intellect'),
                 icub3d_Spell('macro', 'im_healthstone'),
                 icub3d_Spell('use', 'Drums of Fury'),
                 icub3d_Skip(),
@@ -68,6 +71,7 @@ icub3d_Spells['PALADIN'] = {
                 icub3d_Spell('help', 'Avenging Wrath', 1),
                 icub3d_Spell('help', 'Divine Shield', 2),
                 icub3d_Spell('help', 'Divine Protection', 1),
+
                 -- Bottom Row (right)
                 icub3d_Spell('help', 'Avenging Crusader', 1, 'help', 'Divine Shield'),
                 icub3d_Spell('help', 'Aura Mastery'),
@@ -95,23 +99,25 @@ icub3d_Spells['PALADIN'] = {
                 ['quest'] = {1, 2, 1, 2, 3, 1, 2},
                 ['raid'] = {1, 2, 1, 2, 3, 1, 2},
                 ['dungeon'] = {1, 2, 1, 2, 3, 1, 2},
-                ['pvp'] = {1, 2, 1, 3, 3, 2, 2}
+                ['pvp'] = {1, 2, 1, 3, 3, 2, 2},
+                ['solo'] = {1, 2, 1, 1, 3, 1, 2}
             },
             actionbar = {
                 -- These should be in the order you want them on the action bar.
                 -- Top Row
                 icub3d_Spell('harm', 'Hammer of the Righteous', 1),
-                icub3d_Spell('harm', 'Hammer of the Righteous', 2),
-                icub3d_Skip(),
                 icub3d_Skip(),
                 icub3d_Spell('help', 'Light of the Protector', 1),
-                icub3d_Spell('help', 'Light of the Protector', 2),
                 icub3d_Spell('harm', 'Shield of the Righteous', 1),
-                icub3d_Spell('harm', 'Shield of the Righteous', 2),
                 icub3d_Spell('harm', "Avenger's Shield", 1),
-                icub3d_Spell('harm', "Avenger's Shield", 2),
                 icub3d_Spell('harm', 'Judgment', 1),
+                icub3d_Spell('harm', 'Hammer of the Righteous', 2),
+                icub3d_Skip(),
+                icub3d_Spell('help', 'Light of the Protector', 2),
+                icub3d_Spell('harm', 'Shield of the Righteous', 2),
+                icub3d_Spell('harm', "Avenger's Shield", 2),
                 icub3d_Spell('harm', 'Judgment', 2),
+
                 -- Middle Left
                 icub3d_Spell('help', 'Cleanse Toxins', 1),
                 icub3d_Spell('help', 'Cleanse Toxins', 2),
@@ -125,6 +131,7 @@ icub3d_Spells['PALADIN'] = {
                 icub3d_Spell('harm', 'Hand of Reckoning', 2),
                 icub3d_Spell('help', 'Lay on Hands', 1),
                 icub3d_Spell('help', 'Lay on Hands', 2),
+
                 -- Middle Right
                 icub3d_Spell('help', 'Blessing of Freedom', 1),
                 icub3d_Spell('help', 'Blessing of Freedom', 2),
@@ -138,9 +145,10 @@ icub3d_Spells['PALADIN'] = {
                 icub3d_Spell('help', 'Flash of Light', 2),
                 icub3d_Spell('harm', 'Hammer of Justice', 1),
                 icub3d_Spell('harm', 'Hammer of Justice', 2),
+
                 -- Bottom Row (left)
                 icub3d_Spell('use', 'F.R.I.E.D.'),
-                icub3d_Skip(),
+                icub3d_Spell('use', 'Battle Potion of Strength'),
                 icub3d_Spell('macro', 'im_healthstone'),
                 icub3d_Spell('use', 'Drums of Fury'),
                 icub3d_Skip(),
@@ -151,6 +159,7 @@ icub3d_Spells['PALADIN'] = {
                 icub3d_Spell('help', 'Avenging Wrath', 1),
                 icub3d_Spell('help', 'Divine Shield', 2),
                 icub3d_Spell('help', 'Bastion of Light', 1, 'help', 'Divine Shield'),
+
                 -- Bottom Row (right)
                 icub3d_Spell('help', 'Aegis of Light', 1, 'help', 'Divine Shield'),
                 icub3d_Spell('help', 'Ardent Defender', 1),
@@ -185,17 +194,18 @@ icub3d_Spells['PALADIN'] = {
                 -- These should be in the order you want them on the action bar.
                 -- Top Row
                 icub3d_Spell('harm', 'Crusader Strike', 1),
-                icub3d_Spell('harm', 'Crusader Strike', 2),
                 icub3d_Spell('harm', 'Blade of Justice', 1),
-                icub3d_Spell('harm', 'Blade of Justice', 2),
                 icub3d_Spell('harm', "Templar's Verdict", 1),
-                icub3d_Spell('harm', "Templar's Verdict", 2),
                 icub3d_Spell('harm', 'Hand of Hindrance', 1),
-                icub3d_Spell('harm', 'Hand of Hindrance', 2),
                 icub3d_Spell('harm', 'Divine Storm', 1),
-                icub3d_Spell('harm', 'Divine Storm', 2),
                 icub3d_Spell('harm', 'Judgment', 1),
+                icub3d_Spell('harm', 'Crusader Strike', 2),
+                icub3d_Spell('harm', 'Blade of Justice', 2),
+                icub3d_Spell('harm', "Templar's Verdict", 2),
+                icub3d_Spell('harm', 'Hand of Hindrance', 2),
+                icub3d_Spell('harm', 'Divine Storm', 2),
                 icub3d_Spell('harm', 'Judgment', 2),
+
                 -- Middle Left
                 icub3d_Spell('help', 'Cleanse Toxins', 1),
                 icub3d_Spell('help', 'Cleanse Toxins', 2),
@@ -209,6 +219,7 @@ icub3d_Spells['PALADIN'] = {
                 icub3d_Spell('harm', 'Hand of Reckoning', 2),
                 icub3d_Spell('help', 'Lay on Hands', 1),
                 icub3d_Spell('help', 'Lay on Hands', 2),
+
                 -- Middle Right
                 icub3d_Spell('help', 'Blessing of Freedom', 1),
                 icub3d_Spell('help', 'Blessing of Freedom', 2),
@@ -222,9 +233,10 @@ icub3d_Spells['PALADIN'] = {
                 icub3d_Spell('help', 'Flash of Light', 2),
                 icub3d_Spell('harm', 'Hammer of Justice', 1),
                 icub3d_Spell('harm', 'Hammer of Justice', 2),
+
                 -- Bottom Row (left)
                 icub3d_Spell('use', 'F.R.I.E.D.'),
-                icub3d_Skip(),
+                icub3d_Spell('use', 'Battle Potion of Strength'),
                 icub3d_Spell('macro', 'im_healthstone'),
                 icub3d_Spell('use', 'Drums of Fury'),
                 icub3d_Spell('harm', 'Hammer of Wrath', 1, 'harm', "Templar's Verdict"),
@@ -235,6 +247,7 @@ icub3d_Spells['PALADIN'] = {
                 icub3d_Spell('help', 'Avenging Wrath', 1),
                 icub3d_Spell('help', 'Divine Shield', 2),
                 icub3d_Spell('help', 'Eye for an Eye', 1, 'help', 'Divine Shield'),
+                
                 -- Bottom Row (right)
                 icub3d_Spell('help', 'Inquisition', 1, 'help', 'Crusade', 'help', 'Divine Shield'),
                 icub3d_Spell('help', 'Shield of Vengeance'),

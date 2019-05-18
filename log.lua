@@ -40,3 +40,15 @@ function icub3d_Print(format, args)
    end
    print(string.format("|c%sicub3d:|r " .. format, rgb, unpack(args)))
 end
+
+function icub3d_String(format, args)
+   if args == nil then
+	  args = {}
+   end
+   for k,v in ipairs(args) do
+	  if type(v) == "table" then
+		 args[k] = DataDumper(v)
+	  end
+   end
+   return string.format("|c%s" .. format .. "|r", rgb, unpack(args))
+end

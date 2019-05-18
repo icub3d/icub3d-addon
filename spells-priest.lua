@@ -20,16 +20,16 @@ icub3d_Spells['PRIEST'] = {
             actionbar = {
                 -- Top Row
                 icub3d_Spell('harm', 'Penance', 1),
-                icub3d_Spell('harm', 'Penance', 2),
                 icub3d_Spell('help', 'Penance', 1),
-                icub3d_Spell('help', 'Penance', 2),
                 icub3d_Spell('help', 'Power Word: Shield', 1),
-                icub3d_Spell('help', 'Power Word: Shield', 2),
-                icub3d_Spell('help', 'Shadow Mend', 1),
-                icub3d_Spell('help', 'Shadow Mend', 2),
+                icub3d_Spell('help', 'Shadow Mend', 1, "help", "Flash Heal"),
                 icub3d_Spell('harm', 'Shadow Word: Pain', 1),
-                icub3d_Spell('harm', 'Shadow Word: Pain', 2),
                 icub3d_Spell('harm', 'Smite', 1),
+                icub3d_Spell('harm', 'Penance', 2),
+                icub3d_Spell('help', 'Penance', 2),
+                icub3d_Spell('help', 'Power Word: Shield', 2),
+                icub3d_Spell('help', 'Shadow Mend', 2, "help", "Flash Heal"),
+                icub3d_Spell('harm', 'Shadow Word: Pain', 2),
                 icub3d_Spell('harm', 'Smite', 2),
 
                 -- Middle Row (left)
@@ -109,16 +109,16 @@ icub3d_Spells['PRIEST'] = {
             actionbar = {
                 -- Top Row
                 icub3d_Spell('help', 'Heal', 1),
-                icub3d_Spell('help', 'Heal', 2),
                 icub3d_Spell('help', 'Flash Heal', 1),
-                icub3d_Spell('help', 'Flash Heal', 2),
                 icub3d_Spell('help', 'Holy Word: Serenity', 1),
-                icub3d_Spell('help', 'Holy Word: Serenity', 2),
                 icub3d_Spell('help', 'Prayer of Healing', 1),
-                icub3d_Spell('help', 'Prayer of Healing', 2),
-                icub3d_Spell('mouse', 'Holy Word: Sanctify'),
                 icub3d_Spell('mouse', 'Holy Word: Sanctify'),
                 icub3d_Spell('help', 'Prayer of Mending', 1),
+                icub3d_Spell('help', 'Heal', 2),
+                icub3d_Spell('help', 'Flash Heal', 2),
+                icub3d_Spell('help', 'Holy Word: Serenity', 2),
+                icub3d_Spell('help', 'Prayer of Healing', 2),
+                icub3d_Spell('mouse', 'Holy Word: Sanctify'),
                 icub3d_Spell('help', 'Prayer of Mending', 2),
 
                 -- Middle Row (left)
@@ -196,16 +196,16 @@ icub3d_Spells['PRIEST'] = {
             actionbar = {
                 -- Top Row
                 icub3d_Spell('harm', 'Mind Blast', 1),
-                icub3d_Spell('harm', 'Mind Blast', 2),
                 icub3d_Spell('harm', 'Mind Flay', 1),
-                icub3d_Spell('harm', 'Mind flay', 2),
                 icub3d_Spell('help', 'Power Word: Shield', 1),
-                icub3d_Spell('help', 'Power Word: Shield', 2),
-                icub3d_Spell('help', 'Shadow Mend', 1),
-                icub3d_Spell('help', 'Shadow Mend', 2),
+                icub3d_Spell('help', 'Shadow Mend', 1, "help", "Flash Heal"),
                 icub3d_Spell('harm', 'Shadow Word: Pain', 1),
-                icub3d_Spell('harm', 'Shadow Word: Pain', 2),
                 icub3d_Spell('harm', 'Vampiric Touch', 1),
+                icub3d_Spell('harm', 'Mind Blast', 2),
+                icub3d_Spell('harm', 'Mind flay', 2),
+                icub3d_Spell('help', 'Power Word: Shield', 2),
+                icub3d_Spell('help', 'Shadow Mend', 2, "help", "Flash Heal"),
+                icub3d_Spell('harm', 'Shadow Word: Pain', 2),
                 icub3d_Spell('harm', 'Vampiric Touch', 2),
 
                 -- Middle Row (left)
@@ -219,8 +219,8 @@ icub3d_Spells['PRIEST'] = {
                 icub3d_Spell('harm', "Dark Void", 2, 'harm', 'Mind Sear'),
                 icub3d_Spell('harm', 'Mind Sear', 1),
                 icub3d_Spell('harm', 'Mind Sear', 2),
-                icub3d_Spell('harm', 'Psychic Horror', 1,'harm', 'Mind Bomb', "harm", "Psychic Scream"),
-                icub3d_Spell('harm', 'Psychic Horror', 2,'harm', 'Mind Bomb', "harm", "Psychic Scream"),
+                icub3d_Spell('harm', 'Psychic Horror', 1,'harm', 'Mind Bomb', "harm", "Mind Sear"),
+                icub3d_Spell('harm', 'Psychic Horror', 2,'harm', 'Mind Bomb', "harm", "Mind Sear"),
 
                 -- Middle Row (right)
                 icub3d_Spell('help', 'Leap of Faith', 1),
@@ -231,8 +231,8 @@ icub3d_Spells['PRIEST'] = {
                 icub3d_Spell('harm', 'Shadowfiend', 2),
                 icub3d_Spell('harm', 'Silence', 1),
                 icub3d_Spell('harm', 'Silence', 2),
-                icub3d_Spell('harm', 'Shadow Word: Death', 1, 'harm', 'Shadow Crush', 'harm', 'Mind Flay'),
-                icub3d_Spell('harm', 'Shadow Word: Death', 2, 'harm', 'Shadow Crush', 'harm', 'Mind Flay'),
+                icub3d_Spell('harm', 'Shadow Word: Death', 1, 'harm', 'Shadow Crash', 'harm', 'Mind Flay'),
+                icub3d_Spell('harm', 'Shadow Word: Death', 2, 'harm', 'Shadow Crash', 'harm', 'Mind Flay'),
                 icub3d_Spell('harm', 'Dispel Magic', 1),
                 icub3d_Spell('harm', 'Dispel Magic', 2),
 

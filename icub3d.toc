@@ -4,7 +4,6 @@
 ## Author: Joshua Marsh
 ## Version: 1.0
 ## SavedVariablesPerCharacter: icub3d_MACROTYPE icub3d_PVP1 icub3d_PVP2
-## SavedVariables: icub3d_SEARCHDATA
 icub3d.lua
 dumper.lua
 log.lua
