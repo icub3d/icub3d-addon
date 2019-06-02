@@ -44,8 +44,7 @@ function icub3d_TalentChanges()
 	local _, class, _ = UnitClass("player")
 	if icub3d_Spells[class] ~= nil then
 	   if icub3d_Spells[class].specs[spec] ~= nil then
-		  icub3d_UpdateMacros(icub3d_Spells[class].specs[spec], icub3d_MACROTYPE,
-							  {icub3d_PVP1, icub3d_PVP2})
+		  icub3d_UpdateMacros(icub3d_Spells[class].specs[spec], icub3d_MACROTYPE)
 	   end
 	end
  end
@@ -98,8 +97,7 @@ function icub3d_ChangeTalents(name)
 			 SetSpecialization(i)
 			 -- The event handler will see this and change our macros
 			 -- and spells.
- 
-			 if talents ~= "" then
+ 			 if talents ~= "" then
 				 icub3d_ChangeTalents(talents)
 			 end
  
@@ -115,25 +113,21 @@ function icub3d_ChangeTalents(name)
 -- as a spell. The variadic arguments are the alternates to use if not
 -- available, for example, a talent. They should be given in pairs wit
 -- hthe type and name.
-function icub3d_Spell(typ, name, target, ...)
-    if target == nil then
-        target = 1
-    end
+function icub3d_Spell(typ, name, ...)
     local arg = {...}
     local alternates = {}
     for x = 1, select('#', ...) - 1, 2 do
-        alternates[math.floor((x + 1) / 2)] = {typ = arg[x], name = arg[x + 1], target = target}
+        alternates[math.floor((x + 1) / 2)] = {typ = arg[x], name = arg[x + 1]}
     end
     return {
         typ = typ,
         name = name,
-        target = target,
         alternates = alternates
     }
 end
 
-function icub3d_PvPTalent(num, target)
-    return {typ = 'pvp', num = num, target = target}
+function icub3d_PvPTalent(num)
+    return {typ = 'pvp', num = num}
 end
 
 function icub3d_Skip()
@@ -143,5 +137,3 @@ end
 function icub3d_Macro(name)
     return {typ = 'macro', name = name}
 end
-
-

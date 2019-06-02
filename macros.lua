@@ -5,6 +5,11 @@ icub3d_MACROTYPE = nil
 icub3d_PVP1 = nil
 icub3d_PVP2 = nil
 
+-- We use these as the default values. The first is if there is no
+-- macro in the slot, the second if it's a spell.
+icub3d_DefaultIcon = 'spell_chargenegative'
+icub3d_QuestionIcon = 'INV_Misc_QuestionMark'
+
 --------------------------------------------------------------------
 -- SLASH COMMANDS
 --------------------------------------------------------------------
@@ -13,7 +18,9 @@ function SlashCmdList.ICUB3DMACROS(msg, editBox)
     if msg == 'create' then
         icub3d_CreateMacros()
     elseif msg == 'delete' then
-        icub3d_DeleteMacros()
+	   icub3d_DeleteMacros()
+	elseif msg == 'place' then
+	   icub3d_PlaceMacros()
     else
         icub3d_Error('unknown icub3d-macro command: %s', {msg})
     end
@@ -53,12 +60,16 @@ icub3d_PermanentMacros = {
     },
     ['im_turnin'] = {
         icon = 'achievement_quests_completed_08',
-        body = '/script SelectGossipAvailableQuest(1)\n/script CompleteQuest()\n/script AcceptQuest()\n/script GetQuestReward()'
+        body = '/script SelectGossipAvailableQuest(1)\n/script CompleteQuest()\n/script AcceptQuest()\n/script GetQuestReward(1)'
     },
     ['im_mench'] = {
-        icon = 'INV_Misc_QuestionMark',
+        icon = icub3d_QuestionIcon,
         body = '#showtooltip Enchanting\n/run C_TradeSkillUI.CraftRecipe(TradeSkillFrame.RecipeList:GetSelectedRecipeID())\n/use Enchanting Vellum\n/click StaticPopup1Button1'
     },
+	['im_sell'] = {
+	   icon = 'inv_shirt_grey_01',
+	   body = '/run local c,i,n,v=0;for b=0,4 do for s=1,GetContainerNumSlots(b)do i={GetContainerItemInfo(b,s)}n=i[7]if n and string.find(n,"9d9d9d")then v={GetItemInfo(n)}q=i[2]c=c+v[11]*q;UseContainerItem(b,s)print(n,q)end;end;end;print(GetCoinText(c))'
+	},
     ['im_focus'] = {
         icon = 'ability_cheapshot',
         body = '/clearfocus [target=focus,exists]\n/focus [target=focus,noexists]'
@@ -69,65 +80,35 @@ icub3d_PermanentMacros = {
 -- When we change the macros for an action bar button, it's possible
 -- to choose one of these.
 icub3d_SpecialMacros = {
-    ['im_belt'] = {icon = 'INV_Misc_QuestionMark', body = '#showtooltip\n/use 6'},
-    ['im_cloak'] = {icon = 'INV_Misc_QuestionMark', body = '#showtooltip\n/use 15'},
-    ['im_trinket'] = {icon = 'INV_Misc_QuestionMark', body = '#showtooltip\n/use [mod:alt] 14; 13'},
-    ['im_racial'] = {icon = 'INV_Misc_QuestionMark', body = "/run print('hello')"},
-    ['im_medallion'] = {icon = 'INV_Misc_QuestionMark', body = '#showtooltip\n/use Honorable Medallion'},
-    ['im_glide'] = {icon = 'INV_Misc_QuestionMark', body = '#showtooltip Glide\n/dismount\n/cast Glide'},
-    ['im_healthstone'] = {icon = 'INV_Misc_QuestionMark', body = '#showtooltip healthstone\n/use healthstone'}
+    ['im_belt'] = {icon = icub3d_QuestionIcon, body = '#showtooltip\n/use 6'},
+    ['im_cloak'] = {icon = icub3d_QuestionIcon, body = '#showtooltip\n/use 15'},
+    ['im_trinket'] = {icon = icub3d_QuestionIcon, body = '#showtooltip\n/use [mod:alt] 14; 13'},
+    ['im_racial'] = {icon = icub3d_QuestionIcon, body = "/run print('hello')"},
+    ['im_medallion'] = {icon = icub3d_QuestionIcon, body = '#showtooltip\n/use Honorable Medallion'},
+    ['im_glide'] = {icon = icub3d_QuestionIcon, body = '#showtooltip Glide\n/dismount\n/cast Glide'},
+    ['im_healthstone'] = {icon = icub3d_QuestionIcon, body = '#showtooltip healthstone\n/use healthstone'}
 }
 
 -- These are the different macro formats that can be used.
 icub3d_MacroFormats = {
     ['pve'] = {
-        ['harm'] = {
-            '#showtooltip %1$s\n/cast [mod:alt,@focus] [@mouseover,harm,nodead] [harm] [@mouseovertarget,harm] [@targettarget,harm] [] %1$s',
-            '#showtooltip %1$s\n/cast [mod:alt,@focus] [@mouseover,harm,nodead] [harm] [@mouseovertarget,harm] [@targettarget,harm] [] %1$s'
-        },
-        ['help'] = {
-            '#showtooltip %1$s \n/cast [mod:alt,@player] [@mouseover,help,nodead] [help] [@targettarget,help] [] %1$s',
-            '#showtooltip %1$s \n/cast [mod:alt,@player] [@mouseover,help,nodead] [help] [@targettarget,help] [] %1$s'
-        },
-        ['mouse'] = {
-            '#showtooltip %1$s \n/cast [mod,@player] [] %1$s',
-            '#showtooltip %1$s \n/cast [mod,@player] [] %1$s'
-        },
-        ['use'] = {
-            '#showtooltip %1$s \n/use %1$s',
-            '#showtooltip %1$s \n/use %1$s'
-        },
-        ['simple'] = {
-            '#showtooltip %1$s \n/use %1$s',
-            '#showtooltip %1$s \n/use %1$s'
-        }
+        ['harm'] = '#showtooltip %1$s\n/cast [mod:alt,@focus] [@mouseover,harm,nodead] [harm] [@mouseovertarget,harm] [@targettarget,harm] [] %1$s',
+        ['help'] = '#showtooltip %1$s \n/cast [mod:alt,@player] [@mouseover,help,nodead] [help] [@targettarget,help] [] %1$s',
+        ['mouse'] = '#showtooltip %1$s \n/cast [mod,@player] [] %1$s',
+        ['use'] = '#showtooltip %1$s \n/use %1$s',
+        ['simple'] = '#showtooltip %1$s \n/use %1$s',
     },
     ['pvp'] = {
-        ['harm'] = {
-            '#showtooltip %1$s\n/cast [mod:alt,@arena3] [@arena1] [] %1$s',
-            '#showtooltip %1$s\n/cast [mod:alt,@arena3] [@arena2] [] %1$s'
-        },
-        ['help'] = {
-            '#showtooltip %1$s\n/cast [mod:alt,@player] [@%2s] [] %1$s',
-            '#showtooltip %1$s\n/cast [mod:alt,@player] [@%2s] [] %1$s'
-        },
-        ['mouse'] = {
-            '#showtooltip %1$s \n/cast [mod,@player] [] %1$s',
-            '#showtooltip %1$s \n/cast [mod,@player] [] %1$s'
-        },
-        ['use'] = {
-            '#showtooltip %1$s \n/cast %1$s',
-            '#showtooltip %1$s \n/cast %1$s'
-        },
-        ['simple'] = {
-            '#showtooltip %1$s \n/use %1$s',
-            '#showtooltip %1$s \n/use %1$s'
-        }
+        ['harm'] = '#showtooltip %1$s\n/cast [mod:alt,@arena1] [mod:shift,@arena2] [@mouseover,harm,nodead] [harm] [@mouseovertarget,harm] [@targettarget,harm] [] %1$s',
+        ['help'] = '#showtooltip %1$s\n/cast [mod:alt,@player] [mod:shift,@%2s] [@mouseover,help,nodead] [help] [@%3s] %1$s',
+        ['mouse'] = '#showtooltip %1$s \n/cast [mod,@player] [] %1$s',
+        ['use'] = '#showtooltip %1$s \n/use %1$s',
+        ['simple'] = '#showtooltip %1$s \n/use %1$s',
     }
 }
 
-function icub3d_UpdateMacro(name, where, typ, spell, target, who)
-    macro = string.format(icub3d_MacroFormats[where][typ][target], spell, who)
+function icub3d_UpdateMacro(name, where, typ, spell)
+    macro = string.format(icub3d_MacroFormats[where][typ], spell, icub3d_PVP1, icub3d_PVP2)
     if spell == 'Prowl' then
         macro = '#showtooltip Prowl\n/cancelform [nostance:2]\n/cast Prowl'
     elseif spell == 'Dash' then
@@ -137,7 +118,7 @@ function icub3d_UpdateMacro(name, where, typ, spell, target, who)
     elseif spell == "Divine Shield" and GetSpecialization() == 2 then -- only do this for prot.
         macro = "#showtooltip Divine Shield\n/cancelaura Divine Shield\n/cast Divine Shield"
     end
-    EditMacro(name, nil, nil, macro)
+    EditMacro(name, nil, icub3d_QuestionIcon, macro)
 end
 
 function icub3d_MacrosInit()
@@ -158,15 +139,15 @@ function icub3d_RacialMacro()
 	elseif race == "Troll" then
 	   body ="#showtooltip\n/cast Berserking"
 	elseif race == "Tauren" then
-	   body ="#showtooltip\n/cast Warstomp"
+	   body ="#showtooltip\n/cast War Stomp"
     end
 
-    icub3d_SpecialMacros['im_racial'] = {icon = 'INV_Misc_QuestionMark', body = body}
+    icub3d_SpecialMacros['im_racial'] = {icon = icub3d_QuestionIcon, body = body}
 
     if GetMacroInfo('im_racial') == nil then
-        CreateMacro('im_racial', 'INV_Misc_QuestionMark', body)
+        CreateMacro('im_racial', icub3d_QuestionIcon, body)
     else
-        EditMacro('im_racial', 'im_racial', 'INV_Misc_QuestionMark', body, 1)
+        EditMacro('im_racial', 'im_racial', icub3d_QuestionIcon, body, 1)
     end
 end
 
@@ -177,7 +158,7 @@ function icub3d_CreateMacro(x)
     end
     local name = string.format('is-%03d', x)
     if GetMacroInfo(name) == nil then
-        CreateMacro(name, 'INV_Misc_QuestionMark', '', p)
+        CreateMacro(name, icub3d_QuestionIcon, '', p)
     end
 end
 
@@ -193,6 +174,23 @@ function icub3d_CreateMacros()
     end
 end
 
+function icub3d_PlaceMacros()
+   for x = 1, 120 do
+	  -- skip the second action bar.
+	  local p = x
+	  if p > 12 then
+		 p = p + 12
+	  end
+	  
+	  -- Move the action bar into position.
+	  local name = string.format('is-%03d', x)
+	  PickupMacro(name)
+	  PlaceAction(p)
+	  ClearCursor()
+   end
+end
+
+
 function icub3d_DeleteMacros()
     for i = 1, 138 do
         local name = string.format('is-%03d', i)
@@ -205,7 +203,7 @@ function icub3d_DeleteMacros()
     end
 end
 
-function icub3d_UpdateMacros(spec, where, targets)
+function icub3d_UpdateMacros(spec, where)
     for i, s in ipairs(spec.actionbar) do
         -- Track the slot we'd place it in. We want to skip the second
         -- action bar.
@@ -213,29 +211,13 @@ function icub3d_UpdateMacros(spec, where, targets)
         if p > 12 then
             p = p + 12
         end
-        -- print(p .. " -> " .. DataDumper(s))
 
         -- Determine the macro name the spell will be placed in and set
         -- a default target.
         local name = string.format('is-%03d', i)
-        if s.target == nil then
-            s.target = 1
-        end
-
-        -- We may need to add the macro back to the actionbar if a
-        -- previous spec removed/skipped it.
-        if s.typ ~= 'skip' and GetActionText(p) == nil then
-            PickupMacro(name)
-            PlaceAction(p)
-        end
 
         if s.typ == 'skip' then
-            -- We want to remove this action, we aren't using it. Also,
-            -- clear the macro so it doesn't get placed when we put them
-            -- on the action bar.
-            EditMacro(name, nil, nil, '')
-            PickupAction(p)
-            ClearCursor()
+            EditMacro(name, nil, icub3d_DefaultIcon, '')
         elseif s.typ == 'macro' then
             -- We want to use one of our special macros.
             local macro = icub3d_SpecialMacros[s.name]
@@ -268,18 +250,18 @@ function icub3d_UpdateMacros(spec, where, targets)
             end
 
             -- Update the macro with the chosen spell or alternate.
-            icub3d_UpdateMacro(name, where, selected.typ, selected.name, s.target, targets[s.target])
+            icub3d_UpdateMacro(name, where, selected.typ, selected.name)
         elseif s.typ == 'use' then
             -- This is just a normal spell, item, etc.
-            icub3d_UpdateMacro(name, where, s.typ, s.name, s.target, targets[s.target])
+		   icub3d_UpdateMacro(name, where, s.typ, s.name)
         elseif GetSpellInfo(s.name) ~= nil then
             -- This is just a normal spell, item, etc.
-            icub3d_UpdateMacro(name, where, s.typ, s.name, s.target, targets[s.target])
+		   icub3d_UpdateMacro(name, where, s.typ, s.name)
         elseif s.alternates ~= nil then
             -- No spell was found, so try the alternates.
             for _, alt in ipairs(s.alternates) do
                 if GetSpellInfo(alt.name) ~= nil then
-                    icub3d_UpdateMacro(name, where, alt.typ, alt.name, alt.target, targets[alt.target])
+				   icub3d_UpdateMacro(name, where, alt.typ, alt.name)
                     break
                 end
             end

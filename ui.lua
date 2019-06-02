@@ -66,12 +66,17 @@ icub3d_RegisterEvent(
 		end)
 		
         -- Action bars
-        icub3d_MoveMainActionBar('CENTER', UIParent, -229, -430)
+		--icub3d_MoveMainActionBar('CENTER', UIParent, -229, -430)
         --icub3d_MoveActionBar('ActionButton', 'CENTER', UIParent, -229, -420)
-        icub3d_MoveActionBar('MultiBarRightButton', 'CENTER', UIParent, -480, -472)
-        icub3d_MoveActionBar('MultiBarLeftButton', 'CENTER', UIParent, 23, -472)
-        icub3d_MoveActionBar('MultiBarBottomRightButton', 'CENTER', UIParent, -480, -514)
-        icub3d_MoveActionBar('MultiBarBottomLeftButton', 'CENTER', UIParent, 23, -514)
+        icub3d_MoveActionBar('ActionButton', 'CENTER', UIParent, -480, -472)
+        icub3d_MoveActionBar('MultiBarRightButton', 'CENTER', UIParent, 23, -472)
+        icub3d_MoveActionBar('MultiBarLeftButton', 'CENTER', UIParent, -480, -514)
+        icub3d_MoveActionBar('MultiBarBottomRightButton', 'CENTER', UIParent, 23, -514)
+
+--        icub3d_MoveActionBar('MultiBarRightButton', 'CENTER', UIParent, -480, -472)
+--        icub3d_MoveActionBar('MultiBarLeftButton', 'CENTER', UIParent, 23, -472)
+--        icub3d_MoveActionBar('MultiBarBottomRightButton', 'CENTER', UIParent, -480, -514)
+--        icub3d_MoveActionBar('MultiBarBottomLeftButton', 'CENTER', UIParent, 23, -514)
 
         -- Extra Action Button
         ExtraActionButton1:ClearAllPoints()
