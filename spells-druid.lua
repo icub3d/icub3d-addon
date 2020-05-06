@@ -63,9 +63,9 @@ icub3d_Spells['DRUID'] = {
 				icub3d_Skip(),
 				icub3d_Skip(),
 				icub3d_Skip(),
-				icub3d_Skip(),
-				icub3d_Skip(),
-				icub3d_Skip(),
+				icub3d_Spell('simple', 'Revive'),
+                icub3d_Spell('simple', 'Charm Woodland Creature'),
+                icub3d_Spell('simple', 'Flap'),
 
 				-- We have to skip these for druid, warrior, rogue
 				icub3d_Skip(),
@@ -202,9 +202,9 @@ icub3d_Spells['DRUID'] = {
 				icub3d_Spell('harm', 'Brutal Slash', 'harm', 'Primal Wrath', 'harm', 'Thrash'),
 				icub3d_Spell('harm', 'Swipe'),
 				icub3d_Skip(),
-				icub3d_Skip(),
-				icub3d_Skip(),
-				icub3d_Skip(),
+				icub3d_Spell('simple', 'Revive'),
+                icub3d_Spell('simple', 'Charm Woodland Creature'),
+                icub3d_Spell('simple', 'Flap'),
 
 				-- We have to skip these for druid, warrior, rogue
 				icub3d_Skip(),
@@ -340,9 +340,10 @@ icub3d_Spells['DRUID'] = {
                 icub3d_Spell('help', 'Bristling Fur', 'harm', 'Stampeding Roar'),
 				icub3d_Skip(),
 				icub3d_Skip(),
-				icub3d_Skip(),
-				icub3d_Skip(),
-				icub3d_Skip(),
+				icub3d_Spell('simple', 'Revive'),
+                icub3d_Spell('simple', 'Charm Woodland Creature'),
+                icub3d_Spell('simple', 'Flap'),
+
 
 				-- We have to skip these for druid, warrior, rogue
 				icub3d_Skip(),
@@ -479,10 +480,10 @@ icub3d_Spells['DRUID'] = {
                 icub3d_Macro('im_trinket'),
 				icub3d_Skip(),
 				icub3d_Skip(),
-				icub3d_Skip(),
-				icub3d_Skip(),
-				icub3d_Skip(),
-				icub3d_Skip(),
+                icub3d_Spell('simple', 'Revitalize'),
+				icub3d_Spell('simple', 'Revive'),
+                icub3d_Spell('simple', 'Charm Woodland Creature'),
+                icub3d_Spell('simple', 'Flap'),
 
 				-- We have to skip these for druid, warrior, rogue
 				icub3d_Skip(),

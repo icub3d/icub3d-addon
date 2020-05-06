@@ -65,12 +65,12 @@ icub3d_Spells['PALADIN'] = {
                 icub3d_Spell('use', 'Soft Foam Sword'),
 				icub3d_Skip(),
 				icub3d_Skip(),
+				icub3d_Spell('help', 'Concentrated Flame'),
+				icub3d_Spell('harm', 'Concentrated Flame'),
 				icub3d_Skip(),
 				icub3d_Skip(),
-				icub3d_Skip(),
-				icub3d_Skip(),
-				icub3d_Skip(),
-				icub3d_Skip(),
+				icub3d_Spell('help', 'Absolution'),
+				icub3d_Spell('help', 'Redemption'),
             }
         },
         {
@@ -138,12 +138,12 @@ icub3d_Spells['PALADIN'] = {
                 icub3d_Spell('use', 'Soft Foam Sword'),
 				icub3d_Skip(),
 				icub3d_Skip(),
+				icub3d_Spell('help', 'Concentrated Flame'),
+				icub3d_Spell('harm', 'Concentrated Flame'),
 				icub3d_Skip(),
 				icub3d_Skip(),
-				icub3d_Skip(),
-				icub3d_Skip(),
-				icub3d_Skip(),
-				icub3d_Skip(),
+				icub3d_Spell('help', 'Absolution'),
+				icub3d_Spell('help', 'Redemption'),
             }
         },
         {
@@ -212,12 +212,12 @@ icub3d_Spells['PALADIN'] = {
                 icub3d_Spell('use', 'Soft Foam Sword'),
                 icub3d_Spell('help', 'Greater Blessing of Kings'),
                 icub3d_Spell('help', 'Greater Blessing of Wisdom'),
+				icub3d_Spell('help', 'Concentrated Flame'),
+				icub3d_Spell('harm', 'Concentrated Flame'),
 				icub3d_Skip(),
 				icub3d_Skip(),
-				icub3d_Skip(),
-				icub3d_Skip(),
-				icub3d_Skip(),
-				icub3d_Skip(),
+				icub3d_Spell('help', 'Absolution'),
+				icub3d_Spell('help', 'Redemption'),
             }
         }
     }
