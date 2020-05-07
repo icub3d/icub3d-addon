@@ -69,10 +69,10 @@ icub3d_Spells['PRIEST'] = {
 				icub3d_Skip(),
 				icub3d_Skip(),
 				icub3d_Skip(),
-				icub3d_Skip(),
-				icub3d_Skip(),
-				icub3d_Skip(),
-                icub3d_Spell('use', 'Conjured Mana Bun'),
+                icub3d_Spell('help', 'Mind Vision'),
+                icub3d_Spell('help', 'Power Word: Fortitude'),
+                icub3d_Spell('help', 'Mass Resurrection'),
+                icub3d_Spell('help', 'Resurrection'),
             },
         },
         {
@@ -144,10 +144,10 @@ icub3d_Spells['PRIEST'] = {
 				icub3d_Skip(),
 				icub3d_Skip(),
 				icub3d_Skip(),
-				icub3d_Skip(),
-				icub3d_Skip(),
-				icub3d_Skip(),
-                icub3d_Spell('use', 'Conjured Mana Bun'),
+                icub3d_Spell('help', 'Mind Vision'),
+                icub3d_Spell('help', 'Power Word: Fortitude'),
+                icub3d_Spell('help', 'Mass Resurrection'),
+                icub3d_Spell('help', 'Resurrection'),
             }
         },
         {
@@ -217,10 +217,10 @@ icub3d_Spells['PRIEST'] = {
 				icub3d_Skip(),
 				icub3d_Skip(),
 				icub3d_Skip(),
-				icub3d_Skip(),
-				icub3d_Skip(),
-				icub3d_Skip(),
-                icub3d_Spell('use', 'Conjured Mana Bun'),
+                icub3d_Spell('help', 'Mind Vision'),
+                icub3d_Spell('help', 'Power Word: Fortitude'),
+                icub3d_Spell('help', 'Mass Resurrection'),
+                icub3d_Spell('help', 'Resurrection'),
             }
         }
     }
