@@ -85,7 +85,7 @@ icub3d_RegisterEvent(
 	  -- Player Power Bar
 	  PlayerPowerBarAlt:SetMovable(true)
 	  PlayerPowerBarAlt:SetUserPlaced(true)
-	  PlayerPowerBarAlt:SetPoint('Center', UIParent, 0, 150)
+	  PlayerPowerBarAlt:SetPoint('CENTER', UIParent, 0, 250)
 	  
 	  -- Remove the macro name from the buttons
 	  local bars = {
