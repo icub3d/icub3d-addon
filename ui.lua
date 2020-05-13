@@ -34,22 +34,22 @@ icub3d_RegisterEvent(
 	  -- Hide bags
 	  RegisterStateDriver(MicroButtonAndBagsBar, 'visibility', 'hide')
 	  RegisterStateDriver(PetActionBarFrame, 'visibility', 'hide')
-
+ 
 	  -- Hide XP, etc.
 	  StatusTrackingBarManager:Hide()
 	  
 	  -- Micro buttons
-	  CharacterMicroButton:ClearAllPoints()
-	  CharacterMicroButton:SetPoint('BOTTOMLEFT', -560, -25)
+	  -- CharacterMicroButton:ClearAllPoints()
+	  -- CharacterMicroButton:SetPoint('BOTTOMLEFT', -560, -25)
 
-	  -- TalkingHeadFrame
-	  TalkingHead_LoadUI()
-	  hooksecurefunc("TalkingHeadFrame_PlayCurrent", function()
-						TalkingHeadFrame:ClearAllPoints()
-						TalkingHeadFrame:SetPoint("CENTER", UIParent, 0, 450)
-	  end)
+	  -- -- TalkingHeadFrame
+	  -- TalkingHead_LoadUI()
+	  -- hooksecurefunc("TalkingHeadFrame_PlayCurrent", function()
+	  -- 					TalkingHeadFrame:ClearAllPoints()
+	  -- 					TalkingHeadFrame:SetPoint("CENTER", UIParent, 0, 450)
+	  -- end)
 
-	  -- Unit frames
+	  -- -- Unit frames
 	  PlayerFrame:ClearAllPoints()
 	  PlayerFrame:SetPoint('CENTER', UIParent, -300, -50)
 	  PlayerFrame:SetUserPlaced(true)
@@ -60,33 +60,40 @@ icub3d_RegisterEvent(
 	  FocusFrame:SetPoint('CENTER', UIParent, 400, 75)
 	  FocusFrame:SetUserPlaced(true)
 
-	  CastingBarFrame:HookScript("OnShow", function(self)
-									self:ClearAllPoints()
-									self:SetPoint("CENTER", UIParent, "CENTER", 0, -400)
-	  end)
+	  -- CastingBarFrame:HookScript("OnShow", function(self)
+	  -- 								self:ClearAllPoints()
+	  -- 								self:SetPoint("CENTER", UIParent, "CENTER", 0, -400)
+	  -- end)
 	  
-	  -- Action bars
-	  --icub3d_MoveMainActionBar('CENTER', UIParent, -229, -430)
-	  --icub3d_MoveActionBar('ActionButton', 'CENTER', UIParent, -229, -420)
+	  -- -- Action bars
 	  icub3d_MoveActionBar('ActionButton', 'CENTER', UIParent, -480, -472)
 	  icub3d_MoveActionBar('MultiBarRightButton', 'CENTER', UIParent, 23, -472)
 	  icub3d_MoveActionBar('MultiBarLeftButton', 'CENTER', UIParent, -480, -514)
 	  icub3d_MoveActionBar('MultiBarBottomRightButton', 'CENTER', UIParent, 23, -514)
 
+	  --icub3d_MoveMainActionBar('CENTER', UIParent, -229, -430)
+	  --icub3d_MoveActionBar('ActionButton', 'CENTER', UIParent, -229, -420)
 	  --        icub3d_MoveActionBar('MultiBarRightButton', 'CENTER', UIParent, -480, -472)
 	  --        icub3d_MoveActionBar('MultiBarLeftButton', 'CENTER', UIParent, 23, -472)
 	  --        icub3d_MoveActionBar('MultiBarBottomRightButton', 'CENTER', UIParent, -480, -514)
 	  --        icub3d_MoveActionBar('MultiBarBottomLeftButton', 'CENTER', UIParent, 23, -514)
 
-	  -- Extra Action Button
-	  ExtraActionButton1:ClearAllPoints()
-	  ExtraActionButton1:SetPoint('CENTER', UIParent, 0, -125)
+	  -- -- Extra Action Button
+	  -- ExtraActionButton1:ClearAllPoints()
+	  -- ExtraActionButton1:SetPoint('CENTER', UIParent, 0, -125)
+	  -- ExtraActionButton1:HookScript("OnShow", function(self)
+	  -- 								   self:ClearAllPoints()
+	  -- 								   self:SetPoint('CENTER', UIParent, 0, -125)
+	  -- end)
+	  -- -- -- Player Power Bar
+	  -- -- UNIT_POWER_BAR_SHOW
+	  -- PlayerPowerBarAlt:SetMovable(true)
+	  -- PlayerPowerBarAlt:SetUserPlaced(true)
+	  -- PlayerPowerBarAlt:SetPoint('CENTER', UIParent, 0, 250)
+	  -- PlayerPowerBarAlt:HookScript("OnShow", function(self)
+	  -- 								   self:SetPoint('CENTER', UIParent, 0, 250)
+	  -- end)
 
-	  -- Player Power Bar
-	  PlayerPowerBarAlt:SetMovable(true)
-	  PlayerPowerBarAlt:SetUserPlaced(true)
-	  PlayerPowerBarAlt:SetPoint('CENTER', UIParent, 0, 250)
-	  
 	  -- Remove the macro name from the buttons
 	  local bars = {
 		 'ActionButton',
