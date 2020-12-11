@@ -23,17 +23,9 @@ icub3d_RegisterEvent(
 	  -- Hide shadowform
 	  RegisterStateDriver(StanceBarFrame, 'visibility', 'hide')
 
-	  -- Remove the bottom art
-	  MainMenuBarArtFrame.LeftEndCap:Hide()
-	  MainMenuBarArtFrame.RightEndCap:Hide()
-	  MainMenuBarArtFrame.PageNumber:Hide()
-	  RegisterStateDriver(ActionBarUpButton, 'visibility', 'hide')
-	  RegisterStateDriver(ActionBarDownButton, 'visibility', 'hide')
-	  RegisterStateDriver(MainMenuBarArtFrameBackground, 'visibility', 'hide')
-
 	  -- Hide bags
 	  RegisterStateDriver(MicroButtonAndBagsBar, 'visibility', 'hide')
-	  RegisterStateDriver(PetActionBarFrame, 'visibility', 'hide')
+--	  RegisterStateDriver(PetActionBarFrame, 'visibility', 'hide')
  
 	  -- Hide XP, etc.
 	  StatusTrackingBarManager:Hide()
@@ -49,7 +41,7 @@ icub3d_RegisterEvent(
 	  -- 					TalkingHeadFrame:SetPoint("CENTER", UIParent, 0, 450)
 	  -- end)
 
-	  -- -- Unit frames
+	  -- Unit frames
 	  PlayerFrame:ClearAllPoints()
 	  PlayerFrame:SetPoint('CENTER', UIParent, -300, -50)
 	  PlayerFrame:SetUserPlaced(true)
@@ -65,18 +57,18 @@ icub3d_RegisterEvent(
 	  -- 								self:SetPoint("CENTER", UIParent, "CENTER", 0, -400)
 	  -- end)
 	  
-	  -- -- Action bars
-	  icub3d_MoveActionBar('ActionButton', 'CENTER', UIParent, -480, -472)
-	  icub3d_MoveActionBar('MultiBarRightButton', 'CENTER', UIParent, 23, -472)
-	  icub3d_MoveActionBar('MultiBarLeftButton', 'CENTER', UIParent, -480, -514)
-	  icub3d_MoveActionBar('MultiBarBottomRightButton', 'CENTER', UIParent, 23, -514)
+	  -- Action bars
+	  icub3d_MoveActionBar('ActionButton', 'CENTER', UIParent, -480, -525)
+	  icub3d_MoveActionBar('MultiBarRightButton', 'CENTER', UIParent, 23, -525)
+	  icub3d_MoveActionBar('MultiBarLeftButton', 'CENTER', UIParent, -480, -572)
+	  icub3d_MoveActionBar('MultiBarBottomRightButton', 'CENTER', UIParent, 23, -572)
 
-	  --icub3d_MoveMainActionBar('CENTER', UIParent, -229, -430)
-	  --icub3d_MoveActionBar('ActionButton', 'CENTER', UIParent, -229, -420)
-	  --        icub3d_MoveActionBar('MultiBarRightButton', 'CENTER', UIParent, -480, -472)
-	  --        icub3d_MoveActionBar('MultiBarLeftButton', 'CENTER', UIParent, 23, -472)
-	  --        icub3d_MoveActionBar('MultiBarBottomRightButton', 'CENTER', UIParent, -480, -514)
-	  --        icub3d_MoveActionBar('MultiBarBottomLeftButton', 'CENTER', UIParent, 23, -514)
+	  -- icub3d_MoveMainActionBar('CENTER', UIParent, -229, -430)
+	  -- icub3d_MoveActionBar('ActionButton', 'CENTER', UIParent, -229, -420)
+	  -- icub3d_MoveActionBar('MultiBarRightButton', 'CENTER', UIParent, -480, -472)
+	  -- icub3d_MoveActionBar('MultiBarLeftButton', 'CENTER', UIParent, 23, -472)
+	  -- icub3d_MoveActionBar('MultiBarBottomRightButton', 'CENTER', UIParent, -480, -514)
+	  -- icub3d_MoveActionBar('MultiBarBottomLeftButton', 'CENTER', UIParent, 23, -514)
 
 	  -- -- Extra Action Button
 	  -- ExtraActionButton1:ClearAllPoints()
@@ -85,8 +77,8 @@ icub3d_RegisterEvent(
 	  -- 								   self:ClearAllPoints()
 	  -- 								   self:SetPoint('CENTER', UIParent, 0, -125)
 	  -- end)
-	  -- -- -- Player Power Bar
-	  -- -- UNIT_POWER_BAR_SHOW
+	  -- -- Player Power Bar
+	  -- UNIT_POWER_BAR_SHOW
 	  -- PlayerPowerBarAlt:SetMovable(true)
 	  -- PlayerPowerBarAlt:SetUserPlaced(true)
 	  -- PlayerPowerBarAlt:SetPoint('CENTER', UIParent, 0, 250)
@@ -94,18 +86,40 @@ icub3d_RegisterEvent(
 	  -- 								   self:SetPoint('CENTER', UIParent, 0, 250)
 	  -- end)
 
+	  -- Remove all the blizzard art at the bottom
+	  local function HideArt(frame)
+		 local y={ frame:GetRegions() } 
+		 for k,v in pairs(y)do 
+			if v:GetObjectType()=="Texture" then 
+			   v:SetTexture(nil)
+			end 
+		 end 
+		 y={ frame:GetChildren() } 
+		 for k,v in pairs(y)do 
+			if v:GetObjectType()~="CheckButton" and v:GetObjectType()~="Button" then  
+			   HideArt(v)
+			end 
+		 end 
+	  end 
+	  HideArt(ActionBarUpButton)
+	  HideArt(ActionBarDownButton)
+	  HideArt(MainMenuBarArtFrame)
+	  HideArt(PetActionBarFrame)
+	  HideArt(StatusTrackingBarManager)
+	  HideArt(MicroButtonAndBagsBar)
+
 	  -- Remove the macro name from the buttons
 	  local bars = {
-		 'ActionButton',
-		 'MultiBarRightButton',
-		 'MultiBarLeftButton',
-		 'MultiBarBottomRightButton',
-		 'MultiBarBottomLeftButton'
+	  	 'ActionButton',
+	  	 'MultiBarRightButton',
+	  	 'MultiBarLeftButton',
+	  	 'MultiBarBottomRightButton',
+	  	 'MultiBarBottomLeftButton'
 	  }
 	  for _, name in ipairs(bars) do
-		 for x = 1, 12 do
-			_G[name .. x .. 'Name']:SetAlpha(0)
-		 end
+	  	 for x = 1, 12 do
+	  		_G[name .. x .. 'Name']:SetAlpha(0)
+	  	 end
 	  end
    end
 )

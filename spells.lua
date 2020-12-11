@@ -126,8 +126,19 @@ function icub3d_Spell(typ, name, ...)
     }
 end
 
+function icub3d_Talent(num)
+   return {
+	  typ = 'talent',
+	  num = num
+   }
+end
+
 function icub3d_PvPTalent(num)
     return {typ = 'pvp', num = num}
+end
+
+function icub3d_Ignore()
+    return {typ = 'ignore'}
 end
 
 function icub3d_Skip()

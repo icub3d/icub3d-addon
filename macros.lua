@@ -87,7 +87,14 @@ icub3d_SpecialMacros = {
    ['im_racial'] = {icon = icub3d_QuestionIcon, body = "/run print('hello')"},
    ['im_medallion'] = {icon = icub3d_QuestionIcon, body = '#showtooltip\n/use Honorable Medallion'},
    ['im_glide'] = {icon = icub3d_QuestionIcon, body = '#showtooltip Glide\n/dismount\n/cast Glide'},
-   ['im_healthstone'] = {icon = icub3d_QuestionIcon, body = '#showtooltip healthstone\n/use healthstone'}
+   ['im_healthstone'] = {icon = icub3d_QuestionIcon, body = '#showtooltip healthstone\n/use healthstone'},
+   ['im_imp_void'] = {icon = icub3d_QuestionIcon, body = '#showtooltip\n/cast [mod:shift] Summon Voidlord; Summon Imp'},
+   ['im_fel_succ'] = {icon = icub3d_QuestionIcon, body = '#showtooltip\n/cast [mod:shift] Summon Succubus; Summon Felhunter'},
+   ['im_pet_attack_follow'] = {icon = 'ability_ghoulfrenzy', body = '/petfollow [mod:shift]\n/petattack [nomod:shift,mod:alt,@focus] [nomod:shift,@mouseover,harm,nodead] [nomod:shift,harm] [nomod:shift,@mouseovertarget,harm] [nomod:shift,@targettarget,harm] [nomod:shift]'},
+   ['im_pet_move_stay'] = {icon = 'ability_hunter_pet_goto', body = '/petstay [mod:shift]\n/petmoveto [nomod:shift]'},
+   ['im_pet_special'] = {icon = icub3d_QuestionIcon, body = '#showtooltip [pet:felhunter] Devour Magic; [pet:succubus] Whiplash; [] Fear\n/cast [pet:felhunter,@mouseover,harm,nodead] [pet:felhunter,harm] [pet:felhunter] Devour Magic; [pet:succubus,@mouseover,harm,nodead] [pet:succubus,harm] [pet:succubus] Whiplash; Fear'},
+   ['im_demonic_circle'] = {icon = icub3d_QuestionIcon, body = '#showtooltip\n/cast [mod:shift] Demonic Circle; Demonic Circle: Teleport'},
+   ['im_lock_stone'] = {icon = icub3d_QuestionIcon, body = '#showtooltip\n/cast [mod:shift] Create Soulwell; Create Healthstone'}
 }
 
 -- These are the different macro formats that can be used.
@@ -98,6 +105,7 @@ icub3d_MacroFormats = {
 	  ['help'] = '#showtooltip %1$s \n/cast [mod:alt,@player] [@mouseover,help,nodead] [help] [@targettarget,help] [] %1$s',
 	  ['mouse'] = '#showtooltip %1$s \n/cast [mod:alt,@player] [mod:shift,@target] [] %1$s',
 	  ['use'] = '#showtooltip %1$s \n/use %1$s',
+	  ['click'] = '#showtooltip %1$s \n/click [@mouseover] [] %1$s',
 	  ['simple'] = '#showtooltip %1$s \n/use %1$s',
    },
    ['pvp'] = {
@@ -106,6 +114,7 @@ icub3d_MacroFormats = {
 	  ['help'] = '#showtooltip %1$s\n/cast [mod:alt,@player] [mod:shift,@%2s] [@mouseover,help,nodead] [help] [@%3s] %1$s',
 	  ['mouse'] = '#showtooltip %1$s \n/cast [mod:alt,@player] [mod:shift,@focus] [] %1$s',
 	  ['use'] = '#showtooltip %1$s \n/use %1$s',
+	  ['click'] = '#showtooltip %1$s \n/click [@mouseover] [] %1$s',
 	  ['simple'] = '#showtooltip %1$s \n/use %1$s',
    }
 }
@@ -137,10 +146,14 @@ function icub3d_RacialMacro()
 	  body = '#showtooltip\n/cast Arcane Torrent'
    elseif race == 'HighmountainTauren' then
 	  body = '#showtooltip\n/cast Bull Rush'
+   elseif race == 'Orc' then
+	  body = '#showtooltip\n/cast Blood Fury'
    elseif race == "Human" then
 	  body = "#showtooltip\n/cast Every Man for Himself"
    elseif race == "Troll" then
 	  body ="#showtooltip\n/cast Berserking"
+   elseif race == "Vulpera" then
+	  body ="#showtooltip\n/cast [mod:shift,mod:alt] Rummage Your Bag; [mod:shift] Make Camp; [mod:alt] Return to Camp; Bag of Tricks"
    elseif race == "Tauren" then
 	  body ="#showtooltip\n/cast War Stomp"
    end
@@ -208,6 +221,7 @@ end
 
 function icub3d_UpdateMacros(spec, where)
    for i, s in ipairs(spec.actionbar) do
+	  icub3d_Debug('%s', {s.name})
 	  -- Track the slot we'd place it in. We want to skip the second
 	  -- action bar.
 	  local p = i
@@ -221,6 +235,18 @@ function icub3d_UpdateMacros(spec, where)
 
 	  if s.typ == 'skip' then
 		 EditMacro(name, nil, icub3d_DefaultIcon, '')
+	  elseif s.typ == 'potion' then
+		 local _, class, _ = UnitClass("player");
+		 local spec = GetSpecialization()
+
+		 local potion = "Superior Battle Potion of Intellect"
+		 if class == "PALADIN" and (spec == 2 or spec == 3) then
+			potion = "Superior Battle Potion of Strength"
+		 elseif class == "HUNTER" or class == "DEMONHUNTER" then
+			potion = "Superior Battle Potion of Agility"
+		 end
+		 local mc = string.format('#showtooltip %1$s \n/use %1$s', potion)
+		 EditMacro(name, nil, icub3d_QuestionIcon, mc)
 	  elseif s.typ == 'macro' then
 		 -- We want to use one of our special macros.
 		 local macro = icub3d_SpecialMacros[s.name]
@@ -254,6 +280,42 @@ function icub3d_UpdateMacros(spec, where)
 
 		 -- Update the macro with the chosen spell or alternate.
 		 icub3d_UpdateMacro(name, where, selected.typ, selected.name)
+	  elseif s.typ == 'talent' then
+		 -- This is a pvp talent slot.
+		 local count = 0
+		 local selected = nil
+
+		 -- Find the pvp for the given count.
+		 for _, spell in ipairs(spec.talent) do
+			-- We found a spell, increment the count.
+			if GetSpellInfo(spell.name) ~= nil or spell.typ == 'pot' then
+			   count = count + 1
+			end
+			-- If we've found the number of pvptalents we were
+			-- expecting, we found the right spell.
+			if count == s.num then
+			   selected = spell
+			   break
+			end
+		 end
+
+		 -- Otherwise, we'll just use the alternate.
+		 if selected == nil then
+			EditMacro(name, nil, icub3d_DefaultIcon, '')
+		 elseif selected.typ == 'pot' then
+			local mc = string.format('#showtooltip %1$s \n/use %1$s', selected.name)
+			EditMacro(name, nil, icub3d_QuestionIcon, mc)
+		 elseif selected.name == 'Demonic Circle' then
+			-- We want to use one of our special macros.
+			local macro = icub3d_SpecialMacros['im_demonic_circle']
+			EditMacro(name, nil, macro.icon, macro.body)
+		 else
+			-- Update the macro with the chosen spell or alternate.
+			icub3d_UpdateMacro(name, where, selected.typ, selected.name)
+		 end
+	  elseif s.typ == 'click' then
+		 -- This is just a normal spell, item, etc.
+		 icub3d_UpdateMacro(name, where, s.typ, s.name)
 	  elseif s.typ == 'use' then
 		 -- This is just a normal spell, item, etc.
 		 icub3d_UpdateMacro(name, where, s.typ, s.name)
@@ -278,6 +340,8 @@ function icub3d_UpdateMacros(spec, where)
 			   break
 			end
 		 end
+	  elseif s.typ == 'ignore' then
+
 	  else
 		 icub3d_Error('unable to place spell(%s)', {s.name})
 	  end
