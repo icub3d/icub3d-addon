@@ -6,8 +6,8 @@ icub3d_DemonHunter_Spells = {
    icub3d_Spell('mouse', 'Infernal Strike', 'help', 'Fel Rush', 'skip', 'skip'),
    icub3d_Spell('help', 'Demon Spikes', 'harm',' Eye Beam', 'skip', 'skip'),
    icub3d_Spell('harm', 'Fiery Brand', 'harm', 'Chaos Nova'),
-   icub3d_Spell('mouse', 'Sigil of Flame', 'harm', 'Eye Beam', 'skip', 'skip'),
-   icub3d_Spell('mouse', 'Sigil of Misery', 'harm', 'Blade Dance', 'skip', 'skip'),
+   icub3d_Spell('harm', 'Fel Devasataion', 'harm', 'Eye Beam', 'skip', 'skip'),
+   icub3d_Spell('mouse', 'Sigil of Flame', 'harm', 'Blade Dance', 'skip', 'skip'),
    icub3d_Spell('mouse', 'Sigil of Silence', 'help', 'Vengeful Retreat', 'skip', 'skip'),
    icub3d_Spell('harm', 'Disrupt', 'skip', 'skip'),
    icub3d_Talent(1),
@@ -25,7 +25,7 @@ icub3d_DemonHunter_Spells = {
    icub3d_Spell('harm', 'Imprison', 'skip', 'skip'),
    icub3d_Spell('harm', 'Torment', 'skip', 'skip'),
    icub3d_Spell('harm', 'Immolation Aura', 'skip', 'skip'),
-   icub3d_Skip(),
+   icub3d_Spell('mouse', 'Sigil of Misery', 'skip', 'skip'),
 
    -- Bottom Left --
    icub3d_Spell('mouse', 'Infernal Strike', 'help', 'Fel Rush', 'skip', 'skip'),
@@ -33,7 +33,7 @@ icub3d_DemonHunter_Spells = {
    icub3d_Spell('harm', 'Consume Magic', 'skip', 'skip'),
    icub3d_Spell('help', 'Spectral Sight'),
    icub3d_Macro('im_racial'),
-   icub3d_Macro('im_medallion'),
+   icub3d_Skip(),
    icub3d_Spell('help', 'Blur', 'skip', 'skip'),
    icub3d_Spell('help', 'Darkness', 'skip', 'skip'),
    icub3d_Skip(),
@@ -57,60 +57,68 @@ icub3d_DemonHunter_Spells = {
 
 }
 
+icub3d_DemonHunter_Talents = {
+   -- Both --
+   icub3d_Spell('harm', 'Felblade'),
+
+   -- Havoc --
+   icub3d_Spell('harm', 'Fel Barrage'),
+   icub3d_Spell('harm', 'Fel Eruption'),
+   icub3d_Spell('harm', 'Netherwalk'),
+   icub3d_Spell('harm', 'Essence Break'),
+   icub3d_Spell('harm', 'Glaive Tempest'),
+
+   -- Vengeance --
+   icub3d_Spell('harm', 'Spirit Bomb'),
+   icub3d_Spell('mouse', 'Sigil of Chains'),
+   icub3d_Spell('harm', 'Soul Barrier'),
+   icub3d_Spell('harm', 'Bulk Extraction'),
+
+
+   -- Havoc PvP --
+   icub3d_Spell('harm', 'Reverse Magic'),
+   icub3d_Spell('harm', 'Rain from Above'),
+   icub3d_Spell('harm', 'Eye of Leotheras'),
+   icub3d_Spell('harm', 'Mana Break'),
+   icub3d_Spell('harm', 'Mana Rift'),
+
+   -- Vengeance PvP --
+   icub3d_Spell('harm', 'Reverse Magic'),
+   icub3d_Spell('harm', 'Illidan\'s Grasp'),
+   icub3d_Spell('harm', 'Demonic Trample'),
+
+   -- Potions --
+   icub3d_Spell('pot', '"Third Wind" Potion'),
+   icub3d_Spell('pot', 'Potion of Defiance'),
+   icub3d_Spell('pot', 'Saltwater Potion'),
+   icub3d_Spell('pot', 'Potion of Trivial Invisibility'),
+   icub3d_Spell('pot', 'Swiftness Potion'),
+   icub3d_Spell('pot', 'Drums of Fury'),
+
+}
+
 icub3d_Spells['DEMONHUNTER'] = {
    specs = {
 	  -- The tags are useful for switching but these should be in in-game order.
 	  {
 		 tags = {'h', 'havoc'},
 		 talents = {
-			['app'] = {2, 3, 1, 1, 2, 1, 1},
-			['demonic'] = {1, 3, 1, 1, 2, 1, 1},
-			['pvp'] = {2, 3, 1, 1, 2, 3, 1},
+			['dungeon'] = {1, 1, 3, 3, 1, 3, 1},
+			['felblade'] = {3, 3, 3, 3, 2, 3, 2},
+			['demonic'] = {3, 3, 2, 1, 2, 3, 1},
+			['momentum'] = {3, 3, 2, 3, 2, 3, 2},
 		 },
-		 talent = {
-			icub3d_Spell('harm', 'Felblade'),
-			icub3d_Spell('harm', 'Fel Barrage'),
-			icub3d_Spell('harm', 'Netherwalk'),
-			icub3d_Spell('harm', 'Dark Slash'),
-			icub3d_Spell('harm', 'Fel Eruption'),
-			icub3d_Spell('harm', 'Nemesis'),
-			icub3d_Spell('harm', 'Reverse Magic'),
-			icub3d_Spell('harm', 'Eye of Leotheras'),
-			icub3d_Spell('harm', 'Rain from Above'),
-			icub3d_Spell('harm', 'Mana Break'),
-			icub3d_Spell('harm', 'Mana Rift'),
-			icub3d_Spell('pot', '"Third Wind" Potion'),
-			icub3d_Spell('pot', 'Potion of Defiance'),
-			icub3d_Spell('pot', 'Saltwater Potion'),
-			icub3d_Spell('pot', 'Potion of Trivial Invisibility'),
-			icub3d_Spell('pot', 'Swiftness Potion'),
-			icub3d_Spell('pot', 'Drums of Fury'),
-		 },
+		 talent = icub3d_DemonHunter_Talents,
 		 actionbar = icub3d_DemonHunter_Spells,
 	  },
 	  {
 		 tags = {'v', 'veng', 'vengeance'},
 		 talents = {
-			['dps'] = {1, 2, 1, 3, 3, 2, 1},
-			['dungeon'] = {1, 2, 1, 3, 3, 1, 1},
-			['defensive'] = {1, 2, 1, 2, 3, 1, 1}
+			['bomb'] = {1, 2, 3, 3, 3, 2, 1},
+			['brand'] = {2, 3, 2, 3, 3, 2, 1},
+			['control'] = {1, 3, 1, 3, 3, 2, 1},
 		 },
-		 talent = {
-			icub3d_Spell('harm', 'Felblade'),
-			icub3d_Spell('mouse', 'Sigil of Chains'),
-			icub3d_Spell('harm', 'Spirit Bomb'),
-			icub3d_Spell('harm', 'Fel Devastation'),
-			icub3d_Spell('harm', 'Soul Barrier'),
-			icub3d_Spell('harm', 'Illidan\'s Grasp'),
-			icub3d_Spell('harm', 'Reverse Magic'),
-			icub3d_Spell('harm', 'Demonic Trample'),
-			icub3d_Spell('pot', '"Third Wind" Potion'),
-			icub3d_Spell('pot', 'Potion of Defiance'),
-			icub3d_Spell('pot', 'Saltwater Potion'),
-			icub3d_Spell('pot', 'Potion of Trivial Invisibility'),
-			icub3d_Spell('pot', 'Swiftness Potion'),
-			icub3d_Spell('pot', 'Drums of Fury'),
-		 },
+		 talent = icub3d_DemonHunter_Talents,
 		 actionbar = icub3d_DemonHunter_Spells,
 	  }
    }

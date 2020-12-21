@@ -33,7 +33,7 @@ icub3d_Paladin_Spells = {
    icub3d_Spell('help', 'Cleanse', 'help', 'Cleanse Toxins', 'skip', 'skip'),
    icub3d_Spell('help', 'Lay on Hands'),
    icub3d_Macro('im_racial'),
-   icub3d_Macro('im_medallion'),
+   icub3d_Skip(),
    icub3d_Spell('help', 'Guardian of Ancient Kings', 'help', 'Greater Blessing of Kings', 'help', 'Aura Mastery', 'skip', 'skip'),
    icub3d_Spell('help', 'Greater Blessing of Wisdom', 'help', 'Beacon of Light', 'skip', 'skip'),
    icub3d_Spell('help', 'Blessing of Freedom', 'skip', 'skip'),

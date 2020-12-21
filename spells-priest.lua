@@ -2,12 +2,12 @@ icub3d_Priest_Spells = {
    icub3d_Spell('help', 'Shadow Mend', 'help', 'Flash Heal'), -- D, H, S
    icub3d_Spell('help', 'Power Word: Shield'), -- D, H, S
    icub3d_Spell('harm', 'Smite', 'harm', 'Holy Fire', 'harm', 'Mind Flay'), -- D, H, S
-   icub3d_Spell('harm', 'Penance', 'help', 'Heal', 'skip', 'skip'), -- D, H
-   icub3d_Spell('help', 'Penance', 'help', 'Prayer of Mending', 'skip', 'skip'), -- D, H
-   icub3d_Spell('help', 'Renew', 'harm', 'Devouring Plague', 'skip', 'skip'), -- H, S
+   icub3d_Spell('harm', 'Penance', 'help', 'Heal', 'harm', 'Mind Blast'), -- D, H
+   icub3d_Spell('help', 'Penance', 'help', 'Prayer of Mending', 'harm', 'Shadow Word: Pain'), -- D, H
+   icub3d_Spell('help', 'Renew', 'harm', 'Vampiric Touch', 'skip', 'skip'), -- D, H, S
    icub3d_Spell('help', 'Holy Word: Sanctify', 'skip', 'skip'), -- H
    icub3d_Spell('help', 'Power Word: Radiance', 'help', 'Prayer of Healing', 'skip', 'skip'), -- D, H
-   icub3d_Spell('help', 'Holy Nova', 'harm', 'Vampiric Touch'), -- D, H, S
+   icub3d_Spell('help', 'Holy Nova', 'harm', 'Devouring Plague'), -- H, S
    icub3d_Spell('harm', 'Silence', 'harm', 'Holy Word: Chastise', 'skip', 'skip'), -- H, S
    icub3d_Spell('help', 'Purify', 'harm', 'Void Eruption', 'skip', 'skip'),
    icub3d_Spell('harm', 'Dispel Magic'),
