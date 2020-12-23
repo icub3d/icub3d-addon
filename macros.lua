@@ -81,6 +81,7 @@ icub3d_PermanentMacros = {
 -- to choose one of these.
 icub3d_SpecialMacros = {
    ['im_travel'] = {icon = icub3d_QuestionIcon, body = '#showtooltip\n/cast [mod:shift] Treant Form; [mod:alt] Stag Form; Travel Form'},
+   ['im_cloak_belt'] = {icon = icub3d_QuestionIcon, body = '#showtooltip\n/use [mod:shift] 15; 6'},
    ['im_belt'] = {icon = icub3d_QuestionIcon, body = '#showtooltip\n/use 6'},
    ['im_cloak'] = {icon = icub3d_QuestionIcon, body = '#showtooltip\n/use 15'},
    ['im_trinket'] = {icon = icub3d_QuestionIcon, body = '#showtooltip\n/use [mod:alt] 14; 13'},
@@ -97,7 +98,10 @@ icub3d_SpecialMacros = {
    ['im_pet_move_stay'] = {icon = 'ability_hunter_pet_goto', body = '/petstay [mod:shift]\n/petmoveto [nomod:shift]'},
    ['im_pet_special'] = {icon = icub3d_QuestionIcon, body = '#showtooltip [pet:felhunter] Devour Magic; [pet:succubus] Whiplash; [] Fear\n/cast [pet:felhunter,@mouseover,harm,nodead] [pet:felhunter,harm] [pet:felhunter] Devour Magic; [pet:succubus,@mouseover,harm,nodead] [pet:succubus,harm] [pet:succubus] Whiplash; Fear'},
    ['im_demonic_circle'] = {icon = icub3d_QuestionIcon, body = '#showtooltip\n/cast [mod:shift] Demonic Circle; Demonic Circle: Teleport'},
-   ['im_lock_stone'] = {icon = icub3d_QuestionIcon, body = '#showtooltip\n/cast [mod:shift] Create Soulwell; Create Healthstone'}
+   ['im_lock_stone'] = {icon = icub3d_QuestionIcon, body = '#showtooltip\n/cast [mod:shift] Create Soulwell; Create Healthstone'},
+   ['im_devo'] = {icon = icub3d_QuestionIcon, body = '#showtooltip\n/cast [mod:shift] Concentration Aura; Devotion Aura'},
+   ['im_crus'] = {icon = icub3d_QuestionIcon, body = '#showtooltip\n/cast [mod:shift] Retribution Aura; Crusader Aura'},
+   ['im_foam_loot'] = {icon = icub3d_QuestionIcon, body = '#showtooltip\n/use [mod:shift] Loot-A-Rang; Soft Foam Sword'}
 }
 
 -- These are the different macro formats that can be used.

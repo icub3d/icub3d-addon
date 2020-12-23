@@ -33,7 +33,7 @@ icub3d_Hunter_Spells = {
    icub3d_Spell('help', 'Mend Pet', 'skip', 'skip'),
    icub3d_Spell('mouse', 'Flare'),
    icub3d_Macro('im_racial'),
-   icub3d_Macro('im_medallion'),
+   icub3d_Skip(),
    icub3d_Spell('help', 'Feign Death', 'skip', 'skip'),
    icub3d_Spell('help', 'Play Dead', 'skip', 'skip'),
    icub3d_Spell('mouse', 'Freezing Trap'),
@@ -43,9 +43,9 @@ icub3d_Hunter_Spells = {
 
    -- Bottom Right --
    icub3d_Spell('use', 'Goblin Glider Kit'),
-   icub3d_Macro('im_cloak'),
+   icub3d_Macro('im_cloak_belt'),
    icub3d_Macro('im_trinket'),
-   icub3d_Macro('im_belt'),
+   icub3d_Skip(),
    icub3d_Spell('use', 'Soft Foam Sword'),
    icub3d_Spell('both', 'Fetch'),
    icub3d_Macro('im_healthstone'),
