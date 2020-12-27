@@ -24,7 +24,6 @@ icub3d_Priest_Spells = {
    icub3d_Talent(6),
    icub3d_Talent(7),
 
-
    icub3d_Spell('help', 'Leap of Faith'),
    icub3d_Spell('mouse', 'Mass Dispel'),
    icub3d_Spell('help', 'Rapture', 'help', 'Symbol of Hope', 'help', 'Vampiric Embrace'),
@@ -99,6 +98,7 @@ icub3d_Spells['PRIEST'] = {
 		 talent = icub3d_Priest_Talents,
 		 actionbar = icub3d_Priest_Spells,
 		 talents = {
+			['quest'] = {3, 3, 3, 3, 1, 1, 1},
 			['raid'] = {3, 3, 3, 3, 1, 3, 3},
 			['dungeon'] = {2, 3, 3, 3, 1, 1, 1},
 			['shell'] = {3, 3, 2, 3, 1, 3, 2},

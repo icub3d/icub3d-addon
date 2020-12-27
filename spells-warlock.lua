@@ -46,8 +46,8 @@ icub3d_Warlock_Spells = {
    icub3d_Spell('help', 'Health Funnel'),
    icub3d_Macro('im_banish_subjugate'),
    icub3d_Macro('im_racial'),
-   icub3d_Skip(), -- TODO special 1
-   icub3d_Skip(), -- TODO special 2
+   icub3d_Spell('harm', 'Covenant Ability'),
+   icub3d_Spell('harm', 'Signature Ability'),
    icub3d_Macro('im_trinket'),
    icub3d_Spell('help', 'Soulstone'),
    icub3d_Skip(), 
@@ -111,6 +111,7 @@ icub3d_Spells['WARLOCK'] = {
 		 tags = {'a', 'aff', 'affliction'},
 		 talent = icub3d_Warlock_Talents,
 		 talents = {
+			['quest'] = {1, 2, 2, 2, 2, 2, 2, 1},
 			['raid'] = {3, 3, 2, 2, 2, 2, 2, 3},
 			['dungeon'] = {3, 2, 2, 3, 2, 1, 3},
 			['quest'] = {3, 3, 2, 3, 2, 2, 3},

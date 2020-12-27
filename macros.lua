@@ -130,6 +130,8 @@ function icub3d_UpdateMacro(name, where, typ, spell)
    macro = string.format(icub3d_MacroFormats[where][typ], spell, icub3d_PVP1, icub3d_PVP2)
    if spell == 'Prowl' then
 	  macro = '#showtooltip Prowl\n/cancelform [nostance:2]\n/cast Prowl'
+   elseif spell == 'Glide' then
+	  macro = '#showtooltip Glide\n/dismount [mounted]\n/cast Glide'
    elseif spell == 'Dash' then
 	  macro = '#showtooltip Dash\n/cancelform [nostance:2]\n/cast Dash'
    elseif spell == "Angelic Feather" then

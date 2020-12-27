@@ -6,7 +6,7 @@ icub3d_DemonHunter_Spells = {
    icub3d_Spell('mouse', 'Infernal Strike', 'help', 'Fel Rush', 'skip', 'skip'),
    icub3d_Spell('help', 'Demon Spikes', 'harm',' Eye Beam', 'skip', 'skip'),
    icub3d_Spell('harm', 'Fiery Brand', 'harm', 'Chaos Nova'),
-   icub3d_Spell('harm', 'Fel Devasataion', 'harm', 'Eye Beam', 'skip', 'skip'),
+   icub3d_Spell('harm', 'Fel Devastation', 'harm', 'Eye Beam', 'skip', 'skip'),
    icub3d_Spell('mouse', 'Sigil of Flame', 'harm', 'Blade Dance', 'skip', 'skip'),
    icub3d_Spell('mouse', 'Sigil of Silence', 'help', 'Vengeful Retreat', 'skip', 'skip'),
    icub3d_Spell('harm', 'Disrupt', 'skip', 'skip'),
@@ -36,10 +36,10 @@ icub3d_DemonHunter_Spells = {
    icub3d_Skip(),
    icub3d_Spell('help', 'Blur', 'skip', 'skip'),
    icub3d_Spell('help', 'Darkness', 'skip', 'skip'),
+   icub3d_Spell('use', 'Covenant Ability'),
+   icub3d_Spell('use', 'Signature Ability'),
    icub3d_Skip(),
    icub3d_Skip(),
-   icub3d_Skip(),
-   icub3d_Spell('use', 'Heart Essence'),
 
    -- Bottom Right --
    icub3d_Spell('help', 'Glide'),
@@ -88,12 +88,12 @@ icub3d_DemonHunter_Talents = {
    icub3d_Spell('harm', 'Demonic Trample'),
 
    -- Potions --
-   icub3d_Spell('pot', '"Third Wind" Potion'),
-   icub3d_Spell('pot', 'Potion of Defiance'),
-   icub3d_Spell('pot', 'Saltwater Potion'),
-   icub3d_Spell('pot', 'Potion of Trivial Invisibility'),
-   icub3d_Spell('pot', 'Swiftness Potion'),
-   icub3d_Spell('pot', 'Drums of Fury'),
+   -- icub3d_Spell('pot', '"Third Wind" Potion'),
+   -- icub3d_Spell('pot', 'Potion of Defiance'),
+   -- icub3d_Spell('pot', 'Saltwater Potion'),
+   -- icub3d_Spell('pot', 'Potion of Trivial Invisibility'),
+   -- icub3d_Spell('pot', 'Swiftness Potion'),
+   -- icub3d_Spell('pot', 'Drums of Fury'),
 
 }
 
@@ -114,6 +114,7 @@ icub3d_Spells['DEMONHUNTER'] = {
 	  {
 		 tags = {'v', 'veng', 'vengeance'},
 		 talents = {
+			['quest'] = {1, 2, 1, 3, 2, 1, 1},
 			['bomb'] = {1, 2, 3, 3, 3, 2, 1},
 			['brand'] = {2, 3, 2, 3, 3, 2, 1},
 			['control'] = {1, 3, 1, 3, 3, 2, 1},

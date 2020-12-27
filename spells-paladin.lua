@@ -12,17 +12,16 @@ icub3d_Paladin_Spells = {
    icub3d_Spell('help', 'Avenging Wrath'),
    icub3d_Spell('harm', 'Rebuke', 'skip', 'skip'),
    icub3d_Spell('help', 'Word of Glory'),
-   icub3d_Spell('help', 'Hammer of Wrath'),
-   icub3d_Spell('harm', 'Wake of Ashes', 'skip', 'skip'),
 
    -- Top Right --
+   icub3d_Spell('help', 'Hammer of Wrath'),
+   icub3d_Spell('harm', 'Wake of Ashes', 'skip', 'skip'),
    icub3d_Talent(1),
    icub3d_Talent(2),
    icub3d_Talent(3),
    icub3d_Talent(4),
    icub3d_Talent(5),
    icub3d_Talent(6),
-   icub3d_Talent(7),
    icub3d_Spell('harm', 'Hammer of Justice'),
    icub3d_Spell('harm', 'Hand of Reckoning'),
    icub3d_Spell('harm', 'Consecration', 'skip', 'skip'),
@@ -43,8 +42,8 @@ icub3d_Paladin_Spells = {
    icub3d_Macro('im_crus'),
 
    -- Bottom Right --
-   icub3d_Skip(),
-   icub3d_Skip(),
+   icub3d_Spell('mouse', 'Covenant Ability'),
+   icub3d_Spell('mouse', 'Special  Ability'),
    icub3d_Spell('use', 'Goblin Glider Kit'),
    icub3d_Macro('im_racial'),
    icub3d_Macro('im_trinket'),
