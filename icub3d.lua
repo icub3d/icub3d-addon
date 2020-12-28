@@ -21,7 +21,7 @@ end
 
 SLASH_ICUB3DLP1 = '/lp'
 function SlashCmdList.ICUB3DLP(msg, editBox)
-    LeaveParty()
+    C_PartyInfo.LeaveParty()
 end
 
 --------------------------------------------------------------------

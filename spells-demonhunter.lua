@@ -86,15 +86,6 @@ icub3d_DemonHunter_Talents = {
    icub3d_Spell('harm', 'Reverse Magic'),
    icub3d_Spell('harm', 'Illidan\'s Grasp'),
    icub3d_Spell('harm', 'Demonic Trample'),
-
-   -- Potions --
-   -- icub3d_Spell('pot', '"Third Wind" Potion'),
-   -- icub3d_Spell('pot', 'Potion of Defiance'),
-   -- icub3d_Spell('pot', 'Saltwater Potion'),
-   -- icub3d_Spell('pot', 'Potion of Trivial Invisibility'),
-   -- icub3d_Spell('pot', 'Swiftness Potion'),
-   -- icub3d_Spell('pot', 'Drums of Fury'),
-
 }
 
 icub3d_Spells['DEMONHUNTER'] = {

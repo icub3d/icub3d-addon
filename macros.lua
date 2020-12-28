@@ -84,10 +84,11 @@ icub3d_SpecialMacros = {
    ['im_cloak_belt'] = {icon = icub3d_QuestionIcon, body = '#showtooltip\n/use [mod:shift] 15; 6'},
    ['im_belt'] = {icon = icub3d_QuestionIcon, body = '#showtooltip\n/use 6'},
    ['im_cloak'] = {icon = icub3d_QuestionIcon, body = '#showtooltip\n/use 15'},
-   ['im_trinket'] = {icon = icub3d_QuestionIcon, body = '#showtooltip\n/use [mod:alt] 14; 13'},
+   ['im_trinket'] = {icon = icub3d_QuestionIcon, body = '#showtooltip\n/use [mod:shift] 14; 13'},
    ['im_racial'] = {icon = icub3d_QuestionIcon, body = "/run print('hello')"},
    ['im_medallion'] = {icon = icub3d_QuestionIcon, body = '#showtooltip\n/use Honorable Medallion'},
    ['im_glide'] = {icon = icub3d_QuestionIcon, body = '#showtooltip Glide\n/dismount\n/cast Glide'},
+   ['im_soothe'] = {icon = icub3d_QuestionIcon, body = '#showtooltip \n/cast [mod:shift] Hibernate; Soothe'},
    ['im_healthstone'] = {icon = icub3d_QuestionIcon, body = '#showtooltip healthstone\n/use healthstone'},
    ['im_imp_void'] = {icon = icub3d_QuestionIcon, body = '#showtooltip\n/cast [mod:shift] Summon Voidlord; Summon Imp'},
    ['im_fel_succ'] = {icon = icub3d_QuestionIcon, body = '#showtooltip\n/cast [mod:shift] Summon Succubus; Summon Felhunter'},
@@ -101,7 +102,9 @@ icub3d_SpecialMacros = {
    ['im_lock_stone'] = {icon = icub3d_QuestionIcon, body = '#showtooltip\n/cast [mod:shift] Create Soulwell; Create Healthstone'},
    ['im_devo'] = {icon = icub3d_QuestionIcon, body = '#showtooltip\n/cast [mod:shift] Concentration Aura; Devotion Aura'},
    ['im_crus'] = {icon = icub3d_QuestionIcon, body = '#showtooltip\n/cast [mod:shift] Retribution Aura; Crusader Aura'},
-   ['im_foam_loot'] = {icon = icub3d_QuestionIcon, body = '#showtooltip\n/use [mod:shift] Loot-A-Rang; Soft Foam Sword'}
+   ['im_foam_loot'] = {icon = icub3d_QuestionIcon, body = '#showtooltip\n/use [mod:shift] Soft Foam Sword; [mod:alt] Goblin Glider Kit; Loot-A-Rang'},
+   ['im_health'] = {icon = icub3d_QuestionIcon, body = '#showtooltip\n/use [mod:shift] Healthstone; Spiritual Healing Potion'}
+   
 }
 
 -- These are the different macro formats that can be used.
@@ -248,13 +251,15 @@ function icub3d_UpdateMacros(spec, where)
 		 local _, class, _ = UnitClass("player");
 		 local spec = GetSpecialization()
 
-		 local potion = "Superior Battle Potion of Intellect"
+		 local potion = "Potion of Spectral Intellect"
 		 if class == "PALADIN" and (spec == 2 or spec == 3) then
-			potion = "Superior Battle Potion of Strength"
+			potion = "Potion of Spectral Strength"
+		 elseif class == "DRUID" and spec ~= 1 and spec ~= 4 then
+			potion = "Potion of Spectral Agility"
 		 elseif class == "HUNTER" or class == "DEMONHUNTER" then
-			potion = "Superior Battle Potion of Agility"
+			potion = "Potion of Spectral Agility"
 		 end
-		 local mc = string.format('#showtooltip %1$s \n/use %1$s', potion)
+		 local mc = string.format('#showtooltip\n/use [mod:shift] Spiritual Mana Potion; %1$s', potion)
 		 EditMacro(name, nil, icub3d_QuestionIcon, mc)
 	  elseif s.typ == 'macro' then
 		 -- We want to use one of our special macros.
