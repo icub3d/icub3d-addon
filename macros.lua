@@ -103,6 +103,7 @@ icub3d_SpecialMacros = {
    ['im_devo'] = {icon = icub3d_QuestionIcon, body = '#showtooltip\n/cast [mod:shift] Concentration Aura; Devotion Aura'},
    ['im_crus'] = {icon = icub3d_QuestionIcon, body = '#showtooltip\n/cast [mod:shift] Retribution Aura; Crusader Aura'},
    ['im_foam_loot'] = {icon = icub3d_QuestionIcon, body = '#showtooltip\n/use [mod:shift] Soft Foam Sword; [mod:alt] Goblin Glider Kit; Loot-A-Rang'},
+   ['im_levitate'] = {icon = icub3d_QuestionIcon, body = '#showtooltip\n/use [mod:shift] Goblin Glider Kit; Levitate'},
    ['im_health'] = {icon = icub3d_QuestionIcon, body = '#showtooltip\n/use [mod:shift] Healthstone; Spiritual Healing Potion'}
    
 }

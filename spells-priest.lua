@@ -1,18 +1,18 @@
 icub3d_Priest_Spells = {
-   icub3d_Spell('help', 'Shadow Mend', 'help', 'Flash Heal'), -- D, H, S
-   icub3d_Spell('help', 'Power Word: Shield'), -- D, H, S
-   icub3d_Spell('harm', 'Smite', 'harm', 'Holy Fire', 'harm', 'Mind Flay'), -- D, H, S
-   icub3d_Spell('harm', 'Penance', 'help', 'Heal', 'harm', 'Mind Blast'), -- D, H
-   icub3d_Spell('help', 'Penance', 'help', 'Prayer of Mending', 'harm', 'Shadow Word: Pain'), -- D, H
-   icub3d_Spell('help', 'Renew', 'harm', 'Vampiric Touch', 'skip', 'skip'), -- D, H, S
-   icub3d_Spell('help', 'Holy Word: Sanctify', 'skip', 'skip'), -- H
-   icub3d_Spell('help', 'Power Word: Radiance', 'help', 'Prayer of Healing', 'skip', 'skip'), -- D, H
-   icub3d_Spell('help', 'Holy Nova', 'harm', 'Devouring Plague'), -- H, S
-   icub3d_Spell('harm', 'Silence', 'harm', 'Holy Word: Chastise', 'skip', 'skip'), -- H, S
+   icub3d_Spell('help', 'Shadow Mend', 'help', 'Flash Heal'),
+   icub3d_Spell('help', 'Power Word: Shield'), 
+   icub3d_Spell('harm', 'Smite', 'harm', 'Holy Fire', 'harm', 'Mind Flay'), 
+   icub3d_Spell('harm', 'Penance', 'help', 'Heal', 'harm', 'Mind Blast'), 
+   icub3d_Spell('help', 'Penance', 'help', 'Prayer of Mending', 'harm', 'Shadow Word: Pain'), 
+   icub3d_Spell('help', 'Renew', 'harm', 'Vampiric Touch', 'skip', 'skip'), 
+   icub3d_Spell('help', 'Holy Word: Sanctify', 'skip', 'skip'),
+   icub3d_Spell('help', 'Power Word: Radiance', 'help', 'Prayer of Healing', 'skip', 'skip'),
+   icub3d_Spell('help', 'Holy Nova', 'harm', 'Devouring Plague'),
+   icub3d_Spell('harm', 'Silence', 'harm', 'Holy Word: Chastise', 'skip', 'skip'),
    icub3d_Spell('help', 'Purify', 'harm', 'Void Eruption', 'skip', 'skip'),
    icub3d_Spell('harm', 'Dispel Magic'),
    icub3d_Spell('help', 'Circle of Healing', 'harm', 'Mind Sear'),
-   icub3d_Spell('help', 'Holy Word: Serenity', 'skip', 'skip'), -- H
+   icub3d_Spell('help', 'Holy Word: Serenity', 'skip', 'skip'),
    icub3d_Spell('harm', 'Mind Blast'),
    icub3d_Spell('harm', 'Shadow Word: Pain'),
    icub3d_Spell('harm', 'Shadow Word: Death'),
@@ -24,26 +24,26 @@ icub3d_Priest_Spells = {
    icub3d_Talent(6),
    icub3d_Talent(7),
 
-   icub3d_Spell('help', 'Leap of Faith'),
+   icub3d_Macro('im_levitate'),
    icub3d_Spell('mouse', 'Mass Dispel'),
    icub3d_Spell('help', 'Rapture', 'help', 'Symbol of Hope', 'help', 'Vampiric Embrace'),
    icub3d_Spell('help', 'Pain Suppression', 'help', 'Dispersion', 'help', 'Guardian Spirit'),
    icub3d_Spell('harm', 'Shadowfiend', 'harm', 'Lightspawn', 'skip', 'skip'),
    icub3d_Spell('mouse', 'Power Word: Barrier', 'harm', 'Divine Hymn', 'harm', 'Void Eruption'),
    icub3d_Spell('help', 'Desperate Prayer'),
-   icub3d_Spell('help', 'Levitate'),
    icub3d_Spell('help', 'Fade'),
-   icub3d_Spell('harm', 'Mind Soothe'),
    icub3d_Spell('harm', 'Psychic Scream'),
-   icub3d_Spell('harm', 'Shackle Undead'),
-   icub3d_Spell('harm', 'Mind Control'),
    icub3d_Spell('help', 'Power Infusion'),
    icub3d_Macro('im_racial'),
-   icub3d_Spell('help', 'Levitate'),
+   icub3d_Macro('im_trinket'),
    icub3d_Skip(), -- TODO special 1
    icub3d_Skip(), -- TODO special 2
+   icub3d_Spell('help', 'Leap of Faith'),
+   icub3d_Macro('im_health'),
+   icub3d_Spell('harm', 'Shackle Undead'),
+   icub3d_Spell('harm', 'Mind Soothe'),
+   icub3d_Spell('harm', 'Mind Control'),
    icub3d_Skip(),
-   icub3d_Macro('im_trinket'),
    icub3d_Spell('help', 'Resurrection'),
    icub3d_Spell('harm', 'Power Word: Fortitude'),
    icub3d_Spell('harm', 'Mind Vision'),
