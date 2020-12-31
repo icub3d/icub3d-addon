@@ -1,5 +1,5 @@
 icub3d_Warlock_Spells = {
-   -- Top Left --
+   -- Top --
    icub3d_Spell('harm', 'Corruption'),
    icub3d_Spell('harm', 'Agony', 'harm', 'Call Dreadstalkers', 'harm', 'Immolate'),
    icub3d_Spell('harm', 'Malefic Rapture', 'harm', 'Implosion', 'harm', 'Chaos Bolt'),
@@ -12,8 +12,6 @@ icub3d_Warlock_Spells = {
    icub3d_Macro('im_pet_attack_follow'),
    icub3d_Macro('im_pet_move_stay'),
    icub3d_Macro('im_pet_special'),
-
-   -- Top Right --
    icub3d_Spell('harm', 'Havoc', 'skip', 'skip'),
    icub3d_Spell('mouse', 'Summon Infernal', 'harm', 'Summon Darkglare', 'harm', 'Summon Demonic Tyrant'),
    icub3d_Talent(1),
@@ -27,21 +25,16 @@ icub3d_Warlock_Spells = {
    icub3d_Talent(9),
    icub3d_Talent(10),
 
-   -- Bottom Left --
+   -- Bottom --
    icub3d_Spell('harm', 'Fear'),
    icub3d_Macro('im_demonic_circle'),
    icub3d_Spell('mouse', 'Demonic Gateway'),
-   icub3d_Spell('harm', 'Eye of Kilrogg'),
-   icub3d_Spell('help', 'Unending Breath'),
    icub3d_Spell('help', 'Unending Resolve'),
    icub3d_Spell('harm', 'Curse of Exhaustion'),
    icub3d_Spell('harm', 'Curse of Tongues'),
    icub3d_Spell('harm', 'Curse of Weakness'),
-   icub3d_Spell('use', 'Healthstone'),
-   icub3d_Macro('im_lock_stone'),
+   icub3d_Macro('im_health_rev'),
    icub3d_Macro('im_ritual'),
-
-   -- Bottom Right --
    icub3d_Spell('help', 'Fel Domination'),
    icub3d_Spell('help', 'Health Funnel'),
    icub3d_Macro('im_banish_subjugate'),
@@ -50,6 +43,9 @@ icub3d_Warlock_Spells = {
    icub3d_Spell('harm', 'Signature Ability'),
    icub3d_Macro('im_trinket'),
    icub3d_Spell('help', 'Soulstone'),
+   icub3d_Spell('use', 'Soft Foam Sword'),
+   icub3d_Spell('use', 'Goblin Glider Kit'),
+   icub3d_Spell('use', 'Create Healthstone'),
    icub3d_Skip(), 
    icub3d_Skip(), 
    icub3d_Skip(), 
@@ -112,7 +108,8 @@ icub3d_Spells['WARLOCK'] = {
 		 talent = icub3d_Warlock_Talents,
 		 talents = {
 			['quest'] = {1, 2, 2, 2, 2, 2, 2, 1},
-			['raid'] = {3, 3, 2, 2, 2, 2, 2, 3},
+			['single-target'] = {3, 3, 2, 2, 2, 2, 2, 3},
+			['multi-target'] = {3, 2, 2, 2, 2, 2, 2, 3},
 			['dungeon'] = {3, 2, 2, 3, 2, 1, 3},
 			['quest'] = {3, 3, 2, 3, 2, 2, 3},
 		 },

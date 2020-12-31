@@ -36,8 +36,8 @@ icub3d_Priest_Spells = {
    icub3d_Spell('help', 'Power Infusion'),
    icub3d_Macro('im_racial'),
    icub3d_Macro('im_trinket'),
-   icub3d_Skip(), -- TODO special 1
-   icub3d_Skip(), -- TODO special 2
+   icub3d_Spell('use', 'Covenant Ability'),
+   icub3d_Spell('use', 'Signature Ability'),
    icub3d_Spell('help', 'Leap of Faith'),
    icub3d_Macro('im_health'),
    icub3d_Spell('harm', 'Shackle Undead'),

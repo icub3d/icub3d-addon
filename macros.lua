@@ -97,14 +97,16 @@ icub3d_SpecialMacros = {
    ['im_ritual'] = {icon = icub3d_QuestionIcon, body = '#showtooltip\n/cast [mod:shift] Ritual of Summoning; Ritual of Doom'},
    ['im_pet_attack_follow'] = {icon = 'ability_ghoulfrenzy', body = '/petfollow [mod:shift]\n/petattack [nomod:shift,mod:alt,@focus] [nomod:shift,@mouseover,harm,nodead] [nomod:shift,harm] [nomod:shift,@mouseovertarget,harm] [nomod:shift,@targettarget,harm] [nomod:shift]'},
    ['im_pet_move_stay'] = {icon = 'ability_hunter_pet_goto', body = '/petstay [mod:shift]\n/petmoveto [nomod:shift]'},
-   ['im_pet_special'] = {icon = icub3d_QuestionIcon, body = '#showtooltip [pet:felhunter] Devour Magic; [pet:succubus] Whiplash; [] Fear\n/cast [pet:felhunter,@mouseover,harm,nodead] [pet:felhunter,harm] [pet:felhunter] Devour Magic; [pet:succubus,@mouseover,harm,nodead] [pet:succubus,harm] [pet:succubus] Whiplash; Fear'},
+   ['im_pet_special'] = {icon = icub3d_QuestionIcon, body = '#showtooltip\n/cast [pet:felhunter,@mouseover,harm,nodead] [pet:felhunter,harm] [pet:felhunter] Devour Magic; [pet:succubus,@mouseover,harm,nodead] [pet:succubus,harm] [pet:succubus] Whiplash; Fear'},
    ['im_demonic_circle'] = {icon = icub3d_QuestionIcon, body = '#showtooltip\n/cast [mod:shift] Demonic Circle; Demonic Circle: Teleport'},
    ['im_lock_stone'] = {icon = icub3d_QuestionIcon, body = '#showtooltip\n/cast [mod:shift] Create Soulwell; Create Healthstone'},
    ['im_devo'] = {icon = icub3d_QuestionIcon, body = '#showtooltip\n/cast [mod:shift] Concentration Aura; Devotion Aura'},
    ['im_crus'] = {icon = icub3d_QuestionIcon, body = '#showtooltip\n/cast [mod:shift] Retribution Aura; Crusader Aura'},
    ['im_foam_loot'] = {icon = icub3d_QuestionIcon, body = '#showtooltip\n/use [mod:shift] Soft Foam Sword; [mod:alt] Goblin Glider Kit; Loot-A-Rang'},
    ['im_levitate'] = {icon = icub3d_QuestionIcon, body = '#showtooltip\n/use [mod:shift] Goblin Glider Kit; Levitate'},
-   ['im_health'] = {icon = icub3d_QuestionIcon, body = '#showtooltip\n/use [mod:shift] Healthstone; Spiritual Healing Potion'}
+   ['im_health'] = {icon = icub3d_QuestionIcon, body = '#showtooltip\n/use [mod:shift] Healthstone; Spiritual Healing Potion'},
+   ['im_health_rev'] = {icon = icub3d_QuestionIcon, body = '#showtooltip\n/use [mod:shift] Spiritual Healing Potion; Healthstone'},
+   ['im_glider_foam'] = {icon = icub3d_QuestionIcon, body = '#showtooltip\n/use [mod:shift] Soft Foam Sword; Goblin Glider Kit'},
    
 }
 
