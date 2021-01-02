@@ -106,6 +106,9 @@ icub3d_SpecialMacros = {
    ['im_levitate'] = {icon = icub3d_QuestionIcon, body = '#showtooltip\n/use [mod:shift] Goblin Glider Kit; Levitate'},
    ['im_health'] = {icon = icub3d_QuestionIcon, body = '#showtooltip\n/use [mod:shift] Healthstone; Spiritual Healing Potion'},
    ['im_health_rev'] = {icon = icub3d_QuestionIcon, body = '#showtooltip\n/use [mod:shift] Spiritual Healing Potion; Healthstone'},
+   ['im_glider_flap'] = {icon = icub3d_QuestionIcon, body ='#showtooltip\n/use [mod:shift] [noform:4] Goblin Glider Kit; Flap'},
+   ['im_covenant'] = {icon = icub3d_QuestionIcon, body ='#showtooltip\n/use [mod:shift] Signature Ability; Covenant Ability'},
+   ['im_cyclone_typhoon'] = {icon = icub3d_QuestionIcon, body ='#showtooltip\n/use [mod:shift] Typhoon; [mod:alt,@focus] [@mouseover,harm,nodead] [harm] [@mouseovertarget,harm] [@targettarget,harm] [] Cyclone'},
    ['im_glider_foam'] = {icon = icub3d_QuestionIcon, body = '#showtooltip\n/use [mod:shift] Soft Foam Sword; Goblin Glider Kit'},
    
 }
@@ -168,7 +171,7 @@ function icub3d_RacialMacro()
    elseif race == "Troll" then
 	  body ="#showtooltip\n/cast Berserking"
    elseif race == "Vulpera" then
-	  body ="#showtooltip\n/cast [mod:shift,mod:alt] Rummage Your Bag; [mod:shift] Make Camp; [mod:alt] Return to Camp; Bag of Tricks"
+	  body ="#showtooltip\n/cast [mod:shift] Rummage Your Bag; Bag of Tricks"
    elseif race == "Tauren" then
 	  body ="#showtooltip\n/cast War Stomp"
    end
