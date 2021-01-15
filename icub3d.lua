@@ -24,6 +24,38 @@ function SlashCmdList.ICUB3DLP(msg, editBox)
     C_PartyInfo.LeaveParty()
 end
 
+SLASH_ICUB3DPIN1 = '/pin'
+function SlashCmdList.ICUB3DPIN(msg, editBox)
+   -- Get the args
+   parts = {}
+   for part in msg:gmatch("%S+") do table.insert(parts, part) end
+   icub3d_Print('parts: %s', {parts})
+
+   if table.getn(parts) < 2 then
+	  icub3d_Error("requires at least two variables (x, y)")
+	  return
+   end
+   
+   -- (x,y) position
+   local y = tonumber(table.remove(parts))
+   local x = tonumber(table.remove(parts))
+   
+   -- Default to the current map.
+   local map = C_Map.GetBestMapForUnit("player")
+
+   -- If there is anything else from the args, assume it's a name and
+   -- change map.
+   if table.getn(parts) > 1 then
+	  local name = table.concat(parts, " ")
+	  -- TODO not sure how to get maps.
+   end
+   
+   -- Make the pin
+   icub3d_Print("%s %d %d", {map, x, y})
+   C_Map.SetUserWaypoint({uiMapID=map,position={x=x ,y=y}})
+
+end
+
 --------------------------------------------------------------------
 -- EVENT HANDLING CODE
 --------------------------------------------------------------------

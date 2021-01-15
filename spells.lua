@@ -57,7 +57,7 @@ function icub3d_ChangeTalents(name)
 	   return
 	 end
  
-	 spec = character.specs[GetSpecialization()]
+	spec = character.specs[GetSpecialization()]
 	if spec == nil then
 		 icub3d_Error("spec not found: %s", {class})
 		 return

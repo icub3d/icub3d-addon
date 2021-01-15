@@ -87,7 +87,7 @@ icub3d_SpecialMacros = {
    ['im_trinket'] = {icon = icub3d_QuestionIcon, body = '#showtooltip\n/use [mod:shift] 14; 13'},
    ['im_racial'] = {icon = icub3d_QuestionIcon, body = "/run print('hello')"},
    ['im_medallion'] = {icon = icub3d_QuestionIcon, body = '#showtooltip\n/use Honorable Medallion'},
-   ['im_glide'] = {icon = icub3d_QuestionIcon, body = '#showtooltip Glide\n/dismount\n/cast Glide'},
+   ['im_glide'] = {icon = icub3d_QuestionIcon, body = '#showtooltip Glide\n/dismount\n/cast [mod:shift] Goblin Glider Kit; Glide'},
    ['im_soothe'] = {icon = icub3d_QuestionIcon, body = '#showtooltip \n/cast [mod:shift] Hibernate; Soothe'},
    ['im_healthstone'] = {icon = icub3d_QuestionIcon, body = '#showtooltip healthstone\n/use healthstone'},
    ['im_imp_void'] = {icon = icub3d_QuestionIcon, body = '#showtooltip\n/cast [mod:shift] Summon Voidlord; Summon Imp'},
@@ -140,7 +140,7 @@ function icub3d_UpdateMacro(name, where, typ, spell)
    if spell == 'Prowl' then
 	  macro = '#showtooltip Prowl\n/cancelform [nostance:2]\n/cast Prowl'
    elseif spell == 'Glide' then
-	  macro = '#showtooltip Glide\n/dismount [mounted]\n/cast Glide'
+	  macro = '#showtooltip [mod: shift] Goblin Glider Kit; Glide\n/dismount [nomod:shift,mounted]\n/cast [mod:shift] Goblin Glider Kit; Glide'
    elseif spell == 'Dash' then
 	  macro = '#showtooltip Dash\n/cancelform [nostance:2]\n/cast Dash'
    elseif spell == "Angelic Feather" then
@@ -162,6 +162,8 @@ function icub3d_RacialMacro()
 
    if race == 'BloodElf' then
 	  body = '#showtooltip\n/cast Arcane Torrent'
+   elseif race == 'NightElf' then
+	  body = '#showtooltip\n/cast Shadowmeld'
    elseif race == 'HighmountainTauren' then
 	  body = '#showtooltip\n/cast Bull Rush'
    elseif race == 'Orc' then
