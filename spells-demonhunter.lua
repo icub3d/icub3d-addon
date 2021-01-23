@@ -1,5 +1,5 @@
 icub3d_DemonHunter_Spells = {
-   -- Top Left --
+   -- Top --
    icub3d_Spell('harm', 'Shear', 'harm', 'Demon\'s Bite', 'skip', 'skip'),
    icub3d_Spell('harm', 'Soul Cleave', 'harm', 'Chaos Strike', 'skip', 'skip'),
    icub3d_Spell('harm', 'Throw Glaive', 'skip', 'skip'),
@@ -10,51 +10,46 @@ icub3d_DemonHunter_Spells = {
    icub3d_Spell('mouse', 'Sigil of Flame', 'harm', 'Blade Dance', 'skip', 'skip'),
    icub3d_Spell('mouse', 'Sigil of Silence', 'help', 'Vengeful Retreat', 'skip', 'skip'),
    icub3d_Spell('harm', 'Disrupt', 'skip', 'skip'),
-   icub3d_Talent(1),
-   icub3d_Talent(2),
-
-   -- Top Right -- 
-   icub3d_Talent(3),
-   icub3d_Talent(4),
-   icub3d_Talent(5),
-   icub3d_Talent(6),
-   icub3d_Talent(7),
-   icub3d_Talent(8),
-   icub3d_Talent(9),
-   icub3d_Talent(10),
-   icub3d_Spell('harm', 'Imprison', 'skip', 'skip'),
-   icub3d_Spell('harm', 'Torment', 'skip', 'skip'),
-   icub3d_Spell('harm', 'Immolation Aura', 'skip', 'skip'),
-   icub3d_Spell('mouse', 'Sigil of Misery', 'help', 'Blur'),
-
-   -- Bottom Left --
-   icub3d_Spell('mouse', 'Infernal Strike', 'help', 'Fel Rush', 'skip', 'skip'),
-   icub3d_Spell('mouse', 'Metamorphosis'),
-   icub3d_Spell('harm', 'Consume Magic', 'skip', 'skip'),
-   icub3d_Spell('help', 'Spectral Sight'),
    icub3d_Spell('mouse', 'Elysian Decree'),
    icub3d_Spell('help', 'Summon Steward'),
    icub3d_Macro('im_racial'),
    icub3d_Spell('use', 'Phial of Serenity'),
    icub3d_Macro('im_healthstone'),
    icub3d_Spell('potion', 'potion'),
-   icub3d_Spell('help', 'Darkness', 'skip', 'skip'),
-   icub3d_Spell('use', 'Goblin Glider Kit'),
+   icub3d_Talent(1),
+   icub3d_Talent(2),
+   icub3d_Talent(3),
+   icub3d_Talent(4),
+   icub3d_Spell('harm', 'Imprison', 'skip', 'skip'),
+   icub3d_Spell('harm', 'Torment', 'skip', 'skip'),
+   icub3d_Spell('harm', 'Immolation Aura', 'skip', 'skip'),
+   icub3d_Spell('mouse', 'Sigil of Misery', 'help', 'Blur'),
 
-   -- Bottom Right --
+   -- Bottom --
+   icub3d_Spell('help', 'Darkness', 'skip', 'skip'),
+   icub3d_Spell('mouse', 'Metamorphosis'),
+   icub3d_Spell('harm', 'Consume Magic', 'skip', 'skip'),
+   icub3d_Spell('help', 'Spectral Sight'),
+   icub3d_Talent(5),
+   icub3d_Talent(6),
+   icub3d_Talent(7),
+   icub3d_Talent(8),
+   icub3d_Talent(9),
+   icub3d_Talent(10),
+   icub3d_Spell('use', 'Goblin Glider Kit'),
    icub3d_Spell('help', 'Glide'),
    icub3d_Macro('im_cloak'),
    icub3d_Macro('im_trinket'),
    icub3d_Macro('im_belt'),
-   icub3d_Skip(),
-   icub3d_Skip(),
    icub3d_Spell('use', 'Soft Foam Sword'),
    icub3d_Spell('use', 'Loot-A-Rang'),
    icub3d_Skip(),
    icub3d_Skip(),
    icub3d_Skip(),
-   icub3d_Spell('help', 'Glide', 'skip', 'skip'),
-
+   icub3d_Skip(),
+   icub3d_Skip(),
+   icub3d_Skip(),
+   icub3d_Skip(),
 }
 
 icub3d_DemonHunter_Talents = {
