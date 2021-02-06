@@ -49,7 +49,7 @@ icub3d_RegisterEvent(
 	  TargetFrame:SetPoint('CENTER', UIParent, 300, -50)
 	  TargetFrame:SetUserPlaced(true)
 	  FocusFrame:ClearAllPoints()
-	  FocusFrame:SetPoint('CENTER', UIParent, 400, 75)
+	  FocusFrame:SetPoint('CENTER', UIParent, 300, 100)
 	  FocusFrame:SetUserPlaced(true)
 
 	  -- CastingBarFrame:HookScript("OnShow", function(self)

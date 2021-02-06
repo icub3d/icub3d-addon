@@ -1,4 +1,4 @@
-## Interface: 80300
+## Interface: 90200
 ## Title: icub3d
 ## Notes: My personal addon
 ## Author: Joshua Marsh
