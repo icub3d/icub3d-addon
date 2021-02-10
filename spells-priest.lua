@@ -11,6 +11,7 @@ icub3d_Priest_Spells = {
    icub3d_Spell('harm', 'Silence', 'mouse', 'Angelic Feather', 'skip', 'skip'),
    icub3d_Spell('harm', 'Mindgames'),
    icub3d_Spell('mouse', 'Door of Shadows'),
+
    icub3d_Macro('im_racial'),
    icub3d_Spell('help', 'Desperate Prayer'),
    icub3d_Macro('im_health_rev'),
@@ -37,6 +38,7 @@ icub3d_Priest_Spells = {
    icub3d_Macro('im_trinket'),
    icub3d_Talent(1),
    icub3d_Talent(2),
+
    icub3d_Talent(3),
    icub3d_Talent(4),
    icub3d_Talent(5),
