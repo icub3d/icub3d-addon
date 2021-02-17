@@ -80,6 +80,8 @@ icub3d_PermanentMacros = {
 -- When we change the macros for an action bar button, it's possible
 -- to choose one of these.
 icub3d_SpecialMacros = {
+   ['im_fregen'] = {icon = icub3d_QuestionIcon, body = '#showtooltip\n/cast [nostance:1] !Bear Form; Frenzied Regeneration'},
+   ['im_root_beam'] = {icon = icub3d_QuestionIcon, body = '#showtooltip Solar Beam\n/cast [mod:alt,talent:4/2,@focus] [talent:4/2,@mouseover,harm] [] Mass Entanglement\n/cast  [mod:alt,@focus] [@mouseover,harm] [] Solar Beam\n'},
    ['im_travel'] = {icon = icub3d_QuestionIcon, body = '#showtooltip\n/cast [mod:shift] Treant Form; [mod:alt] Stag Form; Travel Form'},
    ['im_cloak_belt'] = {icon = icub3d_QuestionIcon, body = '#showtooltip\n/use [mod:shift] 15; 6'},
    ['im_belt'] = {icon = icub3d_QuestionIcon, body = '#showtooltip\n/use 6'},
