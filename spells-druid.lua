@@ -149,10 +149,10 @@ icub3d_restoration_normal = {
    icub3d_Spell('help', 'Swiftmend', 'skip', 'skip'),
    icub3d_Spell('help', 'Wild Growth', 'skip', 'skip'),
    icub3d_Spell('help', 'Nature\'s Swiftness', 'skip', 'skip'),
-   icub3d_Skip(),
+   icub3d_Spell('help', 'Cenarion Ward', 'help', 'Nourish', 'skip', 'skip'),
    icub3d_Spell('help', 'Ironbark', 'skip', 'skip'),
    icub3d_Spell('help', 'Efflorescence', 'skip', 'skip'),
-   icub3d_Skip(),
+   icub3d_Spell('help', 'Renewal', 'skip', 'skip'),
    icub3d_Spell('help', 'Convoke the Spirits'),
    icub3d_Spell('help', 'Soulshape'),
 }
@@ -175,7 +175,7 @@ icub3d_restoration_moonkin = {
 -- Restoration Top Right Form
 icub3d_restoration_top_right = {
    icub3d_Macro('im_racial'),
-   icub3d_Spell('help', 'Celestial Alignment'),
+   icub3d_Spell('help', 'Tranquility'),
    icub3d_Macro('im_health_rev'),
    icub3d_Spell('help', 'Barkskin'),   
    icub3d_Spell('harm', 'Moonfire', 'skip', 'skip'),
@@ -486,7 +486,7 @@ icub3d_Spells['DRUID'] = {
 			   ['quest'] = {1, 3, 1, 3, 2, 2, 1},
 			   ['dungeon'] = {3, 3, 1, 3, 2, 2, 1},
 			   ['raid'] = {3, 2, 3, 3, 3, 2, 3,},
-			   ['pvp'] = {3, 1, 1, 3, 2, 2, 1},
+			   ['pvp'] = {3, 3, 3, 1, 1, 3, 2},
 			   ['tor'] = {3, 2, 1, 1, 2, 3, 1},
 			},
         },

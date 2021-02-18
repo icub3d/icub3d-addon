@@ -24,6 +24,24 @@ function SlashCmdList.ICUB3DLP(msg, editBox)
     C_PartyInfo.LeaveParty()
 end
 
+SLASH_ICUB3DCURRENCY1 = '/curr'
+function SlashCmdList.ICUB3DCURRENCY(msg, editBox)
+   local currencies = {
+	  1792, -- honor
+	  1602, -- conquest
+	  1885, -- grateful offering
+	  1813, -- anima - night fae
+	  1828, -- soul ash
+	  1767, -- stygia
+   }
+
+   for k, currency in pairs(currencies) do
+	  info = C_CurrencyInfo.GetCurrencyInfo(currency)
+	  icub3d_Print('%s %d/%d', {info.name, info.quantity, info.maxQuantity})
+   end
+end
+
+
 SLASH_ICUB3DPIN1 = '/pin'
 function SlashCmdList.ICUB3DPIN(msg, editBox)
    -- Get the args
