@@ -24,7 +24,7 @@ icub3d_Warlock_Spells = {
    icub3d_Talent(7),
    icub3d_Talent(8),
    icub3d_Talent(9),
-   icub3d_Spell('help', 'Havoc', 'skip', 'skip'),
+   icub3d_Spell('harm', 'Havoc', 'skip', 'skip'),
 
    -- Bottom --
    icub3d_Spell('harm', 'Fear'),

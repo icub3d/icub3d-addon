@@ -37,7 +37,7 @@ function SlashCmdList.ICUB3DCURRENCY(msg, editBox)
 
    for k, currency in pairs(currencies) do
 	  info = C_CurrencyInfo.GetCurrencyInfo(currency)
-	  icub3d_Print('%s %d/%d', {info.name, info.quantity, info.maxQuantity})
+	  icub3d_Print('%05d/%05d - %s', {info.quantity, info.maxQuantity, info.name})
    end
 end
 
@@ -70,8 +70,7 @@ function SlashCmdList.ICUB3DPIN(msg, editBox)
    
    -- Make the pin
    icub3d_Print("%s %d %d", {map, x, y})
-   C_Map.SetUserWaypoint({uiMapID=map,position={x=x ,y=y}})
-
+   C_Map.SetUserWaypoint({uiMapID=map,position=CreateVector2D(x, y)})
 end
 
 --------------------------------------------------------------------
