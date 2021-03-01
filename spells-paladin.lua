@@ -10,8 +10,8 @@ icub3d_Paladin_Spells = {
    icub3d_Spell('harm', 'Wake of Ashes', 'harm', 'Shield of the Righteous'),
    icub3d_Spell('harm', 'Hammer of Justice'),
    icub3d_Spell('harm', 'Rebuke', 'skip', 'skip'),
-   icub3d_Spell('use', 'Signature Ability'),
-   icub3d_Spell('use', 'Covenant Ability'),
+   icub3d_Spell('both', 'Divine Toll'),
+   icub3d_Spell('help', 'Summon Steward'),
 
    -- Top Right -- 
    icub3d_Macro('im_racial'),
@@ -22,7 +22,7 @@ icub3d_Paladin_Spells = {
    icub3d_Spell('help', 'Divine Shield'),
    icub3d_Spell('help', 'Blessing of Protection', 'skip', 'skip'),
    icub3d_Spell('harm', 'Consecration', 'skip', 'skip'),
-   icub3d_Spell('help', 'Hammer of Wrath'),
+   icub3d_Spell('harm', 'Hammer of Wrath'),
    icub3d_Spell('harm', 'Hand of Reckoning'),
    icub3d_Spell('help', 'Blessing of Sacrifice', 'skip', 'skip'),
    icub3d_Spell('help', 'Blessing of Freedom', 'skip', 'skip'),

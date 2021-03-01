@@ -101,7 +101,7 @@ icub3d_balance_top_right = {
    icub3d_Spell('help', 'Wild Growth', 'skip', 'skip'),
    icub3d_Spell('help', 'Swiftmend', 'skip', 'skip'),
    icub3d_Spell('harm', 'Ursol\'s Vortex', 'skip', 'skip'),
-   icub3d_Spell('harm', 'Typhoon', 'skip', 'skip'),
+   icub3d_Spell('harm', 'Typhoon', 'harm', 'Entangling Roots', 'skip', 'skip'),
    icub3d_Spell('harm', 'Cyclone'),
 }
 
@@ -184,7 +184,7 @@ icub3d_restoration_top_right = {
    icub3d_Spell('harm', 'Starfall', 'help', 'Overgrowth', 'skip', 'skip'),
    icub3d_Spell('help', 'Thorns', 'skip', 'skip'),
    icub3d_Spell('harm', 'Ursol\'s Vortex', 'skip', 'skip'),
-   icub3d_Spell('harm', 'Typhoon', 'skip', 'skip'),
+   icub3d_Spell('harm', 'Typhoon', 'harm', 'Entangling Roots', 'skip', 'skip'),
    icub3d_Spell('harm', 'Cyclone'),
 }
 
@@ -251,9 +251,9 @@ icub3d_feral_top_right = {
    icub3d_Spell('harm', 'Wrath', 'skip', 'skip'),
    icub3d_Spell('harm', 'Sunfire', 'skip', 'skip'),
    icub3d_Spell('help', 'Regrowth', 'skip', 'skip'),
-   icub3d_Spell('harm', 'Starfall', 'skip', 'skip'),
+   icub3d_Spell('harm', 'Starfall', 'help', 'Survival Instincts', 'skip', 'skip'),
    icub3d_Spell('harm', 'Ursol\'s Vortex', 'skip', 'skip'),
-   icub3d_Spell('harm', 'Typhoon', 'skip', 'skip'),
+   icub3d_Spell('harm', 'Typhoon', 'harm', 'Entangling Roots', 'skip', 'skip'),
    icub3d_Spell('harm', 'Cyclone'),
 }
 
@@ -318,9 +318,9 @@ icub3d_guardian_top_right = {
    icub3d_Spell('harm', 'Wrath', 'skip', 'skip'),
    icub3d_Spell('harm', 'Sunfire', 'skip', 'skip'),
    icub3d_Spell('help', 'Regrowth', 'skip', 'skip'),
-   icub3d_Spell('harm', 'Starfall', 'skip', 'skip'),
+   icub3d_Spell('harm', 'Starfall', 'help', 'Survival Instincts', 'skip', 'skip'),
    icub3d_Spell('harm', 'Ursol\'s Vortex', 'skip', 'skip'),
-   icub3d_Spell('harm', 'Typhoon', 'skip', 'skip'),
+   icub3d_Spell('harm', 'Typhoon', 'harm', 'Entangling Roots', 'skip', 'skip'),
    icub3d_Spell('harm', 'Cyclone'),
 }
 
