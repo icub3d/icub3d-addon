@@ -97,8 +97,8 @@ icub3d_balance_top_right = {
    icub3d_Spell('help', 'Barkskin'),   
    icub3d_Spell('help', 'Regrowth', 'skip', 'skip'),
    icub3d_Spell('help', 'Rejuvenation', 'skip', 'skip'),
-   icub3d_Skip(),
-   icub3d_Spell('help', 'Wild Growth', 'skip', 'skip'),
+   icub3d_Spell('help', 'Thorns', 'skip', 'skip'),
+   icub3d_Spell('harm', 'Faerie Swarm', 'help', 'Wild Growth', 'skip', 'skip'),
    icub3d_Spell('help', 'Swiftmend', 'skip', 'skip'),
    icub3d_Spell('harm', 'Ursol\'s Vortex', 'skip', 'skip'),
    icub3d_Spell('harm', 'Typhoon', 'harm', 'Entangling Roots', 'skip', 'skip'),
@@ -404,7 +404,7 @@ icub3d_Spells['DRUID'] = {
             tags = {'b', 'bal', 'balance'},
 			talents = {
 			   ['pvp'] = {1, 2, 2, 2, 2, 2, 2},
-			   ['quest'] = {3, 1, 3, 3, 3, 2, 2},
+			   ['quest'] = {3, 3, 3, 2, 3, 2, 2},
 			   ['dungeon'] = {1, 3, 3, 1, 1, 1, 1},
 			   ['multi'] = {1, 3, 3, 1, 1, 1, 1},
 			   ['single'] = {1, 3, 3, 3, 2, 3, 1},
@@ -423,6 +423,7 @@ icub3d_Spells['DRUID'] = {
 			   icub3d_balance_moonkin
 			),
 		},
+
         {
             tags = {'f', 'feral'},
 			talents = {
@@ -444,9 +445,11 @@ icub3d_Spells['DRUID'] = {
 			   icub3d_feral_normal
 			),
         },
+
         {
             tags = {'g', 'guard', 'guardian'},
 			talents = {
+			   ['torghast'] = {1, 3, 1, 3, 2, 2, 1},
 			   ['quest'] = {1, 3, 2, 1, 2, 2, 1},
 			   ['dungeon'] = {2, 3, 3, 3, 3, 1, 1},
 			   ['raid-def-st'] = {3, 2, 3, 3, 3, 1, 3},
@@ -468,6 +471,7 @@ icub3d_Spells['DRUID'] = {
 			   icub3d_guardian_normal
 			),
         },
+
         {
             tags = {'r', 'resto', 'restoration'},
 			talent = icub3d_Druid_Talents,
