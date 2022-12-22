@@ -3,7 +3,7 @@
 -- the main spells for a given spec and then the less common spells
 -- are elsewhere.
 
-function icub3d_join_spells(a, b, c, d, e, f, g, h, i)
+function icub3d_join_spells(a, b, c, d, e, f, g, h, i, j)
    r = {}
    for k,v in pairs(a) do table.insert(r, v) end
    for k,v in pairs(b) do table.insert(r, v) end
@@ -14,6 +14,7 @@ function icub3d_join_spells(a, b, c, d, e, f, g, h, i)
    for k,v in pairs(g) do table.insert(r, v) end
    for k,v in pairs(h) do table.insert(r, v) end
    for k,v in pairs(i) do table.insert(r, v) end
+   for k,v in pairs(j) do table.insert(r, v) end
    return r
 end
 
@@ -86,13 +87,13 @@ icub3d_balance_moonkin = {
    icub3d_Skip(),
    icub3d_Macro('im_root_beam'),
    icub3d_Spell('help', 'Convoke the Spirits'),
-   icub3d_Spell('help', 'Soulshape'),
+   icub3d_Spell('help', "Nature's Vigil", 'skip', 'skip'),
 }
 
 -- Balance Top Right Form
 icub3d_balance_top_right = {
    icub3d_Macro('im_racial'),
-   icub3d_Spell('help', 'Celestial Alignment'),
+   icub3d_Spell('help', 'Celestial Alignment', 'skip', 'skip'),
    icub3d_Macro('im_health_rev'),
    icub3d_Spell('help', 'Barkskin'),   
    icub3d_Spell('help', 'Regrowth', 'skip', 'skip'),
@@ -118,7 +119,7 @@ icub3d_balance_cat_prowl = {
    icub3d_Spell('help', 'Tiger\'s Fury', 'skip', 'skip'),
    icub3d_Spell('harm', 'Skull Bash', 'macro', 'im_root_beam', 'skip', 'skip'),
    icub3d_Spell('help', 'Convoke the Spirits'),
-   icub3d_Spell('help', 'Soulshape'),
+   icub3d_Spell('help', "Nature's Vigil", 'skip', 'skip'),
 }
 
 -- Balance Bear Form
@@ -135,7 +136,7 @@ icub3d_balance_bear = {
    icub3d_Spell('help', 'Incapacitating Roar', 'skip', 'skip'),
    icub3d_Spell('harm', 'Skull Bash', 'macro', 'im_root_beam', 'skip', 'skip'),
    icub3d_Spell('help', 'Convoke the Spirits'),
-   icub3d_Spell('help', 'Soulshape'),
+   icub3d_Spell('help', "Nature's Vigil", 'skip', 'skip'),
 }
 
 ------------------------------------------------------------------------
@@ -154,7 +155,7 @@ icub3d_restoration_normal = {
    icub3d_Spell('help', 'Efflorescence', 'skip', 'skip'),
    icub3d_Spell('help', 'Renewal', 'skip', 'skip'),
    icub3d_Spell('help', 'Convoke the Spirits'),
-   icub3d_Spell('help', 'Soulshape'),
+   icub3d_Spell('help', "Nature's Vigil", 'skip', 'skip'),
 }
 
 icub3d_restoration_moonkin = {
@@ -169,7 +170,7 @@ icub3d_restoration_moonkin = {
    icub3d_Spell('help', 'Rejuvenation', 'skip', 'skip'),
    icub3d_Spell('help', 'Regrowth', 'skip', 'skip'),
    icub3d_Spell('help', 'Convoke the Spirits'),
-   icub3d_Spell('help', 'Soulshape'),
+   icub3d_Spell('help', "Nature's Vigil", 'skip', 'skip'),
 }
 
 -- Restoration Top Right Form
@@ -201,7 +202,7 @@ icub3d_restoration_cat_prowl = {
    icub3d_Spell('help', 'Rejuvenation', 'skip', 'skip'),
    icub3d_Spell('help', 'Regrowth', 'skip', 'skip'),
    icub3d_Spell('help', 'Convoke the Spirits'),
-   icub3d_Spell('help', 'Soulshape'),
+   icub3d_Spell('help', "Nature's Vigil", 'skip', 'skip'),
 }
 
 -- Restoration Bear Form
@@ -219,7 +220,7 @@ icub3d_restoration_bear = {
 				'skip', 'skip'),
    icub3d_Spell('help', 'Regrowth', 'skip', 'skip'),
    icub3d_Spell('help', 'Convoke the Spirits'),
-   icub3d_Spell('help', 'Soulshape'),
+   icub3d_Spell('help', "Nature's Vigil", 'skip', 'skip'),
 }
 
 ------------------------------------------------------------------------
@@ -238,13 +239,13 @@ icub3d_feral_cat_prowl = {
    icub3d_Spell('help', 'Tiger\'s Fury', 'skip', 'skip'),
    icub3d_Spell('harm', 'Skull Bash', 'skip', 'skip'),
    icub3d_Spell('help', 'Convoke the Spirits'),
-   icub3d_Spell('help', 'Soulshape'),
+   icub3d_Spell('help', "Nature's Vigil", 'skip', 'skip'),
 }
 
 -- Feral Top Right
 icub3d_feral_top_right = {
    icub3d_Macro('im_racial'),
-   icub3d_Spell('help', 'Celestial Alignment'),
+   icub3d_Spell('help', 'Celestial Alignment', 'skip', 'skip'),
    icub3d_Macro('im_health_rev'),
    icub3d_Spell('help', 'Barkskin'),   
    icub3d_Spell('harm', 'Moonfire', 'skip', 'skip'),
@@ -270,7 +271,7 @@ icub3d_feral_bear = {
    icub3d_Spell('help', 'Incapacitating Roar', 'skip', 'skip'),
    icub3d_Spell('harm', 'Skull Bash', 'skip', 'skip'),
    icub3d_Spell('help', 'Convoke the Spirits'),
-   icub3d_Spell('help', 'Soulshape'),
+   icub3d_Spell('help', "Nature's Vigil", 'skip', 'skip'),
 }
 
 -- Feral normal/moonkin Form
@@ -286,7 +287,7 @@ icub3d_feral_normal = {
    icub3d_Spell('help', 'Rejuvenation', 'skip', 'skip'),
    icub3d_Spell('help', 'Regrowth', 'skip', 'skip'),
    icub3d_Spell('help', 'Convoke the Spirits'),
-   icub3d_Spell('help', 'Soulshape'),
+   icub3d_Spell('help', "Nature's Vigil", 'skip', 'skip'),
 }
 
 ------------------------------------------------------------------------
@@ -305,13 +306,13 @@ icub3d_guardian_cat_prowl = {
    icub3d_Spell('help', 'Tiger\'s Fury', 'help', 'Incapacitating Roar', 'skip', 'skip'),
    icub3d_Spell('harm', 'Skull Bash', 'skip', 'skip'),
    icub3d_Spell('help', 'Convoke the Spirits'),
-   icub3d_Spell('help', 'Soulshape'),
+   icub3d_Spell('help', "Nature's Vigil", 'skip', 'skip'),
 }
 
 -- Guardian Top Right
 icub3d_guardian_top_right = {
    icub3d_Macro('im_racial'),
-   icub3d_Spell('help', 'Celestial Alignment'),
+   icub3d_Spell('help', 'Celestial Alignment', 'skip', 'skip'),
    icub3d_Macro('im_health_rev'),
    icub3d_Spell('help', 'Barkskin'),   
    icub3d_Spell('harm', 'Moonfire', 'skip', 'skip'),
@@ -337,7 +338,7 @@ icub3d_guardian_bear = {
    icub3d_Spell('help', 'Incapacitating Roar', 'skip', 'skip'),
    icub3d_Spell('harm', 'Skull Bash', 'skip', 'skip'),
    icub3d_Spell('help', 'Convoke the Spirits'),
-   icub3d_Spell('help', 'Soulshape'),
+   icub3d_Spell('help', "Nature's Vigil", 'skip', 'skip'),
 }
 
 -- Guardian normal/moonkin Form
@@ -353,7 +354,7 @@ icub3d_guardian_normal = {
    icub3d_Spell('help', 'Rejuvenation', 'skip', 'skip'),
    icub3d_Spell('help', 'Regrowth', 'skip', 'skip'),
    icub3d_Spell('help', 'Convoke the Spirits'),
-   icub3d_Spell('help', 'Soulshape'),
+   icub3d_Spell('help', "Nature's Vigil", 'skip', 'skip'),
 }
 
 icub3d_Druid_Talents = { -- resto has 8 if we use all
@@ -420,6 +421,7 @@ icub3d_Spells['DRUID'] = {
 			   icub3d_balance_cat_prowl,
 			   icub3d_balance_cat_prowl,
 			   icub3d_balance_bear,
+			   icub3d_balance_moonkin,
 			   icub3d_balance_moonkin
 			),
 		},
@@ -442,6 +444,7 @@ icub3d_Spells['DRUID'] = {
 			   icub3d_feral_cat_prowl,
 			   icub3d_feral_cat_prowl,
 			   icub3d_feral_bear,
+			   icub3d_feral_normal,
 			   icub3d_feral_normal
 			),
         },
@@ -469,6 +472,7 @@ icub3d_Spells['DRUID'] = {
 			   icub3d_guardian_cat_prowl,
 			   icub3d_guardian_cat_prowl,
 			   icub3d_guardian_bear,
+			   icub3d_guardian_normal,
 			   icub3d_guardian_normal
 			),
         },
@@ -485,7 +489,8 @@ icub3d_Spells['DRUID'] = {
 			   icub3d_restoration_cat_prowl,
 			   icub3d_restoration_cat_prowl,
 			   icub3d_restoration_bear,
-			   icub3d_restoration_moonkin
+			   icub3d_restoration_moonkin,
+			   icub3d_restoration_normal
 			),
 			talents = {
 			   ['quest'] = {1, 3, 1, 3, 2, 2, 1},

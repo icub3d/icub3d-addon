@@ -20,15 +20,24 @@ end
 icub3d_RegisterEvent(
    'ADDON_READY',
    function(arg1)
-	  -- Hide shadowform
-	  RegisterStateDriver(StanceBarFrame, 'visibility', 'hide')
+	  -- Remove the macro name from the buttons
+	  local bars = {
+		"MultiBarBottomLeft", "MultiBarBottomRight", "Action", "MultiBar5", "MultiBar6", "MultiBar7", "MultiBar8"
+   }
+   for _, name in ipairs(bars) do
+		for x = 1, 12 do
+		   _G[name .. x .. 'Name']:SetAlpha(0)
+		end
+   end
+   	  -- Hide shadowform
+	  -- RegisterStateDriver(StanceBarFrame, 'visibility', 'hide')
 
 	  -- Hide bags
-	  RegisterStateDriver(MicroButtonAndBagsBar, 'visibility', 'hide')
---	  RegisterStateDriver(PetActionBarFrame, 'visibility', 'hide')
+	  -- RegisterStateDriver(MicroButtonAndBagsBar, 'visibility', 'hide')
+	  -- RegisterStateDriver(PetActionBarFrame, 'visibility', 'hide')
  
 	  -- Hide XP, etc.
-	  StatusTrackingBarManager:Hide()
+	  -- StatusTrackingBarManager:Hide()
 	  
 	  -- Micro buttons
 	  -- CharacterMicroButton:ClearAllPoints()
@@ -42,15 +51,15 @@ icub3d_RegisterEvent(
 	  -- end)
 
 	  -- Unit frames
-	  PlayerFrame:ClearAllPoints()
-	  PlayerFrame:SetPoint('CENTER', UIParent, -300, -50)
-	  PlayerFrame:SetUserPlaced(true)
-	  TargetFrame:ClearAllPoints()
-	  TargetFrame:SetPoint('CENTER', UIParent, 300, -50)
-	  TargetFrame:SetUserPlaced(true)
-	  FocusFrame:ClearAllPoints()
-	  FocusFrame:SetPoint('CENTER', UIParent, 300, 100)
-	  FocusFrame:SetUserPlaced(true)
+	--   PlayerFrame:ClearAllPoints()
+	--   PlayerFrame:SetPoint('CENTER', UIParent, -300, -50)
+	--   PlayerFrame:SetUserPlaced(true)
+	--   TargetFrame:ClearAllPoints()
+	--   TargetFrame:SetPoint('CENTER', UIParent, 300, -50)
+	--   TargetFrame:SetUserPlaced(true)
+	--   FocusFrame:ClearAllPoints()
+	--   FocusFrame:SetPoint('CENTER', UIParent, 300, 100)
+	--   FocusFrame:SetUserPlaced(true)
 
 	  -- CastingBarFrame:HookScript("OnShow", function(self)
 	  -- 								self:ClearAllPoints()
@@ -58,10 +67,10 @@ icub3d_RegisterEvent(
 	  -- end)
 	  
 	  -- Action bars
-	  icub3d_MoveActionBar('ActionButton', 'CENTER', UIParent, -480, -525)
-	  icub3d_MoveActionBar('MultiBarRightButton', 'CENTER', UIParent, 23, -525)
-	  icub3d_MoveActionBar('MultiBarLeftButton', 'CENTER', UIParent, -480, -572)
-	  icub3d_MoveActionBar('MultiBarBottomRightButton', 'CENTER', UIParent, 23, -572)
+	--   icub3d_MoveActionBar('ActionButton', 'CENTER', UIParent, -480, -525)
+	--   icub3d_MoveActionBar('MultiBarRightButton', 'CENTER', UIParent, 23, -525)
+	--   icub3d_MoveActionBar('MultiBarLeftButton', 'CENTER', UIParent, -480, -572)
+	--   icub3d_MoveActionBar('MultiBarBottomRightButton', 'CENTER', UIParent, 23, -572)
 
 	  -- icub3d_MoveMainActionBar('CENTER', UIParent, -229, -430)
 	  -- icub3d_MoveActionBar('ActionButton', 'CENTER', UIParent, -229, -420)
@@ -87,40 +96,26 @@ icub3d_RegisterEvent(
 	  -- end)
 
 	  -- Remove all the blizzard art at the bottom
-	  local function HideArt(frame)
-		 local y={ frame:GetRegions() } 
-		 for k,v in pairs(y)do 
-			if v:GetObjectType()=="Texture" then 
-			   v:SetTexture(nil)
-			end 
-		 end 
-		 y={ frame:GetChildren() } 
-		 for k,v in pairs(y)do 
-			if v:GetObjectType()~="CheckButton" and v:GetObjectType()~="Button" then  
-			   HideArt(v)
-			end 
-		 end 
-	  end 
-	  HideArt(ActionBarUpButton)
-	  HideArt(ActionBarDownButton)
-	  HideArt(MainMenuBarArtFrame)
-	  HideArt(PetActionBarFrame)
-	  HideArt(StatusTrackingBarManager)
-	  HideArt(MicroButtonAndBagsBar)
-
-	  -- Remove the macro name from the buttons
-	  local bars = {
-	  	 'ActionButton',
-	  	 'MultiBarRightButton',
-	  	 'MultiBarLeftButton',
-	  	 'MultiBarBottomRightButton',
-	  	 'MultiBarBottomLeftButton'
-	  }
-	  for _, name in ipairs(bars) do
-	  	 for x = 1, 12 do
-	  		_G[name .. x .. 'Name']:SetAlpha(0)
-	  	 end
-	  end
+	--   local function HideArt(frame)
+	-- 	 local y={ frame:GetRegions() } 
+	-- 	 for k,v in pairs(y)do 
+	-- 		if v:GetObjectType()=="Texture" then 
+	-- 		   v:SetTexture(nil)
+	-- 		end 
+	-- 	 end 
+	-- 	 y={ frame:GetChildren() } 
+	-- 	 for k,v in pairs(y)do 
+	-- 		if v:GetObjectType()~="CheckButton" and v:GetObjectType()~="Button" then  
+	-- 		   HideArt(v)
+	-- 		end 
+	-- 	 end 
+	--   end 
+	--   HideArt(ActionBarUpButton)
+	--   HideArt(ActionBarDownButton)
+	--   HideArt(MainMenuBarArtFrame)
+	--   HideArt(PetActionBarFrame)
+	--   HideArt(StatusTrackingBarManager)
+	--   HideArt(MicroButtonAndBagsBar)
    end
 )
 

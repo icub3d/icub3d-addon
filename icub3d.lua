@@ -74,6 +74,22 @@ function SlashCmdList.ICUB3DPIN(msg, editBox)
 end
 
 --------------------------------------------------------------------
+-- Macro Name
+--------------------------------------------------------------------
+-- local r={"MultiBarBottomLeft", "MultiBarBottomRight", "Action", "MultiBar5", "MultiBar6", "MultiBar7", "MultiBar8"}for b=1,#r do for i=1,12 do _G[r[b].."Button"..i.."Name"]:SetAlpha(0)end end
+-- 
+-- SLASH_HideMacroName1 = "/hmn";
+-- SlashCmdList["HideMacroName"] = function() 
+--    local r={"MultiBarBottomLeft", "MultiBarBottomRight", "Action", "MultiBar5", "MultiBar6", "MultiBar7", "MultiBar8"}for b=1,#r do for i=1,12 do _G[r[b].."Button"..i.."Name"]:SetAlpha(0)end end; 
+-- end
+-- 
+-- SLASH_ShowMacroName1 = "/smn";
+-- SlashCmdList["ShowMacroName"] = function() 
+--    local r={"MultiBarBottomLeft", "MultiBarBottomRight", "Action", "MultiBar5", "MultiBar6", "MultiBar7", "MultiBar8"}for b=1,#r do for i=1,12 do _G[r[b].."Button"..i.."Name"]:SetAlpha(1)end end; 
+-- end
+
+
+--------------------------------------------------------------------
 -- EVENT HANDLING CODE
 --------------------------------------------------------------------
 -- We need a frame to listen for events.
