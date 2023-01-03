@@ -14,6 +14,7 @@ spells-demonhunter.lua
 spells-druid.lua
 # spells-hunter.lua
 # spells-mage.lua
-# spells-paladin.lua
+spells-evoker.lua
+spells-paladin.lua
 # spells-priest.lua
 spells-warlock.lua

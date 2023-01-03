@@ -1,0 +1,93 @@
+-- Opie -- 
+Contemplation 
+Sense Undead
+Absolution
+Redemption
+
+
+-- Paladin -- 
+Avenging Wrath
+Binding Light
+Consecration
+Crusader Strike 
+Divine Shield
+Flash of Light
+Hammer of Justice 
+Hand of Reckoning
+Intercession 
+Judgment 
+Lay on hands 
+Shield of the Righteous
+World of Glory
+
+
+-- Paladin Talents -- 
+Avenging Wrath 
+Blessing of Freedom
+Blessing of Protection 
+Blessing of Sacrifice 
+Concentration Aura / Devotion Aura
+Divine Steed 
+Hammer of Wrath
+Holy Avenger
+Lay on Hands
+Rebuke
+Repentance / Blinding Light 
+Retribution Aura / Crusader Aura 
+Sanctified Wrath / Seraphim
+Turn Evil 
+
+-- Holy -- 
+Beacon of Light
+Cleanse
+
+-- Holy Talents -- 
+Aura Mastery 
+Avenging Crusader 
+Barrier of Faith 
+Beacon of Faith / Beacon of Virtue 
+Bestow Faith 
+Blessing of Summer 
+Divine Favor
+Divine Protection
+Divine Toll 
+Holy Light 
+Holy Shock
+Light of Dawn
+Light of the Martyr
+Light's Hammer / Holy Prism
+Rule of Law
+Tyr's Deliverance 
+
+-- Protection -- 
+Cleans Toxins
+
+-- Protection Talent -- 
+Ardent Defender 
+Avenger's Shield
+Bastion of Light
+Blessing of Spellwarding
+Divine Toll 
+Eye of Tyr 
+Guardian of Ancient Kings
+Hammer of the Righteous
+Moment of Glory 
+Sentinel
+
+-- Retribution --
+Templar's Verdict
+
+-- Retribution Talents --
+Blade of Justice 
+Crusade 
+Divine Storm
+Divine Toll
+Execution Sentence 
+Exorcism
+Final Reckoning
+Final Verdict 
+Hand of Hindrance 
+Justicar's Vengeance / Eye for an Eye 
+Radiant Decree
+Shield of Vengeance / Divine Protection
+Wake of Ashes 

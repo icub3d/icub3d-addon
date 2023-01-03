@@ -178,7 +178,9 @@ function icub3d_RacialMacro()
 	  body ="#showtooltip\n/cast [mod:shift] Rummage Your Bag; Bag of Tricks"
    elseif race == "Tauren" then
 	  body ="#showtooltip\n/cast War Stomp"
-   end
+	elseif race == "Nightborne" then
+	  body ="#showtooltip\n/cast [mod:shift] Cantrips; Arcane Pulse"
+	 end
 
    icub3d_SpecialMacros['im_racial'] = {icon = icub3d_QuestionIcon, body = body}
 
@@ -243,7 +245,6 @@ end
 
 function icub3d_UpdateMacros(spec, where)
    for i, s in ipairs(spec.actionbar) do
-	  icub3d_Debug('%s', {s.name})
 	  -- Track the slot we'd place it in. We want to skip the second
 	  -- action bar.
 	  local p = i

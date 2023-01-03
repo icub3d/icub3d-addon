@@ -39,14 +39,14 @@ icub3d_Paladin_Spells = {
    icub3d_Spell('use', 'Goblin Glider Kit'),
    icub3d_Macro('im_cloak_belt'),
    icub3d_Macro('im_trinket'),
+   icub3d_Spell('help', 'Intercession'),
    icub3d_Talent(1),
-   icub3d_Talent(2),
 
    -- Bottom Right --
    icub3d_Talent(3),
    icub3d_Talent(4),
    icub3d_Talent(5),
-   icub3d_Talent(6),
+   icub3d_Talent(2),
    icub3d_Spell('harm', 'Turn Evil', 'skip', 'skip'),
    icub3d_Macro('im_devo'),
    icub3d_Macro('im_crus'),
@@ -83,7 +83,10 @@ icub3d_Paladin_Talents = {
    icub3d_Spell('help', 'Divine Favor'),
    icub3d_Spell('help', 'Shield of Virtue'),
    icub3d_Spell('help', 'Blessing of Sanctuary'),
-   
+
+   icub3d_Spell('help', 'Bastion of Light'),
+   icub3d_Spell('harm', 'Eye of Tyr'),
+
 }
 
 icub3d_Spells['PALADIN'] = {

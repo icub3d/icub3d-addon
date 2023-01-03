@@ -42,9 +42,7 @@ icub3d_Warlock_Spells = {
    icub3d_Spell('harm', 'Soulburn', 'skip', 'skip'),
 
    -- Bottom Right --
-
-
-   icub3d_Spell('harm', 'Summon Soulkeeper' 'harm' ,'Inquisitor\'s Gaze', 'skip', 'skip'),
+   icub3d_Spell('harm', 'Summon Soulkeeper', 'harm' ,'Inquisitor\'s Gaze', 'skip', 'skip'),
    icub3d_Spell('harm', 'Shadowfury', 'skip', 'skip'),
    icub3d_Spell('harm', 'Shadowflame', 'skip', 'skip'),
    icub3d_Spell('harm', 'Dark Pact', 'skip', 'skip'),

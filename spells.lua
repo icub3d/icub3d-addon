@@ -29,8 +29,8 @@ end
 --------------------------------------------------------------------
 icub3d_RegisterEvent("ADDON_READY", function(arg1)
 	icub3d_TalentChanges()
-	icub3d_RegisterEvent("PLAYER_TALENT_UPDATE", function(arg1)
-		icub3d_Debug("talents changed")
+	icub3d_RegisterEvent("SPELLS_CHANGED", function(arg1)
+		icub3d_Debug("spells changed")
 		icub3d_TalentChanges()
 	end)
 end)
@@ -50,27 +50,17 @@ function icub3d_TalentChanges()
  end
 
 function icub3d_ChangeTalents(name)
-	local _, class, _ = UnitClass("player")
-	local character = icub3d_Spells[class]
-	if character == nil then
-	   icub3d_Error("class not found: %s", {class})
-	   return
-	 end
- 
-	spec = character.specs[GetSpecialization()]
-	if spec == nil then
-		 icub3d_Error("spec not found: %s", {class})
-		 return
-	 end	
-	 local talents = spec.talents[name]
-	 if talents == nil then
-		 icub3d_Error("talent '%s' not found for spec", {name})
-		 return
-	 end
- 
-	 for k, tal in pairs(talents) do
-		 LearnTalent(GetTalentInfo(k, tal, 1))
-	 end
+	local spec = PlayerUtil.GetCurrentSpecID()
+	local configs = C_ClassTalents.GetConfigIDsBySpecID(spec)
+	for k, v in pairs(configs) do 
+		local info = C_Traits.GetConfigInfo(v)
+		if info.name == name then 
+			C_ClassTalents.LoadConfig(v, true)
+			icub3d_TalentChanges()
+			return
+		end
+	end
+	icub3d_Error("loadout '%s' not found", {name})
  end
  
  function icub3d_ChangeSpec(spec)
