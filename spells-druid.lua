@@ -104,7 +104,7 @@ icub3d_balance_top_right = {
     icub3d_Spell('help', 'Celestial Alignment', 'skip', 'skip'),
     icub3d_Macro('im_health_rev'),
     icub3d_Spell('help', 'Barkskin'),
-    icub3d_Spell('help', 'Regrowth', 'skip', 'skip'),
+    icub3d_Spell('help', 'Regrowth', 'harm', 'New Moon', 'skip', 'skip'),
     icub3d_Spell('help', 'Rejuvenation', 'skip', 'skip'),
     icub3d_Spell('help', 'Thorns', 'skip', 'skip'),
     icub3d_Spell('harm', 'Faerie Swarm', 'help', 'Wild Growth', 'harm', 'Wild Mushroom', 'skip', 'skip'),
@@ -380,19 +380,16 @@ icub3d_Druid_Talents = { -- resto has 8 if we use all
     icub3d_Spell('harm', 'Stellar Flare'),
     icub3d_Spell('harm', 'Fury of Elune'),
     icub3d_Spell('harm', 'New Moon'),
-
-    -- feral --
+    icub3d_Spell('help', 'Invigorate'),
     icub3d_Spell('help', 'Savage Roar'),
     icub3d_Spell('harm', 'Primal Wrath'),
     icub3d_Spell('harm', 'Feral Frenzy'), -- guardian --
     icub3d_Spell('help', 'Bristling Fur'),
     icub3d_Spell('harm', 'Pulverize'), -- restoration -- 
     icub3d_Spell('help', 'Nourish'),
-    icub3d_Spell('help', 'Cenarion Ward'),
     icub3d_Spell('help', 'Incarnation: Tree of Life'),
     icub3d_Spell('help', 'Overgrowth'),
     icub3d_Spell('help', 'Flourish'), -- pvp --
-
     icub3d_Spell('help', 'Thorns'),
     icub3d_Spell('harm', 'Faerie Swarm'),
     icub3d_Spell('harm', 'Rip and Tear'),
@@ -401,7 +398,6 @@ icub3d_Druid_Talents = { -- resto has 8 if we use all
     icub3d_Spell('help', 'Roar of the Protector'),
     icub3d_Spell('help', 'Mark of the Wild')
 }
-
 icub3d_Spells['DRUID'] = {
     specs = {
         {
