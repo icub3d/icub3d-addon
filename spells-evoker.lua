@@ -137,17 +137,17 @@ icub3d_Evoker_Devastation_Spells = {
 icub3d_Evoker_Preservation_Spells = {
    -- Top Left -- 
    icub3d_Spell('both', 'Living Flame', 'skip', 'skip'),
-   icub3d_Spell('harm', 'Azure Strike', 'skip', 'skip'),
+   icub3d_Spell('help', 'Temporal Anomaly', 'skip', 'skip'),
    icub3d_Spell('help', 'Reversion', 'skip', 'skip'),
    icub3d_Spell('harm', 'Disintegrate', 'skip', 'skip'),
-   icub3d_Spell('harm', 'Fire Breath', 'skip', 'skip'),
+   icub3d_Spell('help', 'Dream Breath', 'skip', 'skip'),
    icub3d_Spell('help', 'Spiritbloom', 'skip', 'skip'),
-   icub3d_Spell('mouse', 'Dream Breath', 'skip', 'skip'),
+   icub3d_Spell('help', 'Emerald Blossom', 'skip', 'skip'),
    icub3d_Spell('mouse', 'Dream Flight', 'skip', 'skip'),
    icub3d_Spell('help', 'Echo', 'skip', 'skip'),
    icub3d_Spell('harm', 'Quell', 'skip', 'skip'),
-   icub3d_Spell('help', 'Emerald Blossom', 'skip', 'skip'),
    icub3d_Spell('help', 'Verdant Embrace', 'skip', 'skip'),
+   icub3d_Spell('harm', 'Fire Breath', 'skip', 'skip'),
    
    -- Top Right -- 
    icub3d_Spell('help', 'Rewind', 'skip', 'skip'),
@@ -178,7 +178,7 @@ icub3d_Evoker_Preservation_Spells = {
    icub3d_Spell('help', 'Stasis', 'skip', 'skip'),
    
    -- Bottom Right --
-   icub3d_Spell('help', 'Temporal Anomaly', 'skip', 'skip'),
+   icub3d_Spell('harm', 'Azure Strike', 'skip', 'skip'),
    icub3d_Talent(1),
    icub3d_Talent(2),
    icub3d_Talent(3),

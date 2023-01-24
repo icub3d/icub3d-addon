@@ -21,7 +21,11 @@ end
 -- Change talents
 SLASH_CHANGETALENTS1 = "/ct"
 function SlashCmdList.CHANGETALENTS(msg, editBox)
-   icub3d_ChangeTalents(msg)
+	local currentSpec = GetSpecialization()
+	local currentSpecName = currentSpec and select(2, GetSpecializationInfo(currentSpec)) or "None"
+	local spec = string.lower(string.sub(currentSpecName, 1, 1))
+	SlashCmdList["BTWLOADOUTS"]("activate " .. spec .. msg)
+	icub3d_TalentChanges()
 end
 
 --------------------------------------------------------------------
@@ -48,20 +52,6 @@ function icub3d_TalentChanges()
 	   end
 	end
  end
-
-function icub3d_ChangeTalents(name)
-	local spec = PlayerUtil.GetCurrentSpecID()
-	local configs = C_ClassTalents.GetConfigIDsBySpecID(spec)
-	for k, v in pairs(configs) do 
-		local info = C_Traits.GetConfigInfo(v)
-		if info.name == name then 
-			C_ClassTalents.LoadConfig(v, true)
-			icub3d_TalentChanges()
-			return
-		end
-	end
-	icub3d_Error("loadout '%s' not found", {name})
- end
  
  function icub3d_ChangeSpec(spec)
 	local _, class, _ = UnitClass("player")
@@ -74,10 +64,8 @@ function icub3d_ChangeTalents(name)
 	 local words = {}
 	 for word in spec:gmatch("%w+") do table.insert(words, word) end
 	 local len = table.getn(words)
-	 local talents = ""
 	 if len > 1 then
 		 spec = words[1]
-		 talents = words[2]
 	 end
 	 
 	-- Find the spec that matches the given spec tag.
@@ -85,12 +73,6 @@ function icub3d_ChangeTalents(name)
 	   for j, tag in ipairs(v.tags) do
 		  if tag == spec then
 			 SetSpecialization(i)
-			 -- The event handler will see this and change our macros
-			 -- and spells.
- 			 if talents ~= "" then
-				 icub3d_ChangeTalents(talents)
-			 end
- 
 			 return
 		  end
 	   end
@@ -116,6 +98,19 @@ function icub3d_Spell(typ, name, ...)
     }
 end
 
+function icub3d_Spell_Spec(...)
+    local arg = {...}
+	local spells = {}
+    for x = 1, select('#', ...) - 1, 2 do
+        spells[math.floor((x + 1) / 2)] = {typ = arg[x], name = arg[x + 1]}
+    end
+	return {
+		typ = "spec",
+		name = "spec spell",
+		spells = spells,
+	}
+end
+
 function icub3d_Talent(num)
    return {
 	  typ = 'talent',
@@ -137,4 +132,25 @@ end
 
 function icub3d_Macro(name)
     return {typ = 'macro', name = name}
+end
+
+-- converts from compact bit-packing format to LoadoutEntryInfo format to pass to ImportLoadout API
+-- FROM Blizzard UI
+function icub3d_ConvertLoadout(configID, treeID, loadoutContent)
+	local results = {};
+	local treeNodes = C_Traits.GetTreeNodes(treeID);
+	local count = 1;
+	for i, treeNodeID in ipairs(treeNodes) do
+		local indexInfo = loadoutContent[i];
+		if (indexInfo.isNodeSelected) then
+			local treeNode = C_Traits.GetNodeInfo(configID, treeNodeID);
+			local result = {};
+			result.nodeID = treeNode.ID;
+			result.ranksPurchased = indexInfo.isPartiallyRanked and indexInfo.partialRanksPurchased or treeNode.maxRanks;
+			result.selectionEntryID = indexInfo.isChoiceNode and treeNode.entryIDs[indexInfo.choiceNodeSelection] or treeNode.activeEntry.entryID;
+			results[count] = result;
+			count = count + 1;
+		end
+	end
+	return results;
 end

@@ -80,7 +80,6 @@ icub3d_PermanentMacros = {
 -- When we change the macros for an action bar button, it's possible
 -- to choose one of these.
 icub3d_SpecialMacros = {
-   ['im_fregen'] = {icon = icub3d_QuestionIcon, body = '#showtooltip\n/cast [nostance:1] !Bear Form; Frenzied Regeneration'},
    ['im_root_beam'] = {icon = icub3d_QuestionIcon, body = '#showtooltip Solar Beam\n/cast [mod:alt,talent:4/2,@focus] [talent:4/2,@mouseover,harm] [] Mass Entanglement\n/cast  [mod:alt,@focus] [@mouseover,harm] [] Solar Beam\n'},
    ['im_travel'] = {icon = icub3d_QuestionIcon, body = '#showtooltip\n/cast [mod:shift] Treant Form; [mod:alt] Stag Form; Travel Form'},
    ['im_cloak_belt'] = {icon = icub3d_QuestionIcon, body = '#showtooltip\n/use [mod:shift] 15; 6'},
@@ -111,14 +110,17 @@ icub3d_SpecialMacros = {
    ['im_glider_flap'] = {icon = icub3d_QuestionIcon, body ='#showtooltip\n/use [mod:shift] [noform:4] Goblin Glider Kit; Flap'},
    ['im_covenant'] = {icon = icub3d_QuestionIcon, body ='#showtooltip\n/use [mod:shift] Signature Ability; Covenant Ability'},
    ['im_cyclone_typhoon'] = {icon = icub3d_QuestionIcon, body ='#showtooltip\n/use [mod:shift] Typhoon; [mod:alt,@focus] [@mouseover,harm,nodead] [harm] [@mouseovertarget,harm] [@targettarget,harm] [] Cyclone'},
-   ['im_glider_foam'] = {icon = icub3d_QuestionIcon, body = '#showtooltip\n/use [mod:shift] Soft Foam Sword; Goblin Glider Kit'},
-   
+   ['im_glider_foam'] = {icon = icub3d_QuestionIcon, body = '#showtooltip\n/use [mod:alt] Soft Foam Sword; [mod:shift] Goblin Glider Kit; Windscale Rider'},
+   ['im_flap'] = {icon = icub3d_QuestionIcon, body = '#showtooltip\n/cast [nomod:shift,noform:4] Moonkin Form; [nomod:sift] Flap\n/cancelform [mod:shift]'},
+   ['im_entangling_hibernate'] = {icon = icub3d_QuestionIcon, body = '#showtooltip\n/cast [mod:shift] Hibernate; Entangling Roots'},
+   ['im_charge_roar'] = {icon = icub3d_QuestionIcon, body = '#showtooltip\n/cast [mod:shift] Stampeding Roar; Wild Charge'},
+   ['im_fregen'] = {icon = icub3d_QuestionIcon, body = '#showtooltip\n/cast [nomod:shift,nostance:1] !Bear Form; [nomod:shift] Frenzied Regeneration\n/cancelform [mod:shift]'},
 }
 
 -- These are the different macro formats that can be used.
 icub3d_MacroFormats = {
    ['pve'] = {
-	  ['both'] = '#showtooltip %1$s\n/cast [mod:alt,@player] [@mouseover,exists,nodead] [@cursor,combat] [] %1$s',
+	  ['both'] = '#showtooltip %1$s\n/cast [@mouseover,exists,nodead] [@cursor,combat] [] %1$s',
 	  ['harm'] = '#showtooltip %1$s\n/cast [mod:alt,@focus] [@mouseover,harm,nodead] [harm] [@mouseovertarget,harm] [@targettarget,harm] [] %1$s',
 	  ['help'] = '#showtooltip %1$s \n/cast [mod:alt,@player] [@mouseover,help,nodead] [help] [@targettarget,help] [] %1$s',
 	  ['mouse'] = '#showtooltip %1$s \n/cast [mod:alt,@player] [mod:shift,@cursor] [] %1$s',
@@ -178,9 +180,9 @@ function icub3d_RacialMacro()
 	  body ="#showtooltip\n/cast [mod:shift] Rummage Your Bag; Bag of Tricks"
    elseif race == "Tauren" then
 	  body ="#showtooltip\n/cast War Stomp"
-	elseif race == "Nightborne" then
+   elseif race == "Nightborne" then
 	  body ="#showtooltip\n/cast [mod:shift] Cantrips; Arcane Pulse"
-	 end
+   end
 
    icub3d_SpecialMacros['im_racial'] = {icon = icub3d_QuestionIcon, body = body}
 
@@ -199,18 +201,6 @@ function icub3d_CreateMacro(x)
    local name = string.format('is-%03d', x)
    if GetMacroInfo(name) == nil then
 	  CreateMacro(name, icub3d_QuestionIcon, '', p)
-   end
-end
-
-function icub3d_CreateMacros()
-   for x = 1, 120 do
-	  icub3d_CreateMacro(x)
-   end
-
-   for name, macro in pairs(icub3d_PermanentMacros) do
-	  if GetMacroInfo(name) == nil then
-		 CreateMacro(name, macro.icon, macro.body)
-	  end
    end
 end
 
@@ -244,20 +234,22 @@ function icub3d_DeleteMacros()
 end
 
 function icub3d_UpdateMacros(spec, where)
+   local specId = GetSpecialization()
    for i, s in ipairs(spec.actionbar) do
-	  -- Track the slot we'd place it in. We want to skip the second
-	  -- action bar.
-	  local p = i
-	  if p > 12 then
-		 p = p + 12
-	  end
-
 	  -- Determine the macro name the spell will be placed in and set
 	  -- a default target.
 	  local name = string.format('is-%03d', i)
 
 	  if s.typ == 'skip' then
 		 EditMacro(name, nil, icub3d_DefaultIcon, '')
+	  elseif s.typ == 'spec' then 
+		local spell = s.spells[specId]
+		if GetSpellInfo(spell.name) ~= nil then
+			-- This is just a normal spell, item, etc.
+			icub3d_UpdateMacro(name, where, spell.typ, spell.name)
+		else 
+			EditMacro(name, nil, icub3d_DefaultIcon, '')
+		end
 	  elseif s.typ == 'potion' then
 		 local _, class, _ = UnitClass("player");
 		 local spec = GetSpecialization()
@@ -283,7 +275,7 @@ function icub3d_UpdateMacros(spec, where)
 	  elseif s.typ == 'pvp' then
 		 -- This is a pvp talent slot.
 		 local count = 0
-		 local selected = nil
+		 local selected = false
 
 		 -- Find the pvp for the given count.
 		 for _, spell in ipairs(spec.pvp.spells) do
@@ -294,19 +286,18 @@ function icub3d_UpdateMacros(spec, where)
 			-- If we've found the number of pvptalents we were
 			-- expecting, we found the right spell.
 			if count == s.num then
-			   selected = spell
-			   break
-			end
-			-- Otherwise, we'll just use the alternate.
-			if selected == nil then
-			   selected = spec.pvp.alternate
+				selected = true
+				icub3d_UpdateMacro(name, where, spell.typ, spell.name)
+				break
 			end
 		 end
 
-		 -- Update the macro with the chosen spell or alternate.
-		 icub3d_UpdateMacro(name, where, selected.typ, selected.name)
+		-- Otherwise, we'll just use the skip.
+		if not selected then
+			EditMacro(name, nil, icub3d_DefaultIcon, '')
+		end
 	  elseif s.typ == 'talent' then
-		 -- This is a pvp talent slot.
+		 -- This is a talent slot.
 		 local count = 0
 		 local selected = nil
 
