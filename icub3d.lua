@@ -24,68 +24,50 @@ function SlashCmdList.ICUB3DLP(msg, editBox)
     C_PartyInfo.LeaveParty()
 end
 
-SLASH_ICUB3DCURRENCY1 = '/curr'
-function SlashCmdList.ICUB3DCURRENCY(msg, editBox)
-   local currencies = {
-	  1792, -- honor
-	  1602, -- conquest
-	  1885, -- grateful offering
-	  1813, -- anima - night fae
-	  1828, -- soul ash
-	  1767, -- stygia
-   }
-
-   for k, currency in pairs(currencies) do
-	  info = C_CurrencyInfo.GetCurrencyInfo(currency)
-	  icub3d_Print('%05d/%05d - %s', {info.quantity, info.maxQuantity, info.name})
-   end
-end
-
-
 SLASH_ICUB3DPIN1 = '/pin'
 function SlashCmdList.ICUB3DPIN(msg, editBox)
-   -- Get the args
-   parts = {}
-   for part in msg:gmatch("%S+") do table.insert(parts, part) end
-   icub3d_Print('parts: %s', {parts})
+    -- Get the args
+    parts = {}
+    for part in msg:gmatch("%S+") do table.insert(parts, part) end
+    icub3d_Print('parts: %s', { parts })
 
-   if table.getn(parts) < 2 then
-	  icub3d_Error("requires at least two variables (x, y)")
-	  return
-   end
-   
-   -- (x,y) position
-   local y = tonumber(table.remove(parts))
-   local x = tonumber(table.remove(parts))
-   
-   -- Default to the current map.
-   local map = C_Map.GetBestMapForUnit("player")
+    if table.getn(parts) < 2 then
+        icub3d_Error("requires at least two variables (x, y)")
+        return
+    end
 
-   -- If there is anything else from the args, assume it's a name and
-   -- change map.
-   if table.getn(parts) > 1 then
-	  local name = table.concat(parts, " ")
-	  -- TODO not sure how to get maps.
-   end
-   
-   -- Make the pin
-   icub3d_Print("%s %d %d", {map, x, y})
-   C_Map.SetUserWaypoint({uiMapID=map,position=CreateVector2D(x, y)})
+    -- (x,y) position
+    local y = tonumber(table.remove(parts))
+    local x = tonumber(table.remove(parts))
+
+    -- Default to the current map.
+    local map = C_Map.GetBestMapForUnit("player")
+
+    -- If there is anything else from the args, assume it's a name and
+    -- change map.
+    if table.getn(parts) > 1 then
+        local name = table.concat(parts, " ")
+        -- TODO not sure how to get maps.
+    end
+
+    -- Make the pin
+    icub3d_Print("%s %d %d", { map, x, y })
+    C_Map.SetUserWaypoint({ uiMapID = map, position = CreateVector2D(x, y) })
 end
 
 --------------------------------------------------------------------
 -- Macro Name
 --------------------------------------------------------------------
 -- local r={"MultiBarBottomLeft", "MultiBarBottomRight", "Action", "MultiBar5", "MultiBar6", "MultiBar7", "MultiBar8"}for b=1,#r do for i=1,12 do _G[r[b].."Button"..i.."Name"]:SetAlpha(0)end end
--- 
+--
 -- SLASH_HideMacroName1 = "/hmn";
--- SlashCmdList["HideMacroName"] = function() 
---    local r={"MultiBarBottomLeft", "MultiBarBottomRight", "Action", "MultiBar5", "MultiBar6", "MultiBar7", "MultiBar8"}for b=1,#r do for i=1,12 do _G[r[b].."Button"..i.."Name"]:SetAlpha(0)end end; 
+-- SlashCmdList["HideMacroName"] = function()
+--    local r={"MultiBarBottomLeft", "MultiBarBottomRight", "Action", "MultiBar5", "MultiBar6", "MultiBar7", "MultiBar8"}for b=1,#r do for i=1,12 do _G[r[b].."Button"..i.."Name"]:SetAlpha(0)end end;
 -- end
--- 
+--
 -- SLASH_ShowMacroName1 = "/smn";
--- SlashCmdList["ShowMacroName"] = function() 
---    local r={"MultiBarBottomLeft", "MultiBarBottomRight", "Action", "MultiBar5", "MultiBar6", "MultiBar7", "MultiBar8"}for b=1,#r do for i=1,12 do _G[r[b].."Button"..i.."Name"]:SetAlpha(1)end end; 
+-- SlashCmdList["ShowMacroName"] = function()
+--    local r={"MultiBarBottomLeft", "MultiBarBottomRight", "Action", "MultiBar5", "MultiBar6", "MultiBar7", "MultiBar8"}for b=1,#r do for i=1,12 do _G[r[b].."Button"..i.."Name"]:SetAlpha(1)end end;
 -- end
 
 
@@ -99,13 +81,13 @@ icub3d_Frame:RegisterEvent("PLAYER_ENTERING_WORLD")
 local icub3d_Events = {}
 
 function icub3d_RegisterEvent(event, func)
-    icub3d_Debug('register event: %s', {event})
+    icub3d_Debug('register event: %s', { event })
     if icub3d_Events[event] == nil then
-        icub3d_Events[event] = {func}
+        icub3d_Events[event] = { func }
 
         -- We need to register it with the wow api.
         if event ~= 'ADDON_READY' then
-            icub3d_Debug('wow register: %s', {event})
+            icub3d_Debug('wow register: %s', { event })
             icub3d_Frame:RegisterEvent(event)
         end
     else
@@ -115,8 +97,8 @@ end
 
 -- This will be our main event handler. We use these bools to track
 -- when we are ready.
-icub3d_Frame:SetScript('OnEvent', function (self, event, arg1)
-    icub3d_Debug('event: %s', {event})
+icub3d_Frame:SetScript('OnEvent', function(self, event, arg1)
+    icub3d_Debug('event: %s', { event })
     -- We have our own "event" ADDON_READY which is triggered when we are
     -- loaded and in the world. I don't recall why, but it seems to make
     -- things work nice.

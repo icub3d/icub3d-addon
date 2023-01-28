@@ -2,8 +2,7 @@
 ## Title: icub3d
 ## Notes: My personal addon
 ## Author: Joshua Marsh
-## Version: 10.0
-## SavedVariablesPerCharacter: icub3d_MACROTYPE icub3d_PVP1 icub3d_PVP2
+## Version: 10.0.5
 icub3d.lua
 dumper.lua
 log.lua
@@ -16,5 +15,6 @@ spells-druid.lua
 # spells-mage.lua
 spells-evoker.lua
 spells-paladin.lua
-# spells-priest.lua
+spells-priest.lua
 spells-warlock.lua
+spells-warrior.lua

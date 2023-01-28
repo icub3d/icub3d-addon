@@ -25,7 +25,6 @@ icub3d_Priest_Spells = {
    icub3d_Spell('harm', 'Shadowfiend', 'harm', 'Lightspawn', 'skip', 'skip'),
    icub3d_Spell('help', 'Power Infusion'),
 
-
    icub3d_Spell('harm', 'Holy Word: Chastise', 'skip', 'skip'),
    icub3d_Spell('help', 'Leap of Faith'),
    icub3d_Spell('harm', 'Psychic Scream'),
@@ -83,7 +82,13 @@ icub3d_Priest_Talents = {
    icub3d_Spell('help', 'Archangel'),
    icub3d_Spell('help', 'Dark Archangel'),
    
-   icub3d_Spell('help', 'Holy Ward'),
+   icub3d_Spell('help', 'Holy Ward'),   icub3d_Talent(1),
+   icub3d_Talent(2),
+
+   icub3d_Talent(3),
+   icub3d_Talent(4),
+   icub3d_Talent(5),
+   icub3d_Talent(6),
    icub3d_Spell('mouse', 'Holy Word: Concentration'),
    icub3d_Spell('help', 'Divine Ascension'),
    icub3d_Spell('help', 'Greater Heal'),

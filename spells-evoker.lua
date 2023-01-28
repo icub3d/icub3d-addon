@@ -49,18 +49,6 @@ icub3d_Evoker_Devastation_Spells = {
    icub3d_Macro('im_trinket'),
    icub3d_Macro('im_healthstone'),
    icub3d_Skip(),
-   icub3d_Spell('help', 'Blessing of the Bronze', 'skip', 'skip'),
-   icub3d_Spell('help', 'Visage', 'skip', 'skip'),
-   icub3d_Spell('help', 'Chosen Identity', 'skip', 'skip'),
-   icub3d_Spell('help', 'Return', 'skip', 'skip'),
-   icub3d_Spell('help', 'Mass Return', 'skip', 'skip'),
-
-   icub3d_Skip(),
-   icub3d_Skip(),
-   icub3d_Skip(),
-   icub3d_Skip(),
-   icub3d_Skip(),
-   icub3d_Skip(),
    icub3d_Skip(),
    icub3d_Skip(),
    icub3d_Skip(),
@@ -69,8 +57,8 @@ icub3d_Evoker_Devastation_Spells = {
    icub3d_Skip(),
 
    icub3d_Spell('both', 'Living Flame', 'skip', 'skip'),
-   icub3d_Spell('simple', 'Surge Forward'),
-   icub3d_Spell('simple', 'Skyward Ascent'),
+   icub3d_Spell('simple', 'Surge Forward(Racial)'),
+   icub3d_Spell('simple', 'Skyward Ascent(Racial)'),
    icub3d_Spell('harm', 'Disintegrate', 'skip', 'skip'),
    icub3d_Spell('harm', 'Fire Breath', 'skip', 'skip'),
    icub3d_Spell('harm', 'Eternity Surge', 'skip', 'skip'),
@@ -106,6 +94,7 @@ icub3d_Evoker_Devastation_Spells = {
    icub3d_Skip(),
    icub3d_Skip(),
    icub3d_Skip(),
+
 
    icub3d_Skip(),
    icub3d_Skip(),
