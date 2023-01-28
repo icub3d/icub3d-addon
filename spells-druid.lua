@@ -22,7 +22,7 @@ icub3d_Druid_Talents = {
     icub3d_Spell('Innervate'),
     icub3d_Spell('Nature\'s Vigil'),
     icub3d_Spell('Renewal'),
-    icub3d_Spell('mouse', 'Ursol\'s Vortex'),
+    icub3d_Spell('Ursol\'s Vortex'),
     icub3d_Spell('Mass Entanglement'),
     icub3d_Spell('Incapacitating Roar'),
     icub3d_Spell('Mighty Bash'),
@@ -36,82 +36,81 @@ icub3d_Druid_Talents = {
 ------------------------------------------------------------------------
 -- Normal Form
 icub3d_normal = {
-    icub3d_Spell('Regrowth', 'skip'),
-    icub3d_Spell('Rejuvenation', 'skip'),
-    icub3d_Spell('Lifebloom', 'Starfire', 'skip'),
-    icub3d_Spell('Swiftmend', 'skip'),
-    icub3d_Spell('Wild Growth', 'skip'),
-    icub3d_Spell('Nature\'s Swiftness', 'Wrath', 'skip'),
-    icub3d_Spell('Cenarion Ward', 'Nourish', 'Starsurge', 'skip'),
-    icub3d_Spell('Ironbark', 'Sunfire', 'skip'),
-    icub3d_Spell('Efflorescence', 'skip'),
-    icub3d_Spell('Renewal', 'skip'),
-    icub3d_Spell('Convoke the Spirits(Shadowlands)', 'skip'),
-    icub3d_Spell('Adaptive Swarm', 'skip')
+    icub3d_Spell('Regrowth'),
+    icub3d_Spell('Rejuvenation'),
+    icub3d_Spell('Lifebloom', 'Starfire'),
+    icub3d_Spell('Swiftmend'),
+    icub3d_Spell('Wild Growth'),
+    icub3d_Spell('Nature\'s Swiftness', 'Wrath'),
+    icub3d_Spell('Cenarion Ward', 'Nourish', 'Starsurge'),
+    icub3d_Spell('Ironbark', 'Sunfire'),
+    icub3d_Spell('Efflorescence'),
+    icub3d_Spell('Renewal'),
+    icub3d_Spell('Convoke the Spirits(Shadowlands)'),
+    icub3d_Spell('Adaptive Swarm')
 }
 -- Bear Form
 icub3d_bear = {
-    icub3d_Spell('Mangle', 'skip'),
-    icub3d_Spell('Maul', 'skip'),
-    icub3d_Spell('Thrash', 'skip'),
-    icub3d_Spell('Swipe', 'skip'),
-    icub3d_Spell('Ironfur', 'skip'),
-    icub3d_Spell('Growl', 'skip'),
-    icub3d_Spell('Frenzied Regeneration', 'skip'),
-    icub3d_Spell('Bristling Fur', 'skip'),
-    icub3d_Spell('Pulverize', 'skip'),
-    icub3d_Spell('Skull Bash', 'skip'),
-    icub3d_Spell('Convoke the Spirits(Shadowlands)', 'skip'),
-    icub3d_Spell('Rage of the Sleeper', 'skip')
+    icub3d_Spell('Mangle'),
+    icub3d_Spell('Maul'),
+    icub3d_Spell('Thrash'),
+    icub3d_Spell('Swipe'),
+    icub3d_Spell('Ironfur'),
+    icub3d_Spell('Growl'),
+    icub3d_Spell('Frenzied Regeneration'),
+    icub3d_Spell('Bristling Fur'),
+    icub3d_Spell('Pulverize'),
+    icub3d_Spell('Skull Bash'),
+    icub3d_Spell('Convoke the Spirits(Shadowlands)'),
+    icub3d_Spell('Rage of the Sleeper')
 }
 
 -- Cat/Prowl Form
 icub3d_cat = {
-    icub3d_Spell('Shred', 'skip'),
-    icub3d_Spell('Rake', 'skip'),
-    icub3d_Spell('Thrash', 'skip'),
-    icub3d_Spell('Swipe', 'skip'),
-    icub3d_Spell('Ferocious Bite', 'skip'),
-    icub3d_Spell('Maim', 'skip'),
-    icub3d_Spell('Rip', 'skip'),
+    icub3d_Spell('Shred'),
+    icub3d_Spell('Rake'),
+    icub3d_Spell('Thrash'),
+    icub3d_Spell('Swipe'),
+    icub3d_Spell('Ferocious Bite'),
+    icub3d_Spell('Maim'),
+    icub3d_Spell('Rip'),
     icub3d_Skip(),
-    icub3d_Spell('Tiger\'s Fury', 'skip'),
-    icub3d_Spell('Skull Bash', 'skip'),
-    icub3d_Spell('Convoke the Spirits(Shadowlands)', 'skip'),
-    icub3d_Spell("Adaptive Swarm", 'skip')
+    icub3d_Spell('Tiger\'s Fury'),
+    icub3d_Spell('Skull Bash'),
+    icub3d_Spell('Convoke the Spirits(Shadowlands)'),
+    icub3d_Spell("Adaptive Swarm")
 }
 
 -- Moonkin Form
 icub3d_moonkin = {
-    icub3d_Spell('Wrath', 'skip'),
-    icub3d_Spell('Starfire', 'skip'),
-    icub3d_Spell('Starsurge', 'skip'),
-    icub3d_Spell('Starfall', 'skip'),
-    icub3d_Spell('Stellar Flare', 'skip'),
-    icub3d_Spell('Wild Mushroom', 'skip'),
-    icub3d_Spell('New Moon', 'Fury of Elune', 'skip'),
-    icub3d_Spell('Moonfire', 'skip'),
-    icub3d_Spell('Sunfire', 'skip'),
+    icub3d_Spell('Wrath'),
+    icub3d_Spell('Starfire'),
+    icub3d_Spell('Starsurge'),
+    icub3d_Spell('Starfall'),
+    icub3d_Spell('Stellar Flare'),
+    icub3d_Spell('Wild Mushroom'),
+    icub3d_Spell('New Moon', 'Fury of Elune'),
+    icub3d_Spell('Moonfire'),
+    icub3d_Spell('Sunfire'),
     icub3d_Macro('im_root_beam'),
-    icub3d_Spell('Convoke the Spirits(Shadowlands)', 'skip'),
-    icub3d_Spell('Astral Commmunion', 'skip'),
+    icub3d_Spell('Convoke the Spirits(Shadowlands)'),
+    icub3d_Spell('Astral Commmunion'),
 }
 
 -- Top Right
 icub3d_top_right = {
-    icub3d_Spell_Spec('Celestial Alignment', 'Berserk', 'Berserk', 'help',
-        'Incarnation: Tree of Life'),
+    icub3d_Spell_Spec('Celestial Alignment', 'Berserk', 'Berserk', 'Incarnation: Tree of Life'),
     icub3d_Spell_Spec('Regrowth', 'Brutal Slash', 'Demoralizing Roar', 'Flourish'),
-    icub3d_Spell_Spec('Rejuvenation', 'Feral Frenzy', 'mouse', 'Grove Protection', 'Overgrowth'),
+    icub3d_Spell_Spec('Rejuvenation', 'Feral Frenzy', 'Grove Protection', 'Overgrowth'),
     icub3d_Spell_Spec('Swiftmend', 'Primal Wrath', 'Emerald Slumber', 'Invigorate'),
     icub3d_Spell('Moonfire'),
     icub3d_Spell('Sunfire'),
     icub3d_Spell('Lunar Beam', 'Wrath'),
     icub3d_Spell_Spec('Regrowth', 'Regrowth', 'Regrowth', 'Starfire'),
-    icub3d_Spell('Thorns', 'Overrun', 'skip'),
+    icub3d_Spell('Thorns', 'Overrun'),
     icub3d_Macro('im_health_rev'),
-    icub3d_Spell('Barkskin', 'skip'),
-    icub3d_Spell('mouse', 'Force of Nature', 'Warrior of Elune', 'Survival Instincts', 'help',
+    icub3d_Spell('Barkskin'),
+    icub3d_Spell('Force of Nature', 'Warrior of Elune', 'Survival Instincts', 'help',
         'Survival Instincts', 'Tranquility'),
 }
 
@@ -138,13 +137,13 @@ icub3d_bottom_right = {
     icub3d_Macro('im_racial'),
     icub3d_Macro('im_trinket'),
     icub3d_Macro('im_entangling_hibernate'),
-    icub3d_Spell('Soothe', 'skip'),
+    icub3d_Spell('Soothe'),
     icub3d_Macro('im_glider_foam'),
     icub3d_Macro('im_flap'),
-    icub3d_Spell('Mark of the Wild', 'skip'),
-    icub3d_Spell('Revive', 'skip'),
-    icub3d_Spell('Revitalize', 'skip'),
-    icub3d_Spell('Charm Woodland Creature', 'skip'),
+    icub3d_Spell('Mark of the Wild'),
+    icub3d_Spell('Revive'),
+    icub3d_Spell('Revitalize'),
+    icub3d_Spell('Charm Woodland Creature'),
 }
 
 icub3d_dragon = {
