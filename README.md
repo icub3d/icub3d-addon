@@ -2,6 +2,14 @@
 
 This addon provides various utilities (especially from the command line).
 
+# Console Commands
+
+```
+/console cameraDistanceMaxZoomFactor 2.6
+/console CameraReduceUnexpectedMovement 1
+/console set ResampleAlwaysSharpen 1
+```
+
 # UI
 
 ```
@@ -33,7 +41,7 @@ It's often helpful to see lua errors. This can be done in the terminal:
 To Turn it back off:
 
 ```
-/console scriptErrors 1
+/console scriptErrors 0
 ```
 
 ## Frame Names

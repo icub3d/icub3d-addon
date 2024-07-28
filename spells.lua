@@ -161,7 +161,8 @@ function icub3d_UpdateSpells(spec)
 					icub3d_Debug("old %s", { old })
 				end
 				icub3d_Debug("new %s", { new })
-				PickupSpellBookItem(new.id)
+				-- PickupSpellBookItem(new.id)
+				C_Spell.PickupSpell(new.id)
 				if GetCursorInfo() == nil then
 					icub3d_Debug("trying with spell id %s", { new })
 					-- Try by Spell ID?

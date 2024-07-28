@@ -16,6 +16,7 @@ end
 -- Shared Spells
 ------------------------------------------------------------------------
 icub3d_Druid_Talents = {
+    icub3d_Spell('Stampeding Roar'),
     icub3d_Spell('Heart of the Wild'),
     icub3d_Spell('Remove Corruption'),
     icub3d_Spell('Nature\'s Cure'),
@@ -142,7 +143,7 @@ icub3d_bottom_right = {
     icub3d_Macro('im_flap'),
     icub3d_Spell('Mark of the Wild'),
     icub3d_Spell('Revive'),
-    icub3d_Spell('Revitalize'),
+    icub3d_Spell('Revitalize', 'Switch Flight Style'),
     icub3d_Spell('Charm Woodland Creature'),
 }
 
@@ -150,8 +151,10 @@ icub3d_dragon = {
     icub3d_Spell('Whirling Surge'),
     icub3d_Spell('Surge Forward'),
     icub3d_Spell('Skyward Ascent'),
+    icub3d_Spell('Aerial Halt'),
+    icub3d_Spell('Second Wind'),
     icub3d_Spell('Bronze Timelock'),
-    icub3d_Skip(),
+    icub3d_Spell('Switch Flight Style'),
     icub3d_Skip(),
     icub3d_Skip(),
     icub3d_Skip(),
