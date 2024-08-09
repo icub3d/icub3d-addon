@@ -7,57 +7,56 @@
 -- https://wow.gamepedia.com/ClassId
 --
 -- Each class has it's own file that updates this global variable.
-icub3d_Spells = {}
+ICUB3D_Spells = {}
 
 --------------------------------------------------------------------
 -- SLASH COMMANDS
 --------------------------------------------------------------------
 -- Change specs
 SLASH_CHANGESPEC1 = "/cs"
-function SlashCmdList.CHANGESPEC(msg, editBox)
-	icub3d_ChangeSpec(msg)
+function SlashCmdList.CHANGESPEC(msg, _)
+	ICUB3D_ChangeSpec(msg)
 end
 
 -- Change talents
 SLASH_CHANGETALENTS1 = "/ct"
-function SlashCmdList.CHANGETALENTS(msg, editBox)
-	--	local currentSpec = GetSpecialization()
-	--	local currentSpecName = currentSpec and select(2, GetSpecializationInfo(currentSpec)) or "None"
-	--	local spec = string.lower(string.sub(currentSpecName, 1, 1))
-	--	SlashCmdList["BTWLOADOUTS"]("activate " .. spec .. msg)
-	icub3d_TalentChanges()
+function SlashCmdList.CHANGETALENTS(msg, _)
+	ICUB3D_TalentChanges()
 end
 
 --------------------------------------------------------------------
 -- EVENT REGISTRATION
 --------------------------------------------------------------------
-icub3d_RegisterEvent("ADDON_READY", function(arg1)
-	-- icub3d_TalentChanges()
-	icub3d_RegisterEvent("SPELLS_CHANGED", function(arg1)
-		icub3d_Debug("spells changed")
-		icub3d_TalentChanges()
+ICUB3D_RegisterEvent("ADDON_READY", function(_)
+	ICUB3D_RegisterEvent("SPELLS_CHANGED", function(_)
+		-- Don't update spells while in combat
+		if UnitAffectingCombat("player") then
+			return
+		end
+		ICUB3D_Debug("spells changed")
+		ICUB3D_TalentChanges()
 	end)
 end)
 
 --------------------------------------------------------------------
 -- SPELLS CODE
 --------------------------------------------------------------------
-function icub3d_TalentChanges()
+function ICUB3D_TalentChanges()
 	-- Make sure we have the right macros
 	local spec = GetSpecialization()
 	local _, class, _ = UnitClass("player")
-	if icub3d_Spells[class] ~= nil then
-		if icub3d_Spells[class].specs[spec] ~= nil then
-			icub3d_UpdateSpells(icub3d_Spells[class].specs[spec])
+	if ICUB3D_Spells[class] ~= nil then
+		if ICUB3D_Spells[class].specs[spec] ~= nil then
+			ICUB3d_UpdateSpells(ICUB3D_Spells[class].specs[spec])
 		end
 	end
 end
 
-function icub3d_ChangeSpec(spec)
+function ICUB3D_ChangeSpec(spec)
 	local _, class, _ = UnitClass("player")
-	local character = icub3d_Spells[class]
+	local character = ICUB3D_Spells[class]
 	if character == nil then
-		icub3d_Error("class not found: %s", { class })
+		ICUB3D_Error("class not found: %s", { class })
 		return
 	end
 
@@ -78,14 +77,14 @@ function icub3d_ChangeSpec(spec)
 		end
 	end
 
-	icub3d_Error("spec '%s' not found for '%s'", { spec, class })
+	ICUB3D_Error("spec '%s' not found for '%s'", { spec, class })
 end
 
 -- A helper function creates a table that the system will understand
 -- as a spell. The variadic arguments are the alternates to use if not
 -- available, for example, a talent. They should be given in pairs wit
 -- hthe type and name.
-function icub3d_Spell(name, ...)
+function ICUB3D_Spell(name, ...)
 	local alternates = { ... }
 	return {
 		typ = 'spell',
@@ -94,7 +93,7 @@ function icub3d_Spell(name, ...)
 	}
 end
 
-function icub3d_Spell_Spec(...)
+function ICUB3D_SpellSpec(...)
 	local spells = { ... }
 	return {
 		typ = "spec",
@@ -102,30 +101,30 @@ function icub3d_Spell_Spec(...)
 	}
 end
 
-function icub3d_Talent(num)
+function ICUB3D_Talent(num)
 	return {
 		typ = 'talent',
 		num = num
 	}
 end
 
-function icub3d_PvPTalent(num)
+function ICUB3D_PvPTalent(num)
 	return { typ = 'pvp', num = num }
 end
 
-function icub3d_Ignore()
+function ICUB3D_Ignore()
 	return { typ = 'ignore' }
 end
 
-function icub3d_Skip()
+function ICUB3D_Skip()
 	return { typ = 'skip' }
 end
 
-function icub3d_Macro(name)
+function ICUB3D_Macro(name)
 	return { typ = 'macro', name = name }
 end
 
-function icub3d_GetCurrentAction(p)
+function ICUB3D_GetCurrentAction(p)
 	local curType, curId, _ = GetActionInfo(p)
 	if curType == 'macro' then
 		return { typ = curType, id = select(1, GetMacroInfo(curId)) }
@@ -136,7 +135,7 @@ function icub3d_GetCurrentAction(p)
 	end
 end
 
-function icub3d_UpdateSpells(spec)
+function ICUB3d_UpdateSpells(spec)
 	for x, s in ipairs(spec.actionbar) do
 		-- Blizzard be trolling, LOLOLOLOLOL
 		local p = x
@@ -145,31 +144,27 @@ function icub3d_UpdateSpells(spec)
 		end
 
 		-- Get our current action item.
-		local cur = icub3d_GetCurrentAction(p)
+		local cur = ICUB3D_GetCurrentAction(p)
 
 		-- Figure out what action we want to place.
-		local new = icub3d_DetermineAction(spec, p, s)
+		local new = ICUB3D_DetermineAction(spec, p, s)
 
 		-- If we need to make a change, do it.
-		if cur == nil or cur.typ ~= new.typ or (cur.typ == new.typ and cur.id ~= new.id) then
+		if new ~= nil and (cur == nil or cur.typ ~= new.typ or (cur.typ == new.typ and cur.id ~= new.id)) then
 			if new.typ == 'macro' then
 				PickupMacro(new.id)
 				PlaceAction(p)
 				ClearCursor()
 			else
-				if old ~= nil then
-					icub3d_Debug("old %s", { old })
-				end
-				icub3d_Debug("new %s", { new })
-				-- PickupSpellBookItem(new.id)
+				ICUB3D_Debug("new %s", { new })
 				C_Spell.PickupSpell(new.id)
 				if GetCursorInfo() == nil then
-					icub3d_Debug("trying with spell id %s", { new })
+					ICUB3D_Debug("trying with spell id %s", { new })
 					-- Try by Spell ID?
 					local spellId = select(7, GetSpellInfo(new.id))
 					if spellId ~= nil then
-						icub3d_Debug("got spell id %s", { spellId })
-						PickupSpell(spellId)
+						ICUB3D_Debug("got spell id %s", { spellId })
+						C_Spell.PickupSpell(spellId)
 					end
 				end
 				PlaceAction(p)
@@ -179,7 +174,7 @@ function icub3d_UpdateSpells(spec)
 	end
 end
 
-function icub3d_DetermineAction(spec, p, s)
+function ICUB3D_DetermineAction(spec, p, s)
 	local empty = { typ = 'macro', id = 'im_empty' }
 	local specId = GetSpecialization()
 	if s.typ == 'skip' then
@@ -266,7 +261,70 @@ function icub3d_DetermineAction(spec, p, s)
 		end
 		return { typ = 'spell', id = spell }
 	else
-		icub3d_Error("unknown type: %s %s", { s.typ, s })
+		ICUB3D_Error("unknown type: %s %s", { s.typ, s })
 		return
 	end
 end
+
+--------------------------------------------------------------------
+-- Common Functions
+--------------------------------------------------------------------
+function ICUB3D_joinSpells(groups)
+    r = {}
+    for k, g in pairs(groups) do
+        for k, v in pairs(g) do
+            table.insert(r, v)
+        end
+    end
+    return r
+end
+
+local engage = {
+	["DRUID"] = ICUB3D_Spell('Moonfire'),
+	["MONK"] = ICUB3D_Spell('Rushing Jade Wind'),
+	["DEATHKNIGHT"] = ICUB3D_Spell('Heart Strike'),
+}
+
+local engageSpell = function()
+	local class = select(2, UnitClass("player"))
+	if engage[class] ~= nil then
+		return engage[class]
+	end
+	return ICUB3D_Skip()
+end
+
+-- TODO (switch flight style in opie)
+-- TODO (save opie configs)
+-- TODO (add other class spells for engage)
+ICUB3D_Dragon = {
+    ICUB3D_Spell('Surge Forward'),
+    ICUB3D_Spell('Whirling Surge'),
+    ICUB3D_Spell('Skyward Ascent'),
+    ICUB3D_Spell('Aerial Halt'),
+    ICUB3D_Spell('Second Wind'),
+    ICUB3D_Spell('Bronze Timelock'),
+    engageSpell(),
+    ICUB3D_Skip(),
+    ICUB3D_Skip(),
+    ICUB3D_Skip(),
+    ICUB3D_Skip(),
+    ICUB3D_Skip(),
+    ICUB3D_Skip(),
+    ICUB3D_Skip()
+}
+
+-- Skip (All)
+ICUB3D_SkipAll = { -- We have to skip these for druid, warrior, rogue
+    ICUB3D_Skip(),
+    ICUB3D_Skip(),
+    ICUB3D_Skip(),
+    ICUB3D_Skip(),
+    ICUB3D_Skip(),
+    ICUB3D_Skip(),
+    ICUB3D_Skip(),
+    ICUB3D_Skip(),
+    ICUB3D_Skip(),
+    ICUB3D_Skip(),
+    ICUB3D_Skip(),
+    ICUB3D_Skip()
+}

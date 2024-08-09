@@ -1,108 +1,130 @@
-icub3d_Warlock_Spells = {
+local normal = {
    -- Top Left --
-   icub3d_Spell('Haunt', 'Shadow Bolt', 'Immolate'),
-   icub3d_Spell('Agony', 'Demonbolt', 'Incinerate'),
-   icub3d_Spell('Unstable Affliction', 'Call Dreadstalkers', 'Conflagrate'),
-   icub3d_Spell('Malefic Rapture', "Hand of Gul'dan", 'Chaos Bolt'),
-   icub3d_Spell('Soul Tap', 'Implosion', 'Dimensional Rift'),
-   icub3d_Spell('Soul Rot', 'Power Siphon', 'Rain of Fire'),
-   icub3d_Spell('Phantom Singularity', 'Vile Taint', 'Bilescourge Bombers', 'Demonic Strength', 'Shadowburn'),
-   icub3d_Spell('Seed of Corruption', 'Summon Vilefiend', 'Soul Strike', 'Soul Fire'),
-   icub3d_Spell('Summon Darkglare', 'Summon Demonic Tyrant', 'Channel Demonfire'),
-   icub3d_Spell('Siphon Life', 'Grimiore: Felguard', 'Cataclysm'),
-   icub3d_Spell('Drain Soul', 'Nether Portal', 'Harm', 'Summon Infernal'),
-   icub3d_Spell('Command Demon'),
+   ICUB3D_Spell('Haunt', 'Shadow Bolt', 'Immolate'),
+   ICUB3D_Spell('Agony', 'Demonbolt', 'Incinerate'),
+   ICUB3D_Spell('Unstable Affliction', 'Call Dreadstalkers', 'Conflagrate'),
+   ICUB3D_Spell('Malefic Rapture', "Hand of Gul'dan", 'Chaos Bolt'),
+   ICUB3D_Spell('Soul Tap', 'Implosion', 'Dimensional Rift'),
+   ICUB3D_Spell('Soul Rot', 'Power Siphon', 'Rain of Fire'),
+   ICUB3D_Spell('Phantom Singularity', 'Vile Taint', 'Bilescourge Bombers', 'Demonic Strength', 'Shadowburn'),
+   ICUB3D_Spell('Seed of Corruption', 'Summon Vilefiend', 'Soul Strike', 'Soul Fire'),
+   ICUB3D_Spell('Summon Darkglare', 'Summon Demonic Tyrant', 'Channel Demonfire'),
+   ICUB3D_Spell('Siphon Life', 'Grimiore: Felguard', 'Cataclysm'),
+   ICUB3D_Spell('Power Syphon', 'Drain Soul', 'Nether Portal', 'Harm', 'Summon Infernal'),
+   ICUB3D_Spell('Command Demon'),
+}
 
+local topRight = {
    -- Top Right --
-   icub3d_Spell('Fear'),
-   icub3d_Spell('Corruption'),
-   icub3d_Spell('Drain Life'),
-   icub3d_Spell('Health Funnel'),
-   icub3d_Macro('im_health_rev'),
-   icub3d_Spell('Banish'),
-   icub3d_Spell('Amplify Curse'),
-   icub3d_Spell('Curse of Weakness'),
-   icub3d_Spell('Curse of Tongues'),
-   icub3d_Spell('Curse of Exhaustion'),
-   icub3d_Spell('Fel Domination'),
-   icub3d_Spell('Unending Resolve'),
+   ICUB3D_Spell('Fear'),
+   ICUB3D_Spell('Corruption'),
+   ICUB3D_Spell('Drain Life'),
+   ICUB3D_Spell('Health Funnel'),
+   ICUB3D_Macro('im_health_rev'),
+   ICUB3D_Spell('Banish'),
+   ICUB3D_Spell('Amplify Curse'),
+   ICUB3D_Spell('Curse of Weakness'),
+   ICUB3D_Spell('Curse of Tongues'),
+   ICUB3D_Spell('Curse of Exhaustion'),
+   ICUB3D_Spell('Fel Domination'),
+   ICUB3D_Spell('Unending Resolve'),
+}
 
-   -- Bottom Left -- 
-   icub3d_Macro('im_demonic_circle'),
-   icub3d_Spell('Burning Rush'),
-   icub3d_Spell('Mortal Coil', 'Howl of Terror'),
-   icub3d_Spell('Guillotine', 'Grimoire of Sacrifice'),
-   icub3d_Spell('Soul Swap', 'Doom', 'Havoc'),
-   icub3d_Macro('im_racial'),
-   icub3d_Macro('im_trinket'),
-   icub3d_Skip(),
-   icub3d_Talent(1),
-   icub3d_Talent(2),
-   icub3d_Talent(3),
-   icub3d_Spell('Soulburn'),
+local bottomLeft = {
+   -- Bottom Left --
+   ICUB3D_Macro('im_demonic_circle'),
+   ICUB3D_Spell('Burning Rush'),
+   ICUB3D_Spell('Mortal Coil', 'Howl of Terror'),
+   ICUB3D_Spell('Guillotine', 'Grimoire of Sacrifice'),
+   ICUB3D_Spell('Soul Swap', 'Doom', 'Havoc'),
+   ICUB3D_Macro('im_racial'),
+   ICUB3D_Spell('Summon Demon'),
+   ICUB3D_Talent(1),
+   ICUB3D_Talent(2),
+   ICUB3D_Talent(3),
+   ICUB3D_Talent(4),
+   ICUB3D_Talent(5),
+}
 
+local bottomRight = {
    -- Bottom Right --
-   icub3d_Spell('Summon Soulkeeper', 'harm' ,'Inquisitor\'s Gaze'),
-   icub3d_Spell('Shadowfury'),
-   icub3d_Spell('Shadowflame'),
-   icub3d_Spell('Dark Pact'),
-   icub3d_Spell('Demonic Gateway'),
-   icub3d_Spell('Create Healthstone'),
-   icub3d_Spell('Subjugate Demon'),
-   icub3d_Skip(), 
-   icub3d_Skip(), 
-   icub3d_Skip(), 
-   icub3d_Skip(), 
-   icub3d_Skip(), 
+   ICUB3D_Spell('Summon Soulkeeper', 'harm', 'Inquisitor\'s Gaze'),
+   ICUB3D_Spell('Shadowfury'),
+   ICUB3D_Spell('Shadowflame'),
+   ICUB3D_Spell('Dark Pact'),
+   ICUB3D_Spell('Demonic Gateway'),
+   ICUB3D_Spell('Create Healthstone'),
+   ICUB3D_Spell('Subjugate Demon'),
+   ICUB3D_Spell('Demonic Circle'),
+   ICUB3D_Spell('Soulstone'),
+   ICUB3D_Spell('Create Soulwell'),
+   ICUB3D_Spell('Eye of Kilrogg'),
+   ICUB3D_Spell('Ritual of Summoning'),
 }
 
-icub3d_Warlock_Talents = {
-   icub3d_Spell('Bane of Fragility'),
-   icub3d_Spell('Bane of Shadows'),
-   icub3d_Spell('Bonds of Fel'),
-   icub3d_Spell('Deathbolt'),
-   icub3d_Spell('Call Fel Lord'),
-   icub3d_Spell('Call Fel Hunter'),
-   icub3d_Spell('Call Observer'),
-   icub3d_Spell('Casting Circle'),
-   icub3d_Spell('Fel Obelisk'),
-   icub3d_Spell('Nether Ward'),
-   icub3d_Spell('Shadow Rift'),
-   icub3d_Spell('Rapid Contagion'),
+local talents = {
+   ICUB3D_Spell('Power Syphon'),
+   ICUB3D_Spell('Bane of Fragility'),
+   ICUB3D_Spell('Bane of Shadows'),
+   ICUB3D_Spell('Bonds of Fel'),
+   ICUB3D_Spell('Deathbolt'),
+   ICUB3D_Spell('Call Fel Lord'),
+   ICUB3D_Spell('Call Fel Hunter'),
+   ICUB3D_Spell('Call Observer'),
+   ICUB3D_Spell('Casting Circle'),
+   ICUB3D_Spell('Fel Obelisk'),
+   ICUB3D_Spell('Nether Ward'),
+   ICUB3D_Spell('Shadow Rift'),
+   ICUB3D_Spell('Rapid Contagion'),
 }
 
-icub3d_Spells['WARLOCK'] = {
+local spells = ICUB3D_joinSpells(
+   {
+      normal,
+      topRight,
+      bottomLeft,
+      bottomRight,
+      ICUB3D_SkipAll,
+      ICUB3D_SkipAll,
+      ICUB3D_SkipAll,
+      ICUB3D_SkipAll,
+      ICUB3D_SkipAll,
+      ICUB3D_Dragon
+   }
+)
+
+ICUB3D_Spells['WARLOCK'] = {
    specs = {
-	  -- The tags are useful for switching but these should be in in-game order.
-	  {
-		 tags = {'a', 'aff', 'affliction'},
-		 talent = icub3d_Warlock_Talents,
-		 talents = {
-			['raid'] = {3, 3, 2, 2, 2, 2, 3},
-			['dungeon'] = {3, 2, 2, 3, 2, 1, 3},
-			['quest'] = {3, 3, 2, 3, 2, 2, 3},
-		 },
-		 actionbar = icub3d_Warlock_Spells,
-	  },
-	  {
-		 tags = {'dm', 'demo', 'demonology'},
-		 talent = icub3d_Warlock_Talents,
-		 talents = {
-			['raid'] = {3, 1, 2, 3, 1, 3, 2},
-			['quest'] = {1, 1, 2, 3, 2, 3, 2},
-			['dungeon'] = {3, 1, 2, 3, 2, 3, 2},
-		 },
-		 actionbar = icub3d_Warlock_Spells,
-	  },
-	  {
-		 tags = {'ds', 'destro', 'destruction'},
-		 talent = icub3d_Warlock_Talents,
-		 talents = {
-			['aoe'] = {1, 1, 2, 2, 2, 2, 1},
-			['st'] = {1, 1, 2, 3, 2 ,1 ,2},
-			['pvp'] = {1, 1, 1, 3, 2, 1, 3},
-		 },
-		 actionbar = icub3d_Warlock_Spells,
-	  }
+      -- The tags are useful for switching but these should be in in-game order.
+      {
+         tags = { 'a', 'aff', 'affliction' },
+         talent = talents,
+         talents = {
+            ['raid'] = { 3, 3, 2, 2, 2, 2, 3 },
+            ['dungeon'] = { 3, 2, 2, 3, 2, 1, 3 },
+            ['quest'] = { 3, 3, 2, 3, 2, 2, 3 },
+         },
+         actionbar = spells,
+      },
+      {
+         tags = { 'dm', 'demo', 'demonology' },
+         talent = talents,
+         talents = {
+            ['raid'] = { 3, 1, 2, 3, 1, 3, 2 },
+            ['quest'] = { 1, 1, 2, 3, 2, 3, 2 },
+            ['dungeon'] = { 3, 1, 2, 3, 2, 3, 2 },
+         },
+         actionbar = spells,
+      },
+      {
+         tags = { 'ds', 'destro', 'destruction' },
+         talent = talents,
+         talents = {
+            ['aoe'] = { 1, 1, 2, 2, 2, 2, 1 },
+            ['st'] = { 1, 1, 2, 3, 2, 1, 2 },
+            ['pvp'] = { 1, 1, 1, 3, 2, 1, 3 },
+         },
+         actionbar = spells,
+      }
    }
 }

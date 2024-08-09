@@ -2,17 +2,18 @@
 ## Title: icub3d
 ## Notes: My personal addon
 ## Author: Joshua Marsh
-## Version: 10.0.5
+## Version: 11.0.000
 icub3d.lua
 dumper.lua
 log.lua
 macros.lua
 spells.lua
 spells-demonhunter.lua
-# ui.lua
 spells-druid.lua
-# spells-hunter.lua
-# spells-mage.lua
+spells-monk.lua
+spells-deathknight.lua
+# TODO fix spells-hunter.lua
+# TODO fix spells-mage.lua
 spells-evoker.lua
 spells-paladin.lua
 spells-priest.lua

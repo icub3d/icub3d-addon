@@ -3,7 +3,7 @@ local DEBUG = false
 local class = select(2, UnitClass("player"))
 local rgb = select(4, GetClassColor(class))
 
-function icub3d_Debug(format, args)
+function ICUB3D_Debug(format, args)
    if args == nil then
       args = {}
    end
@@ -17,7 +17,7 @@ function icub3d_Debug(format, args)
    end
 end
 
-function icub3d_Error(format, args)
+function ICUB3D_Error(format, args)
    if args == nil then
       args = {}
    end
@@ -29,7 +29,7 @@ function icub3d_Error(format, args)
    print(string.format("|c%sicub3d:|r " .. format, rgb, unpack(args)))
 end
 
-function icub3d_Print(format, args)
+function ICUB3d_Print(format, args)
    if args == nil then
       args = {}
    end
@@ -41,7 +41,7 @@ function icub3d_Print(format, args)
    print(string.format("|c%sicub3d:|r " .. format, rgb, unpack(args)))
 end
 
-function icub3d_String(format, args)
+function ICUB3d_String(format, args)
    if args == nil then
       args = {}
    end

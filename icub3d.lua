@@ -2,135 +2,88 @@
 -- GLOBAL VARIABLES
 --------------------------------------------------------------------
 -- These are global variables that other scripts might use.
-icub3d_LOADED = false
-icub3d_INWORLD = false
+ICUB3D_LOADED = false
+ICUB3D_INWORLD = false
 
 --------------------------------------------------------------------
 -- SLASH COMMANDS
 --------------------------------------------------------------------
 -- Saves 4 keystrokes with every reload! :)
 SLASH_ICUB3DRELOAD1 = '/re'
-function SlashCmdList.ICUB3DRELOAD(msg, editBox)
-    ReloadUI()
-end
-
-SLASH_ICUB3DSOUND1 = '/sound'
-function SlashCmdList.ICUB3DSOUND(msg, editBox)
-    SetCVar('Sound_MasterVolume', msg)
-end
+SlashCmdList.ICUB3DRELOAD = ReloadUI
 
 SLASH_ICUB3DLP1 = '/lp'
-function SlashCmdList.ICUB3DLP(msg, editBox)
-    C_PartyInfo.LeaveParty()
+SlashCmdList.ICUB3DLP = C_PartyInfo.LeaveParty
+
+SLASH_ICUB3DSOUND1 = '/sound'
+SlashCmdList.ICUB3DSOUND = function(msg, editBox)
+    SetCVar('Sound_MasterVolume', msg)
 end
-
-SLASH_ICUB3DPIN1 = '/pin'
-function SlashCmdList.ICUB3DPIN(msg, editBox)
-    -- Get the args
-    parts = {}
-    for part in msg:gmatch("%S+") do table.insert(parts, part) end
-    icub3d_Print('parts: %s', { parts })
-
-    if table.getn(parts) < 2 then
-        icub3d_Error("requires at least two variables (x, y)")
-        return
-    end
-
-    -- (x,y) position
-    local y = tonumber(table.remove(parts))
-    local x = tonumber(table.remove(parts))
-
-    -- Default to the current map.
-    local map = C_Map.GetBestMapForUnit("player")
-
-    -- If there is anything else from the args, assume it's a name and
-    -- change map.
-    if table.getn(parts) > 1 then
-        local name = table.concat(parts, " ")
-        -- TODO not sure how to get maps.
-    end
-
-    -- Make the pin
-    icub3d_Print("%s %d %d", { map, x, y })
-    C_Map.SetUserWaypoint({ uiMapID = map, position = CreateVector2D(x, y) })
-end
-
---------------------------------------------------------------------
--- Macro Name
---------------------------------------------------------------------
--- local r={"MultiBarBottomLeft", "MultiBarBottomRight", "Action", "MultiBar5", "MultiBar6", "MultiBar7", "MultiBar8"}for b=1,#r do for i=1,12 do _G[r[b].."Button"..i.."Name"]:SetAlpha(0)end end
---
--- SLASH_HideMacroName1 = "/hmn";
--- SlashCmdList["HideMacroName"] = function()
---    local r={"MultiBarBottomLeft", "MultiBarBottomRight", "Action", "MultiBar5", "MultiBar6", "MultiBar7", "MultiBar8"}for b=1,#r do for i=1,12 do _G[r[b].."Button"..i.."Name"]:SetAlpha(0)end end;
--- end
---
--- SLASH_ShowMacroName1 = "/smn";
--- SlashCmdList["ShowMacroName"] = function()
---    local r={"MultiBarBottomLeft", "MultiBarBottomRight", "Action", "MultiBar5", "MultiBar6", "MultiBar7", "MultiBar8"}for b=1,#r do for i=1,12 do _G[r[b].."Button"..i.."Name"]:SetAlpha(1)end end;
--- end
-
 
 --------------------------------------------------------------------
 -- EVENT HANDLING CODE
 --------------------------------------------------------------------
 -- We need a frame to listen for events.
-icub3d_Frame = CreateFrame('FRAME')
-icub3d_Frame:RegisterEvent("ADDON_LOADED")
-icub3d_Frame:RegisterEvent("PLAYER_ENTERING_WORLD")
+local frame = CreateFrame("Frame")
+frame:RegisterEvent("ADDON_LOADED")
+frame:RegisterEvent("PLAYER_ENTERING_WORLD")
+
+-- We'll track all events we want to respond to in this table.
 local icub3d_Events = {}
 
-function icub3d_RegisterEvent(event, func)
-    icub3d_Debug('register event: %s', { event })
+-- The rest of the addon can use this to register events that it wants to handle.
+function ICUB3D_RegisterEvent(event, func)
+    ICUB3D_Debug('register event: %s', { event })
     if icub3d_Events[event] == nil then
         icub3d_Events[event] = { func }
 
         -- We need to register it with the wow api.
         if event ~= 'ADDON_READY' then
-            icub3d_Debug('wow register: %s', { event })
-            icub3d_Frame:RegisterEvent(event)
+            ICUB3D_Debug('wow register: %s', { event })
+            frame:RegisterEvent(event)
         end
     else
         table.insert(icub3d_Events[event], func)
     end
 end
 
+
+-- A helper function that will call all the functions that are registered for an
+-- event.
+local handleEvent = function (event, arg1)
+    local events = icub3d_Events[event]
+    if events ~= nil then
+        for _, func in pairs(events) do
+            func(arg1)
+        end
+    end
+end
+
 -- This will be our main event handler. We use these bools to track
 -- when we are ready.
-icub3d_Frame:SetScript('OnEvent', function(self, event, arg1)
-    icub3d_Debug('event: %s', { event })
+frame:SetScript('OnEvent', function(self, event, arg1)
+    ICUB3D_Debug('event: %s', { event })
     -- We have our own "event" ADDON_READY which is triggered when we are
     -- loaded and in the world. I don't recall why, but it seems to make
     -- things work nice.
     if event == 'ADDON_LOADED' and arg1 == 'icub3d' then
-        icub3d_Debug("addon loaded")
-        icub3d_LOADED = true
+        ICUB3D_Debug("addon loaded")
+        ICUB3D_LOADED = true
     elseif event == 'PLAYER_ENTERING_WORLD' then
-        icub3d_Debug("entering world")
-        icub3d_INWORLD = true
+        ICUB3D_Debug("entering world")
+        ICUB3D_INWORLD = true
     end
 
-    if icub3d_LOADED and icub3d_INWORLD then
-        icub3d_Debug("addon ready")
+    if ICUB3D_LOADED and ICUB3D_INWORLD then
+        ICUB3D_Debug("addon ready")
         -- We also do it for events that are "ADDON_READY" at this point.
-        local events = icub3d_Events['ADDON_READY']
-        if events ~= nil then
-            for i, func in pairs(events) do
-                func(arg1)
-            end
-        end
+        handleEvent('ADDON_READY', arg1)
 
         -- At this point, we reset the variables so we don't trigger it again.
-        icub3d_LOADED = false
-        icub3d_INWORLD = false
+        ICUB3D_LOADED = false
+        ICUB3D_INWORLD = false
     end
 
-    local events = icub3d_Events[event]
-    if events ~= nil then
-        for i, func in pairs(events) do
-            func(arg1)
-        end
-    end
-
-
+    -- Now we handle the event.
+    handleEvent(event, arg1)
 end)

@@ -10,14 +10,14 @@ function SlashCmdList.CHANGERAIDPROFILE(msg, editBox)
 	if GetActiveRaidProfile() ~= msg and RaidProfileExists(msg) then
 		CompactUnitFrameProfiles_ActivateRaidProfile(msg)
 	elseif not RaidProfileExists(msg) then
-		icub3d_Error("raid profile '%s' does not exist", { msg })
+		ICUB3D_Error("raid profile '%s' does not exist", { msg })
 	end
 end
 
 --------------------------------------------------------------------
 -- EVENT REGISTRATION
 --------------------------------------------------------------------
-icub3d_RegisterEvent(
+ICUB3D_RegisterEvent(
 	'ADDON_READY',
 	function(arg1)
 		-- Remove the macro name from the buttons
