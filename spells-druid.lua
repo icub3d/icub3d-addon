@@ -1,7 +1,6 @@
 local talents = {
-    ICUB3D_Spell('Raze'),
+    ICUB3D_Spell('Stampeding Roar'),
     ICUB3D_Spell('Heart of the Wild'),
-    ICUB3D_Spell('Remove Corruption'),
     ICUB3D_Spell('Nature\'s Cure'),
     ICUB3D_Spell('Innervate'),
     ICUB3D_Spell('Nature\'s Vigil'),
@@ -13,6 +12,8 @@ local talents = {
     ICUB3D_Spell('Cyclone'),
     ICUB3D_Spell('Typhoon'),
     ICUB3D_Spell('Starfire'),
+    ICUB3D_Spell('Hibernate'),
+    ICUB3D_Spell('Remove Corruption'),
 }
 
 local normal = {
@@ -95,7 +96,7 @@ local bottomLeft = {
     ICUB3D_Spell('Dash'),
     ICUB3D_Spell('Prowl'),
     ICUB3D_Spell('Rebirth'),
-    ICUB3D_Macro('im_charge_roar'),
+    ICUB3D_Spell('Wild Charge'),
     ICUB3D_Talent(1),
     ICUB3D_Talent(2),
     ICUB3D_Talent(3),
@@ -111,8 +112,8 @@ local bottomRight = {
     ICUB3D_Macro('im_travel'),
     ICUB3D_Macro('im_racial'),
     ICUB3D_Macro('im_trinket'),
-    ICUB3D_Macro('im_entangling_hibernate'),
-    ICUB3D_Macro('im_soothe'),
+    ICUB3D_Spell("Entangling Roots"),
+    ICUB3D_Spell("Soothe"),
     ICUB3D_Macro('im_glider_foam'),
     ICUB3D_Macro('im_flap'),
     ICUB3D_Spell('Mark of the Wild'),

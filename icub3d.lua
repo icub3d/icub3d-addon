@@ -13,7 +13,9 @@ SLASH_ICUB3DRELOAD1 = '/re'
 SlashCmdList.ICUB3DRELOAD = ReloadUI
 
 SLASH_ICUB3DLP1 = '/lp'
-SlashCmdList.ICUB3DLP = C_PartyInfo.LeaveParty
+SlashCmdList.ICUB3DLP = function(_, _)
+    C_PartyInfo.LeaveParty()
+end
 
 SLASH_ICUB3DSOUND1 = '/sound'
 SlashCmdList.ICUB3DSOUND = function(msg, editBox)
