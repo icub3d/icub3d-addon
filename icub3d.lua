@@ -22,6 +22,11 @@ SlashCmdList.ICUB3DSOUND = function(msg, editBox)
     SetCVar('Sound_MasterVolume', msg)
 end
 
+SLASH_ICUB3DMUSIC1 = '/music'
+SlashCmdList.ICUB3DMUSIC = function(msg, editBox)
+    Sound_ToggleMusic()
+end
+
 --------------------------------------------------------------------
 -- EVENT HANDLING CODE
 --------------------------------------------------------------------

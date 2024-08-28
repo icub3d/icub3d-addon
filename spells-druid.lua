@@ -1,17 +1,15 @@
-local talents = {
+local classTalents = {
     ICUB3D_Spell('Stampeding Roar'),
+    ICUB3D_Spell('Innervate'),
     ICUB3D_Spell('Heart of the Wild'),
     ICUB3D_Spell('Nature\'s Cure'),
-    ICUB3D_Spell('Innervate'),
     ICUB3D_Spell('Nature\'s Vigil'),
     ICUB3D_Spell('Renewal'),
     ICUB3D_Spell('Ursol\'s Vortex'),
-    ICUB3D_Spell('Mass Entanglement'),
     ICUB3D_Spell('Incapacitating Roar'),
     ICUB3D_Spell('Mighty Bash'),
     ICUB3D_Spell('Cyclone'),
     ICUB3D_Spell('Typhoon'),
-    ICUB3D_Spell('Starfire'),
     ICUB3D_Spell('Hibernate'),
     ICUB3D_Spell('Remove Corruption'),
 }
@@ -19,16 +17,16 @@ local talents = {
 local normal = {
     ICUB3D_Spell('Regrowth'),
     ICUB3D_Spell('Rejuvenation'),
-    ICUB3D_Spell('Lifebloom', 'Starfire'),
+    ICUB3D_Spell('Lifebloom'),
     ICUB3D_Spell('Swiftmend'),
     ICUB3D_Spell('Wild Growth'),
-    ICUB3D_Spell('Nature\'s Swiftness', 'Wrath'),
-    ICUB3D_Spell('Cenarion Ward', 'Nourish', 'Starsurge'),
-    ICUB3D_Spell('Ironbark', 'Sunfire'),
+    ICUB3D_Spell('Nature\'s Swiftness'),
+    ICUB3D_Spell('Cenarion Ward', 'Nourish'),
+    ICUB3D_Spell('Ironbark'),
     ICUB3D_Spell('Efflorescence'),
-    ICUB3D_Spell('Renewal'),
-    ICUB3D_Spell('Convoke the Spirits', 'Incarnation: Tree of Life'),
-    ICUB3D_Spell('Adaptive Swarm')
+    ICUB3D_Spell('Shred'),
+    ICUB3D_Spell('Rake'),
+    ICUB3D_Spell('Incarnation: Tree of Life', 'Convoke the Spirits'),
 }
 
 local bear = {
@@ -40,7 +38,7 @@ local bear = {
     ICUB3D_Spell('Growl'),
     ICUB3D_Spell('Frenzied Regeneration'),
     ICUB3D_Spell('Bristling Fur', 'Raze'),
-    ICUB3D_Spell('Pulverize'),
+    ICUB3D_Spell('Pulverize', 'Lunar Beam'),
     ICUB3D_Spell('Skull Bash'),
     ICUB3D_Spell('Convoke the Spirits'),
     ICUB3D_Spell('Rage of the Sleeper')
@@ -52,9 +50,9 @@ local cat = {
     ICUB3D_Spell('Thrash'),
     ICUB3D_Spell('Swipe'),
     ICUB3D_Spell('Ferocious Bite'),
-    ICUB3D_Spell('Maim'),
+    ICUB3D_Spell('Maim', 'Rejuvenation'),
     ICUB3D_Spell('Rip'),
-    ICUB3D_Skip(),
+    ICUB3D_Spell('Regrowth'),
     ICUB3D_Spell('Tiger\'s Fury'),
     ICUB3D_Spell('Skull Bash'),
     ICUB3D_Spell('Convoke the Spirits'),
@@ -94,7 +92,7 @@ local topRight = {
 
 local bottomLeft = {
     ICUB3D_Spell('Dash'),
-    ICUB3D_Spell('Prowl'),
+    ICUB3D_Macro('im_prowl'),
     ICUB3D_Spell('Rebirth'),
     ICUB3D_Spell('Wild Charge'),
     ICUB3D_Talent(1),
@@ -108,13 +106,13 @@ local bottomLeft = {
 }
 
 local bottomRight = {
-    ICUB3D_Spell('Cat Form'),
+    ICUB3D_Spell('Moonkin Form', 'Cat Form'),
     ICUB3D_Macro('im_travel'),
     ICUB3D_Macro('im_racial'),
     ICUB3D_Macro('im_trinket'),
-    ICUB3D_Spell("Entangling Roots"),
-    ICUB3D_Spell("Soothe"),
-    ICUB3D_Macro('im_glider_foam'),
+    ICUB3D_Macro('im_soothe'),
+    ICUB3D_Spell('Mangle'),
+    ICUB3D_Spell('Regrowth'),
     ICUB3D_Macro('im_flap'),
     ICUB3D_Spell('Mark of the Wild'),
     ICUB3D_Spell('Revive'),
@@ -145,7 +143,7 @@ ICUB3D_Spells['DRUID'] = {
                 'bal',
                 'balance'
             },
-            talent = talents,
+            talent = classTalents,
             actionbar = spells,
         },
         {
@@ -153,7 +151,7 @@ ICUB3D_Spells['DRUID'] = {
                 'f',
                 'feral'
             },
-            talent = talents,
+            talent = classTalents,
             actionbar = spells,
         },
         {
@@ -162,7 +160,7 @@ ICUB3D_Spells['DRUID'] = {
                 'guard',
                 'guardian'
             },
-            talent = talents,
+            talent = classTalents,
             actionbar = spells,
         },
         {
@@ -171,7 +169,7 @@ ICUB3D_Spells['DRUID'] = {
                 'resto',
                 'restoration'
             },
-            talent = talents,
+            talent = classTalents,
             actionbar = spells,
         },
     },

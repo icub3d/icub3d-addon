@@ -1,15 +1,15 @@
 local normal = {
-   ICUB3D_Spell('Shield Slam'),
-   ICUB3D_Spell('Slam'),
-   ICUB3D_Spell('Thunder Clap'),
-   ICUB3D_Spell('Revenge'),
-   ICUB3D_Spell('Shield Block'),
+   ICUB3D_Spell('Bloodthirst', 'Shield Slam'),
+   ICUB3D_Spell('Rampage', 'Slam'),
+   ICUB3D_Spell('Thunder Clap', 'Bladestorm'),
+   ICUB3D_Spell('Revenge', 'Raging Blow'),
+   ICUB3D_Spell('Shield Block', 'Rampage'),
    ICUB3D_Spell('Taunt'),
    ICUB3D_Spell('Victory Rush'),
    ICUB3D_Spell('Demoralizing Shout'),
-   ICUB3D_Spell('Devastate'),
+   ICUB3D_Spell('Devastate', 'Onslaught'),
    ICUB3D_Spell('Pummel'),
-   ICUB3D_Spell('Ignore Pain'),
+   ICUB3D_Spell('Ignore Pain', 'Enraged Regeneration'),
    ICUB3D_Spell('Avatar'),
 }
 
@@ -25,7 +25,7 @@ local topRight = {
    ICUB3D_Spell('Bitter Immunity'),
    ICUB3D_Macro('im_healthstone'),
    ICUB3D_Spell('Rallying Cry'),
-   ICUB3D_Spell('Shield Wall'),
+   ICUB3D_Spell('Shield Wall', 'Recklessness'),
 }
 
 local bottomLeft = {

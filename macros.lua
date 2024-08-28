@@ -50,7 +50,7 @@ local macros = {
 		icon = icub3d_QuestionIcon,
 		body = '#showtooltip Glide\n/dismount\n/cast [mod:alt] Goblin Glider Kit; Glide'
 	},
-	['im_soothe'] = { icon = icub3d_QuestionIcon, body = '#showtooltip \n/cast [mod:alt] Hibernate; Soothe' },
+	['im_soothe'] = { icon = icub3d_QuestionIcon, body = '#showtooltip \n/cast [mod:alt] Entangling Roots; Soothe' },
 	['im_healthstone'] = { icon = icub3d_QuestionIcon, body = '#showtooltip healthstone\n/use healthstone' },
 	['im_imp_void'] = { icon = icub3d_QuestionIcon, body = '#showtooltip\n/cast [mod:alt] Summon Voidlord; Summon Imp' },
 	['im_fel_succ'] = {
@@ -129,6 +129,8 @@ local macros = {
 		icon = icub3d_QuestionIcon,
 		body = '#showtooltip\n/cast [stance:2]!Defensive Stance;!Battle Stance'
 	},
+	['im_attunement'] = { icon = icub3d_QuestionIcon, body= '#showtooltip\n/use [stance:1] Bronze Attunement; Black Attunement'},
+	['im_prowl'] = { icon = icub3d_QuestionIcon, body= '#showtooltip\n/cancelform [noform:2]\n/cast [nocombat] Prowl; Cat Form'},
 	['im_empty'] = { icon = icub3d_DefaultIcon, body = '' }
 }
 
@@ -153,6 +155,8 @@ local racials = function()
 		body = "#showtooltip\n/cast Berserking"
 	elseif race == "Vulpera" then
 		body = "#showtooltip\n/cast [mod:shift] Rummage Your Bag; Bag of Tricks"
+	elseif race == "ZandalariTroll" then
+		body = "#showtooltip\n/cast [mod:alt] Pterrordax Swoop; Regeneratin'"
 	elseif race == "Tauren" then
 		body = "#showtooltip\n/cast War Stomp"
 	elseif race == "Nightborne" then

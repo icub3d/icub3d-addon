@@ -125,13 +125,16 @@ function ICUB3D_Macro(name)
 end
 
 function ICUB3D_GetCurrentAction(p)
+	if not HasAction(p) then
+		return nil
+	end
+
 	local curType, curId, _ = GetActionInfo(p)
 	if curType == 'macro' then
 		return { typ = curType, id = select(1, GetMacroInfo(curId)) }
 	elseif curType == 'spell' then
-		return { typ = curType, id = select(1, GetSpellInfo(curId)) }
-	else
-		return nil
+		local info = C_Spell.GetSpellInfo(curId)
+		return { typ = curType, id = info.spellID }
 	end
 end
 
@@ -156,17 +159,7 @@ function ICUB3d_UpdateSpells(spec)
 				PlaceAction(p)
 				ClearCursor()
 			else
-				ICUB3D_Debug("new %s", { new })
 				C_Spell.PickupSpell(new.id)
-				if GetCursorInfo() == nil then
-					ICUB3D_Debug("trying with spell id %s", { new })
-					-- Try by Spell ID?
-					local spellId = select(7, GetSpellInfo(new.id))
-					if spellId ~= nil then
-						ICUB3D_Debug("got spell id %s", { spellId })
-						C_Spell.PickupSpell(spellId)
-					end
-				end
 				PlaceAction(p)
 				ClearCursor()
 			end
@@ -174,7 +167,7 @@ function ICUB3d_UpdateSpells(spec)
 	end
 end
 
-function ICUB3D_DetermineAction(spec, p, s)
+function ICUB3D_DetermineAction(spec, _, s)
 	local empty = { typ = 'macro', id = 'im_empty' }
 	local specId = GetSpecialization()
 	if s.typ == 'skip' then
@@ -183,86 +176,72 @@ function ICUB3D_DetermineAction(spec, p, s)
 		return { typ = 'macro', id = s.name }
 	elseif s.typ == 'spec' then
 		local spell = s.spells[specId]
-		local name = select(1, GetSpellInfo(spell))
-		if name ~= nil then
-			return { type = 'spell', id = name }
+		if spell:sub(1, 3) == 'im_' then
+			return { typ = 'macro', id = spell }
+		end
+		if spell == 'Dream Breath' then
+			return { typ = 'spell', id = 355936 }
+		elseif spell == 'Spiritbloom' then
+			return { typ = 'spell', id = 367226 }
+		end
+		local info = C_Spell.GetSpellInfo(spell)
+		if info ~= nil then
+			return { type = 'spell', id = info.spellID }
 		else
 			return empty
 		end
 	elseif s.typ == 'talent' then
-		-- This is a talent slot.
-		local count = 0
-		local selected = nil
-		for _, spell in ipairs(spec.talent) do
-			-- We found a spell, increment the count.
-			local name = select(1, GetSpellInfo(spell.name))
-			if name ~= nil then
-				count = count + 1
-			end
-			-- If we've found the number of pvptalents we were
-			-- expecting, we found the right spell.
-			if count == s.num then
-				selected = name
-				break
-			end
-		end
-
-		if selected == nil then
-			return empty
-		elseif selected == 'Demonic Circle' then
-			-- We want to use one of our special macros.
-			return { typ = 'macro', id = 'im_demonic_circle' }
-		else
-			return { typ = 'spell', id = selected }
-		end
+		return pickN(spec.talent, s.num)
 	elseif s.typ == 'pvp' then
-		-- This is a talent slot.
-		local count = 0
-		local selected = nil
-		for _, spell in ipairs(spec.pvp.spells) do
-			-- We found a spell, increment the count.
-			local name = select(1, GetSpellInfo(spell.name))
-			if name ~= nil then
-				count = count + 1
-			end
-			-- If we've found the number of pvptalents we were
-			-- expecting, we found the right spell.
-			if count == s.num then
-				selected = name
-				break
-			end
-		end
-
-		if selected == nil then
-			return empty
-		elseif selected == 'Demonic Circle' then
-			-- We want to use one of our special macros.
-			return { typ = 'macro', id = 'im_demonic_circle' }
-		else
-			return { typ = 'spell', id = selected }
-		end
+		return pickN(spec.pvp.spells, s.num)
 	elseif s.typ == 'spell' then
-		local spell = select(1, GetSpellInfo(s.name))
-		if spell == nil then
+		local info = C_Spell.GetSpellInfo(s.name)
+		if info == nil then
 			for _, alt in ipairs(s.alternates) do
 				if alt == 'skip' then
 					return empty
 				else
-					local a = select(1, GetSpellInfo(alt))
+					local a = C_Spell.GetSpellInfo(alt)
 					if a ~= nil then
-						spell = a
+						info = a
 						break
 					end
 				end
 			end
-			if spell == nil then
+			if info == nil then
 				return empty
 			end
 		end
-		return { typ = 'spell', id = spell }
+		return { typ = 'spell', id = info.spellID }
 	else
 		ICUB3D_Error("unknown type: %s %s", { s.typ, s })
 		return
+	end
+end
+
+-- pickN is a helper function for talent and pvp slots that picks the
+-- nth spell from the list of spells.
+function pickN(spells, n)
+	local count = 0
+	local selected = nil
+	for _, spell in ipairs(spells) do
+		local name = C_Spell.GetSpellInfo(spell.name)
+		if name ~= nil then
+			count = count + 1
+		end
+		if count == n then
+			selected = name
+			break
+		end
+	end
+
+	if selected == nil then
+		return { typ= 'macro', id = 'im_empty' }
+	elseif selected == 'Demonic Circle' then
+		-- We want to use one of our special macros.
+		return { typ = 'macro', id = 'im_demonic_circle' }
+	else
+		return { typ = 'spell', id = selected.spellID }
 	end
 end
 
@@ -270,13 +249,13 @@ end
 -- Common Functions
 --------------------------------------------------------------------
 function ICUB3D_joinSpells(groups)
-    r = {}
-    for k, g in pairs(groups) do
-        for k, v in pairs(g) do
-            table.insert(r, v)
-        end
-    end
-    return r
+	local r = {}
+	for _, g in pairs(groups) do
+		for _, v in pairs(g) do
+			table.insert(r, v)
+		end
+	end
+	return r
 end
 
 local engage = {
@@ -297,34 +276,34 @@ end
 -- TODO (save opie configs)
 -- TODO (add other class spells for engage)
 ICUB3D_Dragon = {
-    ICUB3D_Spell('Surge Forward'),
-    ICUB3D_Spell('Whirling Surge'),
-    ICUB3D_Spell('Skyward Ascent'),
-    ICUB3D_Spell('Aerial Halt'),
-    ICUB3D_Spell('Second Wind'),
-    ICUB3D_Spell('Bronze Timelock'),
-    engageSpell(),
-    ICUB3D_Skip(),
-    ICUB3D_Skip(),
-    ICUB3D_Skip(),
-    ICUB3D_Skip(),
-    ICUB3D_Skip(),
-    ICUB3D_Skip(),
-    ICUB3D_Skip()
+	ICUB3D_Spell('Surge Forward'),
+	ICUB3D_Spell('Whirling Surge'),
+	ICUB3D_Spell('Skyward Ascent'),
+	ICUB3D_Spell('Aerial Halt'),
+	ICUB3D_Spell('Second Wind'),
+	ICUB3D_Spell('Bronze Timelock'),
+	engageSpell(),
+	ICUB3D_Skip(),
+	ICUB3D_Skip(),
+	ICUB3D_Skip(),
+	ICUB3D_Skip(),
+	ICUB3D_Skip(),
+	ICUB3D_Skip(),
+	ICUB3D_Skip()
 }
 
 -- Skip (All)
 ICUB3D_SkipAll = { -- We have to skip these for druid, warrior, rogue
-    ICUB3D_Skip(),
-    ICUB3D_Skip(),
-    ICUB3D_Skip(),
-    ICUB3D_Skip(),
-    ICUB3D_Skip(),
-    ICUB3D_Skip(),
-    ICUB3D_Skip(),
-    ICUB3D_Skip(),
-    ICUB3D_Skip(),
-    ICUB3D_Skip(),
-    ICUB3D_Skip(),
-    ICUB3D_Skip()
+	ICUB3D_Skip(),
+	ICUB3D_Skip(),
+	ICUB3D_Skip(),
+	ICUB3D_Skip(),
+	ICUB3D_Skip(),
+	ICUB3D_Skip(),
+	ICUB3D_Skip(),
+	ICUB3D_Skip(),
+	ICUB3D_Skip(),
+	ICUB3D_Skip(),
+	ICUB3D_Skip(),
+	ICUB3D_Skip()
 }
