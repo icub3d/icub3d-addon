@@ -83,7 +83,7 @@ local topRight = {
     ICUB3D_Spell('Sunfire'),
     ICUB3D_Spell('Lunar Beam', 'Wrath'),
     ICUB3D_SpellSpec('Regrowth', 'Regrowth', 'Regrowth', 'Starfire'),
-    ICUB3D_Spell('Thorns', 'Overrun'),
+    ICUB3D_Spell('Thorns', 'Overrun', 'Starsurge'),
     ICUB3D_Macro('im_health_rev'),
     ICUB3D_Spell('Barkskin'),
     ICUB3D_Spell('Force of Nature', 'Warrior of Elune', 'Survival Instincts',
@@ -131,7 +131,9 @@ local spells = ICUB3D_joinSpells(
         cat,
         bear,
         moonkin,
-        ICUB3D_Dragon
+        ICUB3D_Dragon,
+        ICUB3D_SkipAll,
+        ICUB3D_SkipAll,
     }
 )
 

@@ -69,7 +69,7 @@ local macros = {
 	['im_pet_attack_follow'] = {
 		icon = 'ability_ghoulfrenzy',
 		body =
-		'/petfollow [mod:shift]\n/petattack [nomod:shift,mod:alt,@focus] [nomod:shift,@mouseover,harm,nodead] [nomod:shift,harm] [nomod:shift,@mouseovertarget,harm] [nomod:shift,@targettarget,harm] [nomod:shift]'
+		'/petfollow [mod:ctrl]\n/petattack [nomod:ctrl,mod:alt,@focus] [nomod:ctrl,@mouseover,harm,nodead] [nomod:ctrl,harm] [nomod:ctrl,@mouseovertarget,harm] [nomod:ctrl,@targettarget,harm] [nomod:ctrl]'
 	},
 	['im_pet_move_stay'] = { icon = 'ability_hunter_pet_goto', body = '/petstay [mod:alt]\n/petmoveto [nomod:alt]' },
 	['im_pet_special'] = {
@@ -94,7 +94,7 @@ local macros = {
 	['im_levitate'] = {
 		icon = icub3d_QuestionIcon,
 		body =
-		'#showtooltip\n/use [mod:shift] Goblin Glider Kit[Racial] ; [mod:alt,@focus] [@mouseover,help,nodead] [help] [@mouseovertarget,help] [@targettarget,help] [] Levitate'
+		'#showtooltip\n/use [mod:ctrl] Goblin Glider Kit[Racial] ; [mod:alt,@focus] [@mouseover,help,nodead] [help] [@mouseovertarget,help] [@targettarget,help] [] Levitate'
 	},
 	['im_health'] = {
 		icon = icub3d_QuestionIcon,
@@ -137,7 +137,7 @@ local macros = {
 -- Create our racial macro.
 local racials = function()
 	local _, race, _ = UnitRace('player')
-	local body = '#showtooltip\n/cast [mod:shift] Cannibalize; Will of the Forsaken'
+	local body = '#showtooltip\n/cast [mod:ctrl] Cannibalize; Will of the Forsaken'
 
 	if race == 'BloodElf' then
 		body = '#showtooltip\n/cast Arcane Torrent'
@@ -154,13 +154,13 @@ local racials = function()
 	elseif race == "Troll" then
 		body = "#showtooltip\n/cast Berserking"
 	elseif race == "Vulpera" then
-		body = "#showtooltip\n/cast [mod:shift] Rummage Your Bag; Bag of Tricks"
+		body = "#showtooltip\n/cast [mod:ctrl] Rummage Your Bag; Bag of Tricks"
 	elseif race == "ZandalariTroll" then
 		body = "#showtooltip\n/cast [mod:alt] Pterrordax Swoop; Regeneratin'"
 	elseif race == "Tauren" then
 		body = "#showtooltip\n/cast War Stomp"
 	elseif race == "Nightborne" then
-		body = "#showtooltip\n/cast [mod:shift] Cantrips; Arcane Pulse"
+		body = "#showtooltip\n/cast [mod:ctrl] Cantrips; Arcane Pulse"
 	end
 
 	if GetMacroInfo('im_racial') == nil then

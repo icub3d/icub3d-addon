@@ -10,7 +10,6 @@ This addon provides various utilities (especially from the command line).
 - Talthonei
 - Moragh the Slothful
 - Mosa Umbramane
-- Ristar the Rabid
 - Matriarch Keevah
 
 
