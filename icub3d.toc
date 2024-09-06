@@ -6,6 +6,7 @@
 icub3d.lua
 dumper.lua
 log.lua
+ui.lua
 macros.lua
 spells.lua
 spells-demonhunter.lua

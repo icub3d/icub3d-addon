@@ -112,6 +112,10 @@ function ICUB3D_PvPTalent(num)
 	return { typ = 'pvp', num = num }
 end
 
+function ICUB3D_Use(name)
+	return { typ = 'use', name = name }
+end
+
 function ICUB3D_Ignore()
 	return { typ = 'ignore' }
 end
@@ -131,21 +135,60 @@ function ICUB3D_GetCurrentAction(p)
 
 	local curType, curId, _ = GetActionInfo(p)
 	if curType == 'macro' then
-		return { typ = curType, id = select(1, GetMacroInfo(curId)) }
+		local name = GetActionText(p)
+		return { typ = curType, name = name }
 	elseif curType == 'spell' then
 		local info = C_Spell.GetSpellInfo(curId)
-		return { typ = curType, id = info.spellID }
+		return { typ = curType, id = info.spellID, name = info.name }
 	end
+
+	return nil
+end
+
+local spellsDiffer = function(cur, new)
+	-- If we have no new spell, we shouldn't change it.
+	if new == nil then
+		return false
+	end
+
+	-- If we have no current spell, we definitely want to change it.
+	if cur == nil then
+		return true
+	end
+
+	-- If there are different types, we should change it.
+	if cur.typ ~= new.typ then
+		return true
+	end
+
+
+	-- If they have different names, we should change it.
+	-- Some spells "replace" other spells, so we should track them here.
+	local curName = cur.name
+	if curName == 'Tiger Dash' then
+		curName = 'Dash'
+	elseif curName == 'Lightning Rush' then
+		curName = 'Whirling Surge'
+	elseif curName == 'Incarnation: Guardian of Ursoc' then
+		curName = 'Berserk'
+	elseif curName == 'Nature\'s Cure' then
+		curName = 'Remove Corruption'
+	elseif curName == 'Ravage' then
+		if new.name == 'Ferocious Bite' then
+			curName = 'Ferocious Bite'
+		else
+			curName = 'Maul'
+		end
+	end
+	if curName ~= new.name then
+		return true
+	end
+
+	return false
 end
 
 function ICUB3d_UpdateSpells(spec)
-	for x, s in ipairs(spec.actionbar) do
-		-- Blizzard be trolling, LOLOLOLOLOL
-		local p = x
-		if p > 12 then
-			p = p + 12
-		end
-
+	for p, s in ipairs(spec.actionbar) do
 		-- Get our current action item.
 		local cur = ICUB3D_GetCurrentAction(p)
 
@@ -153,13 +196,22 @@ function ICUB3d_UpdateSpells(spec)
 		local new = ICUB3D_DetermineAction(spec, p, s)
 
 		-- If we need to make a change, do it.
-		if new ~= nil and (cur == nil or cur.typ ~= new.typ or (cur.typ == new.typ and cur.id ~= new.id)) then
+		if new ~= nil and spellsDiffer(cur, new) == true then
+			if cur ~= nil then
+				ICUB3D_Debug("clearing %d: %s", { p, cur })
+			end
+			ICUB3D_Debug("placing %d: %s", { p, new })
 			if new.typ == 'macro' then
-				PickupMacro(new.id)
+				PickupMacro(new.name)
+				PlaceAction(p)
+				ClearCursor()
+			elseif type == 'use' then
+				C_Item.PickupItem(new.name)
 				PlaceAction(p)
 				ClearCursor()
 			else
-				C_Spell.PickupSpell(new.id)
+				local info = C_Spell.GetSpellInfo(new.id)
+				C_Spell.PickupSpell(info.spellID)
 				PlaceAction(p)
 				ClearCursor()
 			end
@@ -167,26 +219,54 @@ function ICUB3d_UpdateSpells(spec)
 	end
 end
 
+-- pickN is a helper function for talent and pvp slots that picks the
+-- nth spell from the list of spells.
+local pickN = function(spells, n)
+	local count = 0
+	local selected = nil
+	for _, spell in ipairs(spells) do
+		local name = C_Spell.GetSpellInfo(spell.name)
+		if name ~= nil then
+			count = count + 1
+		end
+		if count == n then
+			selected = name
+			break
+		end
+	end
+
+	if selected == nil then
+		return { typ = 'macro', name = 'im_empty' }
+	elseif selected == 'Demonic Circle' then
+		-- We want to use one of our special macros.
+		return { typ = 'macro', name = 'im_demonic_circle' }
+	else
+		return { typ = 'spell', id = selected.spellID, name = selected.name }
+	end
+end
+
 function ICUB3D_DetermineAction(spec, _, s)
-	local empty = { typ = 'macro', id = 'im_empty' }
+	local empty = { typ = 'macro', name = 'im_empty' }
 	local specId = GetSpecialization()
 	if s.typ == 'skip' then
 		return empty
+	elseif s.typ == 'use' then
+		return { typ = 'use', name = s.name }
 	elseif s.typ == 'macro' then
-		return { typ = 'macro', id = s.name }
+		return { typ = 'macro', name = s.name }
 	elseif s.typ == 'spec' then
 		local spell = s.spells[specId]
 		if spell:sub(1, 3) == 'im_' then
-			return { typ = 'macro', id = spell }
+			return { typ = 'macro', name = spell }
 		end
 		if spell == 'Dream Breath' then
-			return { typ = 'spell', id = 355936 }
+			return { typ = 'spell', id = 355936, name = spell }
 		elseif spell == 'Spiritbloom' then
-			return { typ = 'spell', id = 367226 }
+			return { typ = 'spell', id = 367226, name = spell }
 		end
 		local info = C_Spell.GetSpellInfo(spell)
 		if info ~= nil then
-			return { type = 'spell', id = info.spellID }
+			return { typ = 'spell', id = info.spellID, name = info.name }
 		else
 			return empty
 		end
@@ -195,6 +275,9 @@ function ICUB3D_DetermineAction(spec, _, s)
 	elseif s.typ == 'pvp' then
 		return pickN(spec.pvp.spells, s.num)
 	elseif s.typ == 'spell' then
+		if s.name:sub(1, 3) == 'im_' then
+			return { typ = 'macro', name = s.name }
+		end
 		local info = C_Spell.GetSpellInfo(s.name)
 		if info == nil then
 			for _, alt in ipairs(s.alternates) do
@@ -212,36 +295,10 @@ function ICUB3D_DetermineAction(spec, _, s)
 				return empty
 			end
 		end
-		return { typ = 'spell', id = info.spellID }
+		return { typ = 'spell', id = info.spellID, name = info.name }
 	else
 		ICUB3D_Error("unknown type: %s %s", { s.typ, s })
 		return
-	end
-end
-
--- pickN is a helper function for talent and pvp slots that picks the
--- nth spell from the list of spells.
-function pickN(spells, n)
-	local count = 0
-	local selected = nil
-	for _, spell in ipairs(spells) do
-		local name = C_Spell.GetSpellInfo(spell.name)
-		if name ~= nil then
-			count = count + 1
-		end
-		if count == n then
-			selected = name
-			break
-		end
-	end
-
-	if selected == nil then
-		return { typ= 'macro', id = 'im_empty' }
-	elseif selected == 'Demonic Circle' then
-		-- We want to use one of our special macros.
-		return { typ = 'macro', id = 'im_demonic_circle' }
-	else
-		return { typ = 'spell', id = selected.spellID }
 	end
 end
 
@@ -272,28 +329,23 @@ local engageSpell = function()
 	return ICUB3D_Skip()
 end
 
--- TODO (switch flight style in opie)
--- TODO (save opie configs)
--- TODO (add other class spells for engage)
 ICUB3D_Dragon = {
+	ICUB3D_Spell('Second Wind'),
+	ICUB3D_Spell('Aerial Halt'),
+	ICUB3D_Spell('Bronze Timelock'),
+	ICUB3D_Spell('Skyward Ascent'),
 	ICUB3D_Spell('Surge Forward'),
 	ICUB3D_Spell('Whirling Surge'),
-	ICUB3D_Spell('Skyward Ascent'),
-	ICUB3D_Spell('Aerial Halt'),
-	ICUB3D_Spell('Second Wind'),
-	ICUB3D_Spell('Bronze Timelock'),
 	engageSpell(),
 	ICUB3D_Skip(),
 	ICUB3D_Skip(),
 	ICUB3D_Skip(),
 	ICUB3D_Skip(),
 	ICUB3D_Skip(),
-	ICUB3D_Skip(),
-	ICUB3D_Skip()
 }
 
 -- Skip (All)
-ICUB3D_SkipAll = { -- We have to skip these for druid, warrior, rogue
+ICUB3D_SkipAll = {
 	ICUB3D_Skip(),
 	ICUB3D_Skip(),
 	ICUB3D_Skip(),

@@ -98,11 +98,7 @@ local macros = {
 	},
 	['im_health'] = {
 		icon = icub3d_QuestionIcon,
-		body = '#showtooltip\n/use [mod:alt] Healthstone; Spiritual Healing Potion'
-	},
-	['im_health_rev'] = {
-		icon = icub3d_QuestionIcon,
-		body = '#showtooltip\n/use [mod:alt] Spiritual Healing Potion; Healthstone'
+		body = '#showtooltip\n/use Cavedweller\'s Delight'
 	},
 	['im_glider_flap'] = {
 		icon = icub3d_QuestionIcon,
@@ -118,7 +114,7 @@ local macros = {
 	},
 	['im_flap'] = {
 		icon = icub3d_QuestionIcon,
-		body = '#showtooltip\n/cast [nomod:alt,noform:4] Moonkin Form; [nomod:alt] Flap\n/cancelform [mod:alt]'
+		body = '#showtooltip Flap\n/cast [noform:4] Moonkin Form; Flap'
 	},
 	['im_entangling_hibernate'] = {
 		icon = icub3d_QuestionIcon,
@@ -131,6 +127,7 @@ local macros = {
 	},
 	['im_attunement'] = { icon = icub3d_QuestionIcon, body= '#showtooltip\n/use [stance:1] Bronze Attunement; Black Attunement'},
 	['im_prowl'] = { icon = icub3d_QuestionIcon, body= '#showtooltip\n/cancelform [noform:2]\n/cast [nocombat] Prowl; Cat Form'},
+	['im_skull_bash'] = { icon = icub3d_QuestionIcon, body='#showtooltip Skull Bash\n/cast [noform:1,noform:2] Cat Form; [@mouseover,harm][@target,harm] Skull Bash'},
 	['im_empty'] = { icon = icub3d_DefaultIcon, body = '' }
 }
 
@@ -151,6 +148,8 @@ local racials = function()
 		body = '#showtooltip\n/cast Blood Fury'
 	elseif race == "Human" then
 		body = "#showtooltip\n/cast Every Man for Himself"
+	elseif race == "EarthenDwarf" then
+		body = "#showtooltip\n/cast Azerite Surge"
 	elseif race == "Troll" then
 		body = "#showtooltip\n/cast Berserking"
 	elseif race == "Vulpera" then
