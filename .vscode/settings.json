@@ -12,7 +12,12 @@
         "MainMenuBar",
         "MinimapCluster",
         "BuffFrame",
-        "Sound_ToggleMusic"
+        "Sound_ToggleMusic",
+        "MultiBar6",
+        "MultiBar7",
+        "RegisterStateDriver",
+        "StanceBar",
+        "BagsBar"
     ],
     "cSpell.words": [
         "Barkskin",

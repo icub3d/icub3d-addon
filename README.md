@@ -45,7 +45,7 @@ This addon provides various utilities (especially from the command line).
 - F1 - Move - oetohH7 feaZfPZ q4i8nwm ount92T 32q4Y6h witem93 2q4ip41 T32q4is b1T32q4 iaE1T32 30q4Jgy 1y411wf astClic k943wwM ove9134 q4it3w1 8scv94.
 - F2 - Quest Items
 - F3 - Travel - oetohH7 KbDHvmg 30qq08q 1y4q4bW 5witem9 2T32q4x 8R1T32q 4YCswto y92V32q 4FRi1V3 2q4bVy1 V3211wf astClic k943wwT ravel91 34q4it3 w18scv9 4.
-- F4 - Interact - oetohH7 oy2vXMv 30qwr29 1y430qq GYx1y43 0qw2LQ1 y4q4KBE wtoy932 30q4SjW 1y411wf astClic k943qwI nteract 9134q4i t3w18sc v94.
+- F4 - Interact - oetohH7 eU9Gm9A 30qw1G4 1y430q4 AlT1y43 0qwr291 y430qqG Yx1y430 qw2LQ1y 4q4KBEw toy9323 0q4SjW1 y411wfa stClick 943ewIn teract9 134q4it 3w18scv 94.
 - F5 - Trade Skills
 
 # Search
