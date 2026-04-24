@@ -1,3 +1,6 @@
+> [!IMPORTANT]
+> This repository has been migrated to [git.marsh.gg/icub3d/icub3d-addon](https://git.marsh.gg/icub3d/icub3d-addon). Please use the new URL for any future issues, pull requests, or clones.
+
 # icub3d
 
 This addon provides various utilities (especially from the command line).
